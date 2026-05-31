@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="The Undertow">
+<meta name="theme-color" content="#080c18">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>The Undertow — Catching Yourself Being Pulled Back</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+.cover::before{background:radial-gradient(ellipse 120% 70% at 70% 8%,rgba(26,92,92,.16),transparent 55%),radial-gradient(ellipse 90% 100% at 10% 88%,rgba(138,48,64,.06),transparent 60%)}
+.cover-eyebrow{color:var(--teal-b)}
+.cover-eyebrow::before{background:var(--teal-b)}
+.cover h1 em{color:var(--teal-b)}
+.cover-rule{background:var(--teal-b)}
+.pb{background:var(--teal-b)}
+.eyebrow-n{color:var(--teal-b)}
+
+/* meter — sticky bottom */
+.meter-wrap{
+  position:sticky;bottom:0;z-index:250;
+  background:rgba(8,12,24,.96);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid var(--border);
+  padding:12px 22px;padding-bottom:max(12px,var(--safe-bot));
+}
+.meter-bar{height:6px;border-radius:3px;background:var(--ink);overflow:hidden;margin-bottom:8px}
+.meter-fill{height:100%;width:0%;background:var(--green-b);border-radius:3px;transition:width .35s var(--ease),background .35s}
+.meter-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--mist);line-height:1.6;text-align:center}
+.meter-label strong{color:var(--paper)}
+
+/* result card */
+.result{margin-top:8px;border-radius:8px;padding:20px 18px;border:1px solid var(--border);display:none}
+.result.show{display:block}
+.result.lvl-1{background:var(--green-pale);border-color:rgba(63,166,118,.35)}
+.result.lvl-2{background:var(--amber-pale);border-color:rgba(224,168,56,.35)}
+.result.lvl-3{background:var(--rose-pale);border-color:rgba(179,64,85,.4)}
+.result h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:21px;margin-bottom:10px;line-height:1.2}
+.result.lvl-1 h3{color:var(--green-b)}
+.result.lvl-2 h3{color:var(--amber-b)}
+.result.lvl-3 h3{color:var(--rose-b)}
+.result p{font-size:15px;color:rgba(245,240,228,.8);line-height:1.68;margin-bottom:10px}
+.result p:last-child{margin-bottom:0}
+.result strong{color:var(--paper)}
+.dolist{list-style:none;margin-top:10px}
+.dolist li{font-size:14.5px;color:rgba(245,240,228,.82);line-height:1.58;padding:9px 0 9px 24px;position:relative;border-top:1px solid var(--border)}
+.dolist li::before{content:'→';position:absolute;left:0;color:var(--teal-b);font-weight:700}
+
+.btn-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{border:none;padding:12px 20px;border-radius:7px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .2s;min-height:44px}
+.btn-primary{background:var(--teal);color:var(--paper)}
+.btn-primary:active{background:var(--teal-b)}
+
+.closing{text-align:center;padding:40px 22px;border-top:1px solid var(--border)}
+.closing p{font-family:'Cormorant Garant',serif;font-style:italic;font-size:21px;line-height:1.48;color:var(--paper);margin-bottom:12px;text-wrap:pretty}
+.closing .small{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);line-height:2}
+</style>
+</head>
+<body>
+
+<div class="pb" id="pb"></div>
+
+<nav class="sitenav">
+  <a class="sitenav-home" href="index.html"><span>CLEAR EYES</span></a>
+  <div class="sitenav-pages teal">
+    <a href="the-cycle.html">The Cycle</a>
+    <a href="the-anchor.html">The Anchor</a>
+    <a href="the-undertow.html" class="here">The Undertow</a>
+    <a href="clear-eyes.html">Clear Eyes</a>
+  </div>
+</nav>
+
+<nav class="nav">
+  <div class="nav-logo">≈</div>
+  <a href="#first">Read First</a>
+  <a href="#how">How It Works</a>
+  <a href="#check">Self-Check</a>
+  <a href="#card">If Drifting</a>
+  <a href="#wave">Ride the Wave</a>
+  <a href="#help">Help</a>
+</nav>
+
+<header class="cover">
+  <div class="cover-eyebrow">A self-check for catching the drift</div>
+  <h1>THE<br><em>UNDERTOW</em></h1>
+  <div class="cover-rule"></div>
+  <p class="cover-sub">You rarely feel the current until it already has you. This is how to notice you're being pulled back — while you can still swim.</p>
+  <div class="cover-note">Check in honestly · Catch it early · 2026</div>
+</header>
+
+<!-- 00 READ FIRST -->
+<section class="sec" id="first">
+  <div class="eyebrow up"><span class="eyebrow-n">00</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Before the checklist</span></div>
+  <h2 class="up">Going Back Is Not <em>An Event</em></h2>
+  <p class="lead up">It's a process. It almost never starts with a decision — it starts with a feeling, then a thought, long before any contact happens.</p>
+
+  <div class="truthcard up">
+    <p class="big">Nobody wakes up one morning and decides to go back.</p>
+    <p>The slide begins quietly — weeks, sometimes months, before any message is sent. First the <em>mood</em> shifts. Then the <em>thinking</em> shifts. Only last does the <em>behaviour</em> shift. By the time you're reaching for the phone, the current has been carrying you for a while.</p>
+    <p>That's good news. It means there are <em>early</em> signs — and if you can name them while you're still in the shallows, you can turn around before the water is over your head.</p>
+  </div>
+</section>
+
+<!-- 01 HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="eyebrow up"><span class="eyebrow-n">01</span><div class="eyebrow-line"></div><span class="eyebrow-tag">What the research shows</span></div>
+  <h2 class="up">The Pull Has <em>Early Signs</em></h2>
+  <p class="lead up">Researchers who study leaving abusive relationships find the same thing every time: leaving is not one clean event, and returning is not a sudden choice. Both are slow, cyclical processes — which means there are signs you can learn to read.</p>
+
+  <p class="body up"><strong>The back-and-forth is normal, expected, and well-documented.</strong> It is not weakness, and it is not failure. Most people who leave for good did it after returning at least once. The signs of being pulled back tend to arrive in a rough order — the mood shifts first, then the thinking, and only last the actions.</p>
+
+  <div class="stages-intro up">
+    <div class="stage-row s1"><div class="stage-ico">1</div><div><h3>The mood shifts first</h3><p>You're not thinking about them yet — but your self-care and connection are slipping. The easiest point to turn around, and the easiest to miss.</p></div></div>
+    <div class="stage-row s2"><div class="stage-ico">2</div><div><h3>Then the thinking shifts</h3><p>A debate starts in your head. The good memories get louder and the harm goes quiet — the mind plays the highlight reel. Old self-blame creeps back in.</p></div></div>
+    <div class="stage-row s3"><div class="stage-ico">3</div><div><h3>Then the actions shift</h3><p>Checking, re-reading, "just one conversation." This is the point closest to contact — and the moment to reach for another person hardest.</p></div></div>
+  </div>
+
+  <div class="framing up">
+    <h4>A word about blame</h4>
+    <p>The pull was built from two conditions: a <strong>power imbalance</strong> that narrowed your options, and <strong>intermittent reinforcement</strong> that trained your nervous system to chase relief from the same source as the pain (Dutton &amp; Painter, 1981; 1993). The aim of this tool is to notice the drift early. And if you do return — many people do, often more than once — <strong>that is part of how leaving usually works, not proof something is wrong with you.</strong> This is a mirror, never a scorecard.</p>
+  </div>
+</section>
+
+<!-- 02 SELF-CHECK -->
+<section class="sec" id="check">
+  <div class="eyebrow up"><span class="eyebrow-n">02</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Honest, private, just for you</span></div>
+  <h2 class="up">The <em>Self-Check</em></h2>
+  <p class="lead up">Tap anything that's true for you lately. Be honest — no one sees this but you. The meter at the bottom moves as you go.</p>
+
+  <div class="checkgroup up undertow-check" id="checkgroup">
+
+    <div class="cg-head"><span class="cg-badge g">First</span><span class="cg-title">The mood shift</span></div>
+    <p class="cg-sub">Not about them yet — about you slipping.</p>
+    <ul class="checklist" data-weight="1">
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been pulling away from my support people — cancelling, going quiet, isolating.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've stopped doing the things that were helping me (therapy, exercise, sleep, journalling).</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">My sleep or eating has gotten noticeably worse, or I feel "off" in my body.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">There's a restlessness or emptiness I can't quite name.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been drinking or using more than I meant to — to take the edge off.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">When people ask how I'm doing, I say "fine" when I'm not.</div></li>
+    </ul>
+
+    <div class="cg-head"><span class="cg-badge a">Next</span><span class="cg-title">The thinking shift</span></div>
+    <p class="cg-sub">The debate has started in your head.</p>
+    <ul class="checklist" data-weight="2">
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I keep replaying the good times — and the bad parts feel fuzzy or far away.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've caught myself thinking "maybe it wasn't as bad as I made it out to be."</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">The old self-blame is back — "if I'd just been better / hadn't been drinking, maybe…"</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been telling myself "this time would be different" or "people can change."</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I'm starting to believe no one else will ever understand me the way they did.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I find myself defending them or softening the story when I talk about them.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I'm looking for reasons it would be "okay" to make contact — the kids, closure, a birthday.</div></li>
+    </ul>
+
+    <div class="cg-head"><span class="cg-badge r">Then</span><span class="cg-title">The action shift</span></div>
+    <p class="cg-sub">Thoughts are turning into actions.</p>
+    <ul class="checklist" data-weight="3">
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been checking their social media, driving past, or quietly keeping tabs.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've re-read old messages, looked at old photos, or kept a "just in case" door open.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I responded to their contact and told myself it was nothing.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I'm hiding my thoughts about them — or any contact — from the people I trust.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've started imagining or half-planning how a reunion would actually happen.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've let them back in through "logistics" and the conversations are widening.</div></li>
+    </ul>
+  </div>
+
+  <div class="result up" id="result">
+    <h3 id="result-h"></h3>
+    <div id="result-body"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="recheck">Clear &amp; check again</button>
+    </div>
+  </div>
+</section>
+
+<div class="pull teal up">Euphoric recall is the mind playing you the highlight reel and hiding the rest. The warmth you're remembering was real — it just never stayed. That was the whole pattern.<cite>— The Undertow</cite></div>
+
+<!-- 03 IF DRIFTING -->
+<section class="sec" id="card">
+  <div class="eyebrow up"><span class="eyebrow-n">03</span><div class="eyebrow-line"></div><span class="eyebrow-tag">When the current is strong</span></div>
+  <h2 class="up">If You're Already <em>Drifting</em></h2>
+  <p class="lead up">Catching it is the win. Here's what to do the moment you notice — screenshot this.</p>
+
+  <div class="card-shot up">
+    <h3>The moment I notice the pull:</h3>
+    <ol>
+      <li><strong>Name the stage out loud.</strong> "I'm in the mood drift / the tug-of-war / I'm reaching back." Naming it creates distance from it.</li>
+      <li><strong>Tell one safe person today.</strong> The pull feeds on secrecy. Breaking the silence breaks its hold.</li>
+      <li><strong>Go back to basics.</strong> Sleep, food, water, the meeting, the walk. The mood drift is reversed by care, not willpower.</li>
+      <li><strong>Re-read your reasons for leaving</strong> — in your own words, from when you were clear. (In The Anchor guide.)</li>
+      <li><strong>Don't act for 48 hours.</strong> The wave peaks and falls. You only have to outlast this one.</li>
+      <li><strong>If you already made contact — you have not failed.</strong> Returning is part of how most people eventually leave for good. Turn back toward your plan now.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 04 RIDE THE WAVE -->
+<section class="sec" id="wave">
+  <div class="eyebrow up"><span class="eyebrow-n">04</span><div class="eyebrow-line"></div><span class="eyebrow-tag">For the strongest moments</span></div>
+  <h2 class="up">Ride The <em>Wave</em></h2>
+  <p class="lead up">An urge is a wave, not a wall. It rises, crests, and falls — usually within twenty to thirty minutes — whether or not you act on it. You only have to stay afloat through this one.</p>
+
+  <div class="card-shot up">
+    <h3>When the urge to reach out peaks:</h3>
+    <ol>
+      <li><strong>Notice and name it.</strong> "This is an urge. It will pass." Saying it puts space between you and the pull.</li>
+      <li><strong>Set a timer for 20 minutes.</strong> Promise yourself you'll do nothing until it rings. Urges almost always soften in that window.</li>
+      <li><strong>Move your body.</strong> Walk, shower, cold water on your face, step outside. Changing your physical state changes the wave.</li>
+      <li><strong>Call someone from your list</strong> — not them. A real voice shrinks the urge faster than anything else.</li>
+      <li><strong>When the timer rings, check again.</strong> Most of the time the wave has already dropped. If not — reset it. One wave at a time.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="pull green up">Reaching out once — or even going back — does not erase what you've learned. Most people who leave for good returned at least once first. The knowing you've built doesn't disappear. It comes with you.<cite>— Wuest &amp; Merritt-Gray (1999)</cite></div>
+
+<!-- 05 HELP -->
+<section class="sec" id="help">
+  <div class="eyebrow up"><span class="eyebrow-n">05</span><div class="eyebrow-line"></div><span class="eyebrow-tag">You were never meant to do this alone</span></div>
+  <h2 class="up">Reach <em>Out</em></h2>
+  <p class="body up">If the meter ran high, or if you've already made contact, that is exactly when a real human voice helps most. None of these require a crisis — they help with the quiet drift too.</p>
+
+  <div class="resources up">
+    <h3>Free, confidential, 24/7</h3>
+    <ul class="res-list">
+      <li><span class="res-n">National DV Hotline</span><span class="res-c">1-800-799-7233</span></li>
+      <li><span class="res-n">DV Text Line</span><span class="res-c">START → 88788</span></li>
+      <li><span class="res-n">SAMHSA (substance use)</span><span class="res-c">1-800-662-4357</span></li>
+      <li><span class="res-n">Crisis Text Line</span><span class="res-c">HOME → 741741</span></li>
+      <li><span class="res-n">Immediate danger</span><span class="res-c">911</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="closing up">
+  <p>The fact that you opened this — that you're checking — means part of you is still swimming.</p>
+  <span class="small">Listen to that part.<br>It's the one telling the truth.</span>
+</div>
+
+<nav class="companions">
+  <h4>Companion guides</h4>
+  <div class="comp-grid">
+    <a class="comp-link" href="the-cycle.html"><span class="cl-name">The Cycle</span><span class="cl-desc">understand the pattern</span><span class="cl-arr">→</span></a>
+    <a class="comp-link" href="the-anchor.html"><span class="cl-name">The Anchor</span><span class="cl-desc">when the pull comes back</span><span class="cl-arr">→</span></a>
+    <a class="comp-link current" href="the-undertow.html"><span class="cl-name">The Undertow</span><span class="cl-desc">catch yourself drifting</span><span class="cl-arr">→</span></a>
+    <a class="comp-link" href="clear-eyes.html"><span class="cl-name">Clear Eyes</span><span class="cl-desc">the complete guide</span><span class="cl-arr">→</span></a>
+  </div>
+</nav>
+
+<footer>
+  <strong>The Undertow</strong> — a companion to Clear Eyes · 2026<br><br>
+  Sources: Prochaska &amp; DiClemente (Stages of Change) · Wuest &amp; Merritt-Gray (1999), "Not Going Back" · Khaw &amp; Hardesty (2009) · Dutton &amp; Painter (1981; 1993) · Melemis (2015), Yale J. Biol. Med.<br><br>
+  For education and self-support only. Not a substitute for a therapist, advocate, or counsellor. Your taps are not saved or sent anywhere — they live only on this screen and reset when you reload.<br><br>
+  <strong>DV Hotline: 1-800-799-7233 · SAMHSA: 1-800-662-4357 · Emergency: 911</strong>
+</footer>
+
+<!-- sticky meter -->
+<div class="meter-wrap">
+  <div class="meter-bar"><div class="meter-fill" id="meterfill"></div></div>
+  <div class="meter-label" id="meterlabel"><strong>Tap honestly above.</strong> The current rises as you go.</div>
+</div>
+
+<script>
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+
+const pb=document.getElementById('pb');
+addEventListener('scroll',()=>{const h=document.body.scrollHeight-innerHeight;pb.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});
+
+const obs=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}}),{threshold:.05,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.up').forEach(el=>obs.observe(el));
+addEventListener('load',()=>document.querySelectorAll('.up').forEach(el=>{if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in')}));
+
+const group=document.getElementById('checkgroup');
+const fill=document.getElementById('meterfill');
+const lbl=document.getElementById('meterlabel');
+const result=document.getElementById('result');
+const rH=document.getElementById('result-h');
+const rB=document.getElementById('result-body');
+
+function maxStage(){
+  let m=0;
+  group.querySelectorAll('ul.checklist').forEach(ul=>{
+    const w=parseInt(ul.dataset.weight,10);
+    if(ul.querySelectorAll('.check-item.checked').length>0&&w>m)m=w;
+  });
+  return m;
+}
+function total(){return group.querySelectorAll('.check-item.checked').length;}
+
+function render(){
+  const n=total();const s=maxStage();
+  let pct=0,col='var(--green-b)';
+  if(s===0){pct=n>0?8:0;}
+  else if(s===1){pct=22+Math.min(n,4)*4;col='var(--green-b)';}
+  else if(s===2){pct=55+Math.min(n,4)*4;col='var(--amber-b)';}
+  else{pct=86+Math.min(n,3)*4;col='var(--rose-b)';}
+  fill.style.width=Math.min(pct,100)+'%';fill.style.background=col;
+  if(n===0){lbl.innerHTML='<strong>Tap honestly above.</strong> The current rises as you go.';result.classList.remove('show');return;}
+  const sn=s===1?'the mood shift':s===2?'the thinking shift':'the action shift';
+  lbl.innerHTML='You marked <strong>'+n+'</strong> — deepest stage: <strong>'+sn+'</strong>.';
+  let lvl,h,html;
+  if(s<=1){
+    lvl=1;h='You\'re in the early current — the best place to be.';
+    html='<p>You\'re noticing the <strong>mood shift</strong> — the self-care slip that comes before thoughts about them even start. Most people miss this entirely. You didn\'t.</p><p>This stage is reversed by care, not willpower:</p><ul class="dolist"><li>Put back one thing you dropped — the meeting, the walk, a real night\'s sleep.</li><li>Tell one safe person you\'re feeling shaky, today.</li><li>Eat, drink water, go outside. Boring basics genuinely work at this stage.</li></ul>';
+  }else if(s===2){
+    lvl=2;h='You\'re in the tug-of-war. Slow down.';
+    html='<p>The debate has started, and <strong>euphoric recall</strong> is doing its work — the warmth gets louder, the harm goes quiet. None of that means you were wrong to leave. It means the current is pulling.</p><ul class="dolist"><li>Re-read your reasons for leaving — in your own words, from when you were clear.</li><li>Call a safe person and say the quiet part out loud: "I\'m thinking about going back." Secrecy is the current\'s fuel.</li><li>Name the recall when it happens: "that\'s the highlight reel, not the whole film."</li><li>No contact for 48 hours. Let this wave pass first.</li></ul>';
+  }else{
+    lvl=3;h='You\'re reaching back. This is the moment to grab a hand.';
+    html='<p>Thoughts are turning into actions. This is the point closest to contact, and it is <strong>not</strong> the moment to handle alone.</p><ul class="dolist"><li>Reach a real person <em>before</em> you reach them — a trusted friend, or the hotline below. Do this first.</li><li>If you\'ve already made contact: that\'s a slip, not a failure. Turning around now still counts. Everything you\'ve learned is still yours.</li><li>Re-read your reasons. Put 48 hours between you and any next step.</li><li>If any contact involves fear for your safety, treat that as the priority — numbers below.</li></ul>';
+  }
+  result.className='result show lvl-'+lvl;rH.textContent=h;rB.innerHTML=html;
+}
+
+group.querySelectorAll('.check-item').forEach(it=>{
+  it.addEventListener('click',()=>{it.classList.toggle('checked');render();});
+});
+document.getElementById('recheck').addEventListener('click',()=>{
+  group.querySelectorAll('.check-item.checked').forEach(i=>i.classList.remove('checked'));
+  render();
+  document.getElementById('check').scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>

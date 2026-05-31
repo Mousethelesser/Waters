@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Both At Once">
+<meta name="theme-color" content="#0a0d1a">
+<title>Both At Once — Abuse, Substance Use, and the Loop That Holds You</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0a0d1a;--ink:#12162a;--card:#181d30;--border:rgba(255,255,255,.07);
+  --paper:#f3ede0;--mist:rgba(243,237,224,.4);--ghost:rgba(243,237,224,.18);
+  --gold:#c8882a;--gold-b:#e8a83a;--gold-pale:rgba(200,136,42,.13);
+  --rose:#8a2840;--rose-b:#b83255;--rose-pale:rgba(138,40,64,.15);
+  --teal:#185858;--teal-b:#269090;--teal-pale:rgba(24,88,88,.2);
+  --violet:#4a2a6e;--violet-b:#7a48b8;--violet-pale:rgba(74,42,110,.2);
+  --green:#246844;--green-b:#38a868;
+  --slate:#7880a0;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%;background:var(--night)}
+body{background:var(--night);color:var(--paper);font-family:'Lato',sans-serif;line-height:1.65;overflow-x:hidden;-webkit-touch-callout:none;padding-bottom:max(24px,var(--safe-bot))}
+a{-webkit-tap-highlight-color:transparent;color:var(--teal-b)}
+button{-webkit-tap-highlight-color:transparent;font-family:inherit}
+
+.pb{position:fixed;top:0;left:0;right:0;height:2px;background:var(--violet-b);width:0%;z-index:400;transition:width .1s linear}
+
+.nav{position:sticky;top:0;z-index:300;background:rgba(10,13,26,.93);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-top:var(--safe-top)}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--violet-b);padding:10px 12px;border-right:1px solid var(--border);flex-shrink:0;white-space:nowrap;font-weight:700}
+.nav a{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ghost);text-decoration:none;padding:10px 10px;white-space:nowrap;flex-shrink:0;transition:color .18s}
+.nav a:active{color:var(--violet-b);background:rgba(255,255,255,.05)}
+
+.up{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.up.in{opacity:1;transform:none}
+
+/* COVER */
+.cover{min-height:78vh;background:var(--night);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 20px;padding-top:calc(40px + var(--safe-top))}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 130% 50% at 85% 8%,rgba(122,72,184,.1),transparent 55%),radial-gradient(ellipse 80% 110% at 5% 90%,rgba(184,50,85,.08),transparent 60%);pointer-events:none}
+.cover-eyebrow{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.22em;color:var(--violet-b);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cover-eyebrow::before{content:'';width:20px;height:1px;background:var(--violet-b);opacity:.6}
+.cover h1{font-family:'Cormorant Garant',serif;font-size:56px;font-weight:700;line-height:.88;color:var(--paper);letter-spacing:-.02em;margin-bottom:16px}
+.cover h1 em{font-style:italic;color:var(--violet-b)}
+.cover-sub{font-family:'Cormorant Garant',serif;font-style:italic;font-size:17px;color:var(--mist);line-height:1.5;max-width:96%;margin-bottom:20px}
+.cover-rule{width:34px;height:2px;background:var(--violet-b);margin-bottom:16px;opacity:.7}
+.cover-note{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--ghost);line-height:1.9;text-transform:uppercase}
+
+/* SECTIONS */
+.sec{padding:30px 20px}
+.sec+.sec{border-top:1px solid var(--border)}
+.eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ey-n{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--violet-b);font-weight:700}
+.ey-line{flex:1;height:1px;background:var(--border)}
+.ey-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+h2{font-family:'Cormorant Garant',serif;font-size:34px;font-weight:700;line-height:1.0;letter-spacing:-.01em;margin-bottom:10px;color:var(--paper)}
+h2 em{font-style:italic;color:var(--violet-b)}
+.lead{font-family:'Cormorant Garant',serif;font-style:italic;font-size:16px;color:var(--mist);line-height:1.62;margin-bottom:20px}
+.body{font-size:13.5px;color:rgba(243,237,224,.68);line-height:1.72;margin-bottom:14px}
+.body strong{color:var(--paper);font-weight:700}
+hr{border:none;border-top:1px solid var(--border);margin:18px 0}
+
+/* FRAMING BOX */
+.frame{border-radius:5px;padding:16px 14px;margin:6px 0 14px}
+.frame.teal{background:var(--teal-pale);border:1px solid rgba(38,144,144,.25)}
+.frame.violet{background:var(--violet-pale);border:1px solid rgba(122,72,184,.25)}
+.frame.rose{background:var(--rose-pale);border:1px solid rgba(184,50,85,.25)}
+.frame.gold{background:var(--gold-pale);border:1px solid rgba(232,168,58,.25)}
+.frame h4{font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}
+.frame.teal h4{color:var(--teal-b)}
+.frame.violet h4{color:var(--violet-b)}
+.frame.rose h4{color:var(--rose-b)}
+.frame.gold h4{color:var(--gold-b)}
+.frame p{font-size:13px;color:rgba(243,237,224,.72);line-height:1.65;margin-bottom:8px}
+.frame p:last-child{margin-bottom:0}
+.frame p strong{color:var(--paper)}
+
+/* PHASE CARDS — condensed */
+.phases{display:grid;gap:2px;margin-top:6px}
+.phase{background:var(--card);padding:14px;border-left:3px solid var(--gold)}
+.phase.p2{border-left-color:var(--rose-b)}.phase.p3{border-left-color:rgba(243,237,224,.2)}.phase.p4{border-left-color:var(--teal-b)}
+.phase-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin-bottom:4px}
+.phase h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:17px;color:var(--paper);margin-bottom:4px}
+.phase p{font-size:12.5px;color:rgba(243,237,224,.6);line-height:1.58}
+
+/* THE LOOP DIAGRAM (text-based) */
+.loop{margin:14px 0;display:grid;gap:0}
+.loop-step{display:grid;grid-template-columns:38px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:start}
+.loop-step:last-child{border-bottom:none}
+.loop-ico{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:2px}
+.loop-ico.a{background:rgba(138,40,64,.25)}
+.loop-ico.b{background:rgba(74,42,110,.25)}
+.loop-ico.c{background:rgba(138,40,64,.18)}
+.loop-step h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper);margin-bottom:3px}
+.loop-step p{font-size:12.5px;color:rgba(243,237,224,.6);line-height:1.58}
+
+/* WEAPON LIST */
+.weapons{list-style:none;margin-top:6px}
+.weapon{padding:13px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:22px 1fr;gap:10px}
+.weapon:last-child{border-bottom:none}
+.weapon-ico{font-size:13px;padding-top:2px}
+.weapon-body h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:15.5px;color:var(--rose-b);margin-bottom:3px}
+.weapon-body p{font-size:12.5px;color:rgba(243,237,224,.62);line-height:1.58}
+.weapon-body .quote{font-family:'Cormorant Garant',serif;font-style:italic;font-size:13px;color:rgba(184,50,85,.7);margin-top:6px;padding:7px 10px;background:var(--rose-pale);border-left:2px solid var(--rose-b);border-radius:2px;line-height:1.5}
+
+/* TRUTH TABLE */
+.truths{list-style:none;margin-top:8px}
+.truth-item{padding:14px;margin-bottom:2px;background:var(--card);border-left:3px solid var(--teal-b);display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start}
+.truth-check{color:var(--teal-b);font-size:14px;padding-top:2px;font-weight:700}
+.truth-body strong{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper);display:block;margin-bottom:3px}
+.truth-body p{font-size:12.5px;color:rgba(243,237,224,.6);line-height:1.58}
+
+/* BARRIER CARDS */
+.barriers{display:grid;gap:2px;margin-top:6px}
+.barrier{background:var(--card);padding:13px 14px}
+.barrier h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:15.5px;color:var(--paper);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.barrier h3 span{font-size:11px}
+.barrier p{font-size:12.5px;color:rgba(243,237,224,.6);line-height:1.6}
+
+/* SHAME SPIRAL VISUAL */
+.spiral{margin:14px 0}
+.spiral-node{padding:13px 14px;margin-bottom:2px;border-radius:3px;position:relative}
+.spiral-node.n1{background:rgba(138,40,64,.18);border-left:3px solid var(--rose-b)}
+.spiral-node.n2{background:rgba(74,42,110,.18);border-left:3px solid var(--violet-b)}
+.spiral-node.n3{background:rgba(138,40,64,.12);border-left:3px solid rgba(184,50,85,.5)}
+.spiral-node.n4{background:rgba(74,42,110,.12);border-left:3px solid rgba(122,72,184,.5)}
+.spiral-node.n5{background:rgba(138,40,64,.08);border-left:3px solid rgba(184,50,85,.3)}
+.spiral-arrow{text-align:center;font-size:14px;color:var(--slate);padding:2px 0;opacity:.6}
+.spiral-node h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;margin-bottom:3px}
+.spiral-node.n1 h3,.spiral-node.n3 h3,.spiral-node.n5 h3{color:var(--rose-b)}
+.spiral-node.n2 h3,.spiral-node.n4 h3{color:var(--violet-b)}
+.spiral-node p{font-size:12px;color:rgba(243,237,224,.6);line-height:1.55}
+
+/* PULL QUOTE */
+.pull{background:var(--violet);padding:22px 20px;margin:0 -20px;font-family:'Cormorant Garant',serif;font-style:italic;font-size:20px;line-height:1.48;color:var(--paper)}
+.pull cite{display:block;margin-top:10px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(243,237,224,.4);font-style:normal}
+
+/* RECOVERY / PATHWAY */
+.path{display:grid;gap:2px;margin-top:6px}
+.path-step{background:var(--card);padding:14px;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.path-n{font-family:'Cormorant Garant',serif;font-size:30px;font-weight:700;color:rgba(56,168,104,.25);line-height:1}
+.path-step h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper);margin-bottom:4px}
+.path-step p{font-size:12.5px;color:rgba(243,237,224,.6);line-height:1.6}
+.path-step .note{font-family:'Space Mono',monospace;font-size:8px;color:var(--green-b);margin-top:6px;line-height:1.7;letter-spacing:.02em}
+
+/* RESOURCES */
+.res-grid{display:grid;gap:2px;margin-top:8px}
+.res-group{background:var(--card);padding:14px}
+.res-group h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;margin-bottom:10px}
+.res-group.dv h3{color:var(--rose-b)}.res-group.su h3{color:var(--violet-b)}.res-group.both h3{color:var(--teal-b)}
+.res-list{list-style:none}
+.res-list li{padding:7px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.res-list li:last-child{border-bottom:none}
+.res-n{color:var(--paper);font-weight:700;font-size:13px}
+.res-c{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.03em;text-align:right;white-space:nowrap}
+.res-group.dv .res-c{color:var(--rose-b)}.res-group.su .res-c{color:var(--violet-b)}.res-group.both .res-c{color:var(--teal-b)}
+
+footer{background:var(--ink);border-top:1px solid var(--border);padding:20px;padding-bottom:max(20px,var(--safe-bot));font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.06em;color:var(--ghost);line-height:1.9}
+footer strong{color:rgba(243,237,224,.42);font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="pb" id="pb"></div>
+<nav class="nav">
+  <div class="nav-logo">B/A</div>
+  <a href="#cycle">The Cycle</a>
+  <a href="#link">The Link</a>
+  <a href="#weapon">How It's Used</a>
+  <a href="#shame">Shame Loop</a>
+  <a href="#truth">The Truth</a>
+  <a href="#harder">Why Harder</a>
+  <a href="#signs">Signs</a>
+  <a href="#path">Path Forward</a>
+  <a href="#help">Help</a>
+</nav>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-eyebrow">For the person dealing with both</div>
+  <h1>BOTH<br>AT<br><em>ONCE</em></h1>
+  <div class="cover-rule"></div>
+  <p class="cover-sub">When coercive control and substance use are happening at the same time — how they feed each other, and why none of it means what you've been told it means.</p>
+  <div class="cover-note">Educational Guide · 2026 · Not a substitute for clinical care</div>
+</header>
+
+<!-- THE CYCLE — condensed -->
+<section class="sec" id="cycle">
+  <div class="eyebrow up"><span class="ey-n">01</span><div class="ey-line"></div><span class="ey-tag">The pattern underneath everything</span></div>
+  <h2 class="up" style="transition-delay:.04s">The <em>Cycle</em></h2>
+  <p class="lead up" style="transition-delay:.07s">Four phases, repeating. Each time around, the bond deepens and leaving feels less possible. This is the structure both your relationship and your substance use are operating inside.</p>
+
+  <div class="phases up" style="transition-delay:.11s">
+    <div class="phase"><div class="phase-tag">Phase 1 — Idealize</div><h3>Love Bombing</h3><p>Overwhelming warmth, attention, and apparent understanding. You feel finally seen. Your brain floods with bonding chemistry. The connection feels more real than anything.</p></div>
+    <div class="phase p2"><div class="phase-tag">Phase 2 — Devalue</div><h3>Criticism &amp; Cold</h3><p>Without warning, warmth is withdrawn. Contempt, blame, and unpredictability replace it. You begin asking what you did wrong. The answer is: nothing. But by now, you believe the answer is you.</p></div>
+    <div class="phase p3"><div class="phase-tag">Phase 3 — Discard</div><h3>Withdrawal</h3><p>Silence, abandonment, or threat of it. Your nervous system responds to the threat of loss the way it responds to physical danger. This is not weakness — it is survival wiring doing exactly what it was built to do.</p></div>
+    <div class="phase p4"><div class="phase-tag">Phase 4 — Hoover</div><h3>The Return</h3><p>He comes back. Warmth returns. Your brain floods with relief. The cycle restarts, deeper than before. Each return tightens the bond — and gives him new information about what works on you.</p></div>
+  </div>
+
+  <div class="frame teal up" style="transition-delay:.16s">
+    <h4>How substances fit into this cycle</h4>
+    <p>Substance use doesn't sit outside this cycle — it gets pulled into it. The highs of Phase 1 may involve using together. The pain of Phase 2 and 3 is what drives the self-medication. The relief of Phase 4 may be partly chemically driven. Over time, <strong>the cycle and the use become entangled in the same neural wiring.</strong></p>
+  </div>
+</section>
+
+<!-- THE LINK -->
+<section class="sec" id="link">
+  <div class="eyebrow up"><span class="ey-n">02</span><div class="ey-line"></div><span class="ey-tag">What the research shows</span></div>
+  <h2 class="up" style="transition-delay:.04s">The <em>Connection</em></h2>
+  <p class="lead up" style="transition-delay:.07s">The relationship between coercive control and substance use is real, well-documented, and almost always misunderstood — especially by the person living in the middle of it.</p>
+
+  <p class="body up" style="transition-delay:.1s">People who experience intimate partner violence are <strong>15 times more likely to use alcohol harmfully</strong> and <strong>9 times more likely to misuse other substances</strong> than people who haven't experienced it. That is not a small difference. It is one of the strongest dose-response relationships in the psychology of trauma.</p>
+
+  <div class="frame violet up" style="transition-delay:.13s">
+    <h4>Which came first?</h4>
+    <p>The honest answer is: often both, in different ways for different people. Some people came into the relationship with an existing substance use pattern. Some developed one inside it. Most find that the abuse made it significantly worse. <strong>The research treats this as a bidirectional relationship — not a simple cause and effect.</strong></p>
+    <p>What the research is clear on: <strong>being abused drives increased substance use</strong>, and abusers frequently exploit that use to deepen their control. The direction that matters for you right now is not which came first. It's recognising that the two are connected, and that neither one is your character.</p>
+  </div>
+
+  <div class="loop up" style="transition-delay:.16s">
+    <div class="loop-step"><div class="loop-ico a">🔥</div><div><h3>Chronic unresolvable pain</h3><p>Coercive control creates ongoing trauma that has no clear endpoint. The nervous system cannot stay in permanent crisis — something is needed to bring it down. Substances do that, at least for a while.</p></div></div>
+    <div class="loop-step"><div class="loop-ico b">💊</div><div><h3>Self-medication of the unbearable</h3><p>Drinking or using to manage fear, shame, hypervigilance, and dissociation is not moral failure. It is a human response to unmanageable conditions. The original target was the pain — not a personal flaw.</p></div></div>
+    <div class="loop-step"><div class="loop-ico a">🔄</div><div><h3>The dependency develops</h3><p>The brain learns that substance use relieves the pain caused by abuse. Tolerance builds. The use increases. And now the abuser has two levers — the relationship itself, and the dependency it helped create.</p></div></div>
+    <div class="loop-step"><div class="loop-ico b">🪤</div><div><h3>Chemical coercion: some abusers actively encourage use</h3><p>This is documented in clinical research. Some abusers deliberately encourage or enable their partner's substance use as a tactic — it increases isolation, financial dependency, vulnerability, and his ability to discredit her. If he introduced you to substances, kept them available, or pushed you to use: this was not kindness.</p></div></div>
+  </div>
+</section>
+
+<!-- HOW IT'S WEAPONIZED -->
+<section class="sec" id="weapon">
+  <div class="eyebrow up"><span class="ey-n">03</span><div class="ey-line"></div><span class="ey-tag">Coercion and control</span></div>
+  <h2 class="up" style="transition-delay:.04s">How It Gets <em>Used Against You</em></h2>
+  <p class="lead up" style="transition-delay:.07s">Your substance use — especially if it started or worsened inside the relationship — becomes one of his most effective tools. Here is how it works, named plainly.</p>
+
+  <ul class="weapons up" style="transition-delay:.11s">
+    <li class="weapon">
+      <div class="weapon-ico">🎭</div>
+      <div class="weapon-body">
+        <h3>Discrediting your memory and perception</h3>
+        <p>He tells you — and others — that you can't be trusted to remember what happened accurately. Your use becomes the explanation for everything you describe. It doesn't matter whether you were actually impaired. The label sticks.</p>
+        <div class="quote">"You were drunk. You don't remember it right." / "Who's going to believe someone who drinks like you?"</div>
+      </div>
+    </li>
+    <li class="weapon">
+      <div class="weapon-ico">🪞</div>
+      <div class="weapon-body">
+        <h3>Making your use the cause of his behaviour</h3>
+        <p>He rewrites every abusive incident as a response to your problem. His violence, cruelty, or control becomes a reasonable reaction to your drinking or using. Over time, you may begin to believe this version yourself.</p>
+        <div class="quote">"I wouldn't act like this if you could just control yourself." / "You bring this on yourself."</div>
+      </div>
+    </li>
+    <li class="weapon">
+      <div class="weapon-ico">👁</div>
+      <div class="weapon-body">
+        <h3>Using it to isolate you further</h3>
+        <p>He tells your family, friends, doctors, or anyone who might help that you have a "problem" — framed with just enough truth to be believable, and used to explain away your reports of abuse. By the time you reach out, your credibility has already been managed.</p>
+        <div class="quote">"She's been struggling for a while. I'm really worried about her." (Said to your family, in front of you.)</div>
+      </div>
+    </li>
+    <li class="weapon">
+      <div class="weapon-ico">⚖️</div>
+      <div class="weapon-body">
+        <h3>Threatening custody or legal consequences</h3>
+        <p>He tells you — explicitly or implicitly — that if you report the abuse, your substance use will be used against you in court. You will lose the children. You will lose credibility. Sometimes this threat is real. Often it is exaggerated. It is always deployed as a lock on the door.</p>
+        <div class="quote">"Go ahead and report me. Let's see what a judge thinks about how you're living."</div>
+      </div>
+    </li>
+    <li class="weapon">
+      <div class="weapon-ico">🔑</div>
+      <div class="weapon-body">
+        <h3>Controlling access to substances as a lever</h3>
+        <p>He may control the supply — providing or withholding to regulate your behaviour, manage your mood, or keep you in a state of dependency. Withdrawal is not just physical discomfort. In this context it is a tool he holds.</p>
+        <div class="quote">No script needed — control can be entirely behavioural, not spoken.</div>
+      </div>
+    </li>
+    <li class="weapon">
+      <div class="weapon-ico">😶</div>
+      <div class="weapon-body">
+        <h3>Weaponising your shame against you</h3>
+        <p>He does not need to do much work here. Shame about substance use is powerful on its own. He simply reinforces it — with a look, a comment, a silence — and it does the rest. Shame keeps you small, isolated, and believing you don't deserve better or won't be believed.</p>
+        <div class="quote">"Look at yourself." (Two words. They don't need to say more.)</div>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- SHAME SPIRAL -->
+<section class="sec" id="shame">
+  <div class="eyebrow up"><span class="ey-n">04</span><div class="ey-line"></div><span class="ey-tag">The reinforcing loop</span></div>
+  <h2 class="up" style="transition-delay:.04s">The <em>Shame Loop</em></h2>
+  <p class="lead up" style="transition-delay:.07s">Shame is not just a feeling here. It is a structural element of both the abuse and the addiction. Understanding how they feed each other is one of the most important things in this guide.</p>
+
+  <div class="spiral up" style="transition-delay:.11s">
+    <div class="spiral-node n1"><h3>The abuse creates unbearable conditions</h3><p>Fear, hypervigilance, helplessness, erosion of self-worth. The body is in chronic survival mode with no safe exit.</p></div>
+    <div class="spiral-arrow">↓</div>
+    <div class="spiral-node n2"><h3>Substances offer temporary relief</h3><p>This is not weakness — it is a functional response to pain. The nervous system finds the only release available.</p></div>
+    <div class="spiral-arrow">↓</div>
+    <div class="spiral-node n3"><h3>Shame about the use develops</h3><p>Both internally and as actively fed by the abuser. "I can't believe I'm like this." "I'm not the kind of person who drinks like this." "Maybe he's right about me."</p></div>
+    <div class="spiral-arrow">↓</div>
+    <div class="spiral-node n4"><h3>Shame deepens the isolation and self-blame</h3><p>The same mechanisms that keep victims in abusive relationships — self-doubt, belief that they deserve this, belief that no one will help — are amplified by the shame of the substance use. <strong>Shame is a barrier to seeking help for either problem.</strong></p></div>
+    <div class="spiral-arrow">↓</div>
+    <div class="spiral-node n5"><h3>The cycle tightens</h3><p>Increased shame → increased use to cope with shame → increased vulnerability to control → abuse continues or worsens → return to top. Research confirms: shame does not motivate change. It entrenches what it touches.</p></div>
+  </div>
+
+  <div class="frame gold up" style="transition-delay:.16s">
+    <h4>What breaks the shame loop</h4>
+    <p>Not willpower. Not self-blame. <strong>Being seen accurately — without judgment — by at least one other person.</strong> This is why trauma-informed care is different from standard care: it starts by naming the loop, not the moral failing. The goal is not to feel worse about using. The goal is to understand what the using was doing, and find other ways to do it.</p>
+  </div>
+</section>
+
+<div class="pull up">Your substance use does not make the abuse your fault. Your use does not justify violence against you on any level — regardless of what he, or society, has told you.<cite>— National Center on Domestic Violence, Trauma &amp; Mental Health</cite></div>
+
+<!-- THE TRUTH -->
+<section class="sec" id="truth">
+  <div class="eyebrow up"><span class="ey-n">05</span><div class="ey-line"></div><span class="ey-tag">Named plainly</span></div>
+  <h2 class="up" style="transition-delay:.04s">What Is <em>True</em></h2>
+  <p class="lead up" style="transition-delay:.07s">These are not reassurances. They are clinical and legal facts — the ones that get buried under shame and the abuser's narrative. Read each one slowly.</p>
+
+  <ul class="truths up" style="transition-delay:.11s">
+    <li class="truth-item"><div class="truth-check">✓</div><div class="truth-body"><strong>Your drinking or using did not cause the abuse.</strong><p>Abuse is a pattern of choices made to control another person. It precedes, persists through, and survives sobriety. Research shows abusers often find new methods when substances are no longer available as an excuse.</p></div></li>
+    <li class="truth-item"><div class="truth-check">✓</div><div class="truth-body"><strong>Being impaired does not make violence your fault or consent.</strong><p>You cannot consent to being harmed by being impaired. Your state at the time does not change his choices or his responsibility for them. This is true legally and morally.</p></div></li>
+    <li class="truth-item"><div class="truth-check">✓</div><div class="truth-body"><strong>Your memory is more reliable than he has told you it is.</strong><p>Gaslighting frequently targets memory specifically. The claim that you "don't remember it right" because of your use is a tactic, not an assessment. Trauma memory is complex, but the basic shape of what happened to you is real.</p></div></li>
+    <li class="truth-item"><div class="truth-check">✓</div><div class="truth-body"><strong>The substance use is very likely a response to the abuse — not the other way around.</strong><p>This is what the evidence shows. You did not drink yourself into an abusive relationship. You are far more likely to have used increasingly as a response to conditions you couldn't otherwise survive.</p></div></li>
+    <li class="truth-item"><div class="truth-check">✓</div><div class="truth-body"><strong>Having a substance use disorder does not disqualify you from safety, help, or being believed.</strong><p>DV advocates and trauma-informed clinicians work with this every day. The system is imperfect, but the best support services do not require you to be sober before they help you be safe.</p></div></li>
+    <li class="truth-item"><div class="truth-check">✓</div><div class="truth-body"><strong>Shame is not information about who you are.</strong><p>Shame is a predictable outcome of being systematically told over a long time that you are the problem. It is a symptom of what happened to you — not a verdict on your character.</p></div></li>
+    <li class="truth-item"><div class="truth-check">✓</div><div class="truth-body"><strong>Recovery from both is possible — and they are best addressed together.</strong><p>Treating one while ignoring the other is why standard treatment often fails people in this situation. Integrated, trauma-informed care exists and it works. It does not require you to choose which problem to address first.</p></div></li>
+  </ul>
+</section>
+
+<!-- WHY LEAVING IS EVEN HARDER -->
+<section class="sec" id="harder">
+  <div class="eyebrow up"><span class="ey-n">06</span><div class="ey-line"></div><span class="ey-tag">The extra layer</span></div>
+  <h2 class="up" style="transition-delay:.04s">Why Leaving Is <em>Even Harder</em></h2>
+  <p class="lead up" style="transition-delay:.07s">The barriers to leaving a coercive relationship are already formidable. Substance use adds specific layers on top of them. None of these mean leaving is impossible — but they are real, and naming them helps.</p>
+
+  <div class="barriers up" style="transition-delay:.11s">
+    <div class="barrier"><h3><span>⚖️</span>Fear of custody loss</h3><p>He has likely told you — or you fear — that your substance use will be used against you in custody proceedings. This fear is real and not unreasonable. But it is also frequently exaggerated by abusers as a control tactic. A DV advocate can help you understand what your actual legal position is — which is almost always better than what he has told you.</p></div>
+    <div class="barrier"><h3><span>😰</span>Fear of not being believed</h3><p>If he has already managed your credibility with family, services, or potential supporters, you may genuinely believe that no one will take your account of the abuse seriously. This is the goal of the discrediting tactic. The antidote is finding support systems that start from believing you — which do exist and are specifically designed for this.</p></div>
+    <div class="barrier"><h3><span>🔗</span>Physical withdrawal as a barrier</h3><p>If there is significant physical dependency, the prospect of withdrawal is a real barrier to leaving. This is not weakness — it is physiology. Medically-assisted withdrawal is available, and some DV services have relationships with healthcare providers who can help with this specifically.</p></div>
+    <div class="barrier"><h3><span>🪟</span>Services that don't talk to each other</h3><p>Standard DV services may not be equipped for co-occurring substance use. Standard substance use services may not screen for or address the DV. This gap is real — but there are practitioners and programmes specifically designed to hold both. They are worth seeking out before concluding that help doesn't exist for your specific situation.</p></div>
+    <div class="barrier"><h3><span>🧠</span>Shame preventing disclosure to either service</h3><p>You may not tell the DV service about your substance use, and not tell the SUD service about the abuse — because both feel too vulnerable to expose in the wrong context. The result is that neither service has the full picture, and neither can fully help. Starting with a trauma-informed, integrated service, or at minimum telling one trusted clinician everything, changes this.</p></div>
+    <div class="barrier"><h3><span>💸</span>Financial and practical dependency</h3><p>Substance use often involves financial dependency that gets layered on top of the financial control already used in coercive relationships. The combination can make independent housing feel mathematically impossible. DV financial advocates and assistance programmes exist specifically for this.</p></div>
+    <div class="barrier"><h3><span>🔁</span>The neurobiological bond is doubled</h3><p>You are potentially leaving two chemical dependencies at once: the trauma bond to the relationship and the neurological dependency on the substance. Both involve genuine withdrawal. Both involve your brain telling you to go back. Knowing that both pulls are real — and both are temporary — is more useful than being told to just decide to leave.</p></div>
+  </div>
+</section>
+
+<!-- SIGNS YOU'RE IN IT -->
+<section class="sec" id="signs">
+  <div class="eyebrow up"><span class="ey-n">07</span><div class="ey-line"></div><span class="ey-tag">Recognition</span></div>
+  <h2 class="up" style="transition-delay:.04s">Signs You're <em>In This</em></h2>
+  <p class="lead up" style="transition-delay:.07s">These are not judgments. They are a map. The pattern is recognisable and you are not the first person in it.</p>
+
+  <div class="frame violet up" style="transition-delay:.09s">
+    <h4>Signs of the abuse pattern</h4>
+    <p>You apologise constantly without knowing what for. You read his mood before you speak. You remember a version of him who doesn't show up consistently anymore. You have tried to leave and found yourself unable to stay gone. You feel more alone inside the relationship than you did before it. You have defended him to people who were worried about you.</p>
+  </div>
+
+  <div class="frame rose up" style="transition-delay:.12s">
+    <h4>Signs the two are entangled</h4>
+    <p>Your use is heaviest around him, or in anticipation of interactions with him. You use primarily to manage emotions caused by the relationship. He controls, provides, or comments on your use. He has told others about your use in a way that feels like a setup, not concern. Sobriety makes the relationship feel more frightening, not safer. You have stayed because you fear what withdrawal would feel like without his support. You have used during or after abusive incidents specifically to survive them.</p>
+  </div>
+
+  <div class="frame gold up" style="transition-delay:.15s">
+    <h4>Signs of where his accountability goes</h4>
+    <p>His behaviour gets worse when you use but does not stop when you don't. He blames your use for incidents that happened when you were sober. He has more information about your using than you have told him — suggesting surveillance. He uses your recovery efforts against you: "you're too emotional since you quit," "you're not the person I loved anymore."</p>
+  </div>
+</section>
+
+<!-- PATH FORWARD -->
+<section class="sec" id="path">
+  <div class="eyebrow up"><span class="ey-n">08</span><div class="ey-line"></div><span class="ey-tag">What actually helps</span></div>
+  <h2 class="up" style="transition-delay:.04s">A <em>Path Forward</em></h2>
+  <p class="lead up" style="transition-delay:.07s">There is no sequence that works for everyone. Safety and substance use do not need to be solved in a fixed order. What matters is starting somewhere, with the right kind of help.</p>
+
+  <div class="path up" style="transition-delay:.11s">
+    <div class="path-step"><div class="path-n">1</div><div><h3>Safety first — even imperfect safety</h3><p>You do not need to be sober to access DV support. You do not need to have left to call a hotline. Advocates will not require you to have everything resolved before they help. Safety planning can happen from exactly where you are right now.</p><div class="note">Hotline: 1-800-799-7233 · Text START to 88788</div></div></div>
+    <div class="path-step"><div class="path-n">2</div><div><h3>Seek trauma-informed, integrated support</h3><p>Ask specifically: "Do you have experience with clients dealing with both domestic violence and substance use?" Services that treat these as separate problems often can't fully help. Integrated or dual-diagnosis trauma-informed care exists and is meaningfully more effective.</p><div class="note">Tell one clinician the whole picture — not a partial version for each service.</div></div></div>
+    <div class="path-step"><div class="path-n">3</div><div><h3>Name the shame before it drives the bus</h3><p>Shame about substance use is one of the strongest predictors of treatment dropout and return to an abusive relationship. Finding one person — a counsellor, an advocate, a trusted friend — who can hold the full picture without judgment interrupts the shame loop. This is not about confessing. It is about not carrying it alone.</p></div></div>
+    <div class="path-step"><div class="path-n">4</div><div><h3>Treat sobriety and safety as parallel tracks</h3><p>Neither one is a prerequisite for the other. Working on your substance use does not mean you are "fixing yourself" so you deserve safety. You already deserve safety. These are two things that are easier together than sequentially — and most evidence-based programmes now work this way.</p></div></div>
+    <div class="path-step"><div class="path-n">5</div><div><h3>Understand that recovery may involve grief — for both losses</h3><p>Leaving the relationship and addressing the substance use both involve losing something that the brain experienced as relief, comfort, or connection — even when those things were harmful. The grief is real. It does not mean the losses were not necessary.</p></div></div>
+    <div class="path-step"><div class="path-n">6</div><div><h3>Build the network before you need it urgently</h3><p>One clinician. One advocate. One safe person. These three, in place before the moment of crisis, change what is possible when the crisis comes.</p><div class="note">See resources below — start with one call.</div></div></div>
+  </div>
+</section>
+
+<!-- HELP -->
+<section class="sec" id="help">
+  <div class="eyebrow up"><span class="ey-n">09</span><div class="ey-line"></div><span class="ey-tag">Where to start</span></div>
+  <h2 class="up" style="transition-delay:.04s">Getting <em>Help</em></h2>
+  <p class="lead up" style="transition-delay:.07s">All of these are free, confidential, and available now. You do not need to have left, be sober, or have everything figured out before you call.</p>
+
+  <div class="res-grid up" style="transition-delay:.11s">
+    <div class="res-group dv">
+      <h3>Domestic Violence &amp; Safety</h3>
+      <ul class="res-list">
+        <li><span class="res-n">National DV Hotline</span><span class="res-c">1-800-799-7233</span></li>
+        <li><span class="res-n">DV Text Line</span><span class="res-c">START to 88788</span></li>
+        <li><span class="res-n">thehotline.org</span><span class="res-c">live chat 24/7</span></li>
+        <li><span class="res-n">Immediate danger</span><span class="res-c">call 911</span></li>
+      </ul>
+    </div>
+    <div class="res-group su">
+      <h3>Substance Use &amp; Recovery</h3>
+      <ul class="res-list">
+        <li><span class="res-n">SAMHSA National Helpline</span><span class="res-c">1-800-662-4357</span></li>
+        <li><span class="res-n">SAMHSA Treatment Locator</span><span class="res-c">findtreatment.gov</span></li>
+        <li><span class="res-n">Crisis Text Line</span><span class="res-c">HOME to 741741</span></li>
+      </ul>
+    </div>
+    <div class="res-group both">
+      <h3>Both Together</h3>
+      <ul class="res-list">
+        <li><span class="res-n">NCDVTMH</span><span class="res-c">nationalcenterdvtraumamh.org</span></li>
+        <li><span class="res-n">Ask your DV advocate</span><span class="res-c">"Do you work with co-occurring SUD?"</span></li>
+        <li><span class="res-n">Ask your SUD counsellor</span><span class="res-c">"Do you screen for domestic violence?"</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="frame teal up" style="transition-delay:.16s" style="margin-top:16px">
+    <h4>A note on telling a DV advocate about your substance use</h4>
+    <p>Advocates at hotlines and shelters are not mandated to report substance use to child protective services simply because you disclose it. Their job is to help you be safer, not to build a case against you. <strong>The more of the full picture they have, the better they can help.</strong> If you encounter a service that makes you feel judged or dismissed because of the substance use, that is a failure of that service — not a statement about whether you deserve help.</p>
+  </div>
+</section>
+
+<footer>
+  <strong>Both At Once</strong> &mdash; A companion to <em>The Cycle</em> and <em>The Anchor</em> &mdash; v1 · 2026<br><br>
+  <strong>Key sources:</strong> National Center on Domestic Violence, Trauma &amp; Mental Health (NCDVTMH) · SAMHSA (2017, 2024) · Ogden, Dichter &amp; Bazzi (2022), IPV as predictor of substance use outcomes · Frontiers in Psychiatry (2024), violence and substance use treatment review · Dolezal &amp; Gibson (2022), shame in post-trauma states and addiction · Battered Women's Justice Project, Survivors and Substance Abuse (2024)<br><br>
+  <strong>Important:</strong> This is an educational guide, not a clinical assessment or legal advice. Statistics are illustrative of research findings; individual situations vary. If anything here conflicts with advice from a clinician or advocate who knows your situation, follow theirs. Your substance use does not reduce your entitlement to safety.<br><br>
+  <strong>Emergency:</strong> 911 &nbsp;·&nbsp; <strong>DV Hotline:</strong> 1-800-799-7233 &nbsp;·&nbsp; <strong>SAMHSA:</strong> 1-800-662-4357
+</footer>
+
+<script>
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+window.addEventListener('scroll',()=>{
+  const h=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('pb').style.width=(h>0?window.scrollY/h*100:0)+'%';
+},{passive:true});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.06});
+document.querySelectorAll('.up').forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>{document.querySelectorAll('.up').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in')})});
+</script>
+</body>
+</html>

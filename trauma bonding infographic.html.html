@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trauma Bonding & Narcissistic Abuse — Clinical Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@300;400;500&family=Bebas+Neue&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#08080e;--dark:#111118;--char:#1e1e28;--mid-dark:#2e2e3c;
+  --paper:#f5f0e8;--cream:#faf7f2;--bone:#e2d8cc;--white:#ffffff;
+  --rust:#9b3525;--rust-b:#c44535;--rust-c:#e05545;--rust-pale:#f5e0db;
+  --teal:#134848;--teal-b:#1f6464;--teal-c:#2a8080;--teal-pale:#cde6e6;
+  --gold:#8c6520;--gold-b:#b58530;--gold-c:#d4a248;--gold-pale:#f2e8d0;
+  --slate:#48485a;--mist:#888898;--fog:#b8b8c8;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--paper);color:var(--night);font-family:'Lato',sans-serif;line-height:1.65;overflow-x:hidden}
+
+/* ANIMATION */
+.up{opacity:0;transform:translateY(30px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.up.in{opacity:1;transform:none}
+.stag>*{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.stag.in>*:nth-child(1){opacity:1;transform:none;transition-delay:.04s}
+.stag.in>*:nth-child(2){opacity:1;transform:none;transition-delay:.11s}
+.stag.in>*:nth-child(3){opacity:1;transform:none;transition-delay:.18s}
+.stag.in>*:nth-child(4){opacity:1;transform:none;transition-delay:.25s}
+.stag.in>*:nth-child(5){opacity:1;transform:none;transition-delay:.32s}
+.stag.in>*:nth-child(6){opacity:1;transform:none;transition-delay:.39s}
+.stag.in>*:nth-child(7){opacity:1;transform:none;transition-delay:.46s}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;background:var(--night);display:flex;align-items:center;padding:0 48px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust-c);padding:15px 20px 15px 0;border-right:1px solid rgba(255,255,255,.1);margin-right:4px;white-space:nowrap;flex-shrink:0}
+.nav a{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.3);text-decoration:none;padding:15px 13px;white-space:nowrap;flex-shrink:0;transition:color .2s}
+.nav a:hover{color:rgba(245,240,232,.85)}
+
+/* PROGRESS BAR */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--rust-c);width:0%;z-index:300;transition:width .1s linear}
+
+/* COVER */
+.cover{min-height:92vh;background:var(--night);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.cover-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 68% 55% at 88% 28%,rgba(155,53,37,.22),transparent 62%),radial-gradient(ellipse 48% 65% at 8% 82%,rgba(19,72,72,.26),transparent 58%),repeating-linear-gradient(-50deg,transparent,transparent 72px,rgba(255,255,255,.013) 72px,rgba(255,255,255,.013) 73px)}
+.cover-grain{position:absolute;inset:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:200px}
+.cover-inner{padding:72px 72px 60px;position:relative;max-width:1200px}
+.cover-kicker{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.kicker-bar{width:36px;height:1px;background:var(--rust-c)}
+.kicker-text{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust-c)}
+.cover h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,9vw,128px);line-height:.92;color:var(--paper);letter-spacing:.02em;margin-bottom:6px}
+.cover h1 .dim{color:rgba(245,240,232,.16)}
+.cover-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(18px,2.2vw,27px);color:rgba(245,240,232,.4);margin-bottom:36px;line-height:1.38;max-width:580px}
+.cover-meta{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:48px}
+.cover-meta-item{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.28);line-height:1.9}
+.cover-meta-item strong{display:block;color:rgba(245,240,232,.58);font-weight:500}
+.cover-ring{position:absolute;right:72px;top:50%;transform:translateY(-50%)}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--rust-b);position:relative}
+.stats::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.04),rgba(0,0,0,.04) 1px,transparent 1px,transparent 25%);pointer-events:none}
+.stat{padding:28px 24px;border-right:1px solid rgba(255,255,255,.14);position:relative}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,5vw,62px);line-height:1;color:var(--paper);letter-spacing:.02em;margin-bottom:4px}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:rgba(245,240,232,.55);line-height:1.75}
+.stat-s{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:rgba(245,240,232,.26);margin-top:5px;line-height:1.5}
+
+/* LAYOUT */
+.wrap{max-width:1200px;margin:0 auto;padding:80px 72px}
+.band{padding:88px 72px}
+.band-inner{max-width:1200px;margin:0 auto}
+.hr{border:none;border-top:1px solid rgba(30,30,40,.1)}
+
+/* EYEBROW */
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.eyebrow-n{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;color:var(--mist)}
+.eyebrow-dash{width:24px;height:1px;background:rgba(30,30,40,.2);flex-shrink:0}
+.eyebrow-t{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)}
+.h2{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,50px);font-weight:900;line-height:1.06;letter-spacing:-.01em;margin-bottom:14px}
+.intro{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--slate);max-width:660px;line-height:1.65;margin-bottom:48px}
+
+/* CYCLE */
+.cycle-wrap{display:grid;grid-template-columns:1fr 440px;gap:56px;align-items:center}
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:8px}
+.phase{background:var(--cream);transition:background .22s}
+.phase:hover{background:#fff}
+.phase-bar{height:5px}
+.phase-body{padding:20px 18px 18px}
+.phase-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:7px}
+.phase-name{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;line-height:1;margin-bottom:3px}
+.phase-aka{display:block;font-style:italic;font-family:'Playfair Display',serif;font-size:13px;color:var(--mist);margin-bottom:11px}
+.phase-desc{font-size:13.5px;color:var(--slate);line-height:1.62;margin-bottom:13px}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;padding:2px 8px;border-radius:2px}
+.pi .phase-bar{background:var(--rust-c)}.pi .phase-name{color:var(--rust)}.pi .tag{background:var(--rust-pale);color:var(--rust)}
+.pd .phase-bar{background:var(--gold-c)}.pd .phase-name{color:var(--gold)}.pd .tag{background:var(--gold-pale);color:var(--gold)}
+.px .phase-bar{background:var(--char)}.px .phase-name{color:var(--char)}.px .tag{background:rgba(30,30,40,.07);color:var(--char)}
+.ph .phase-bar{background:var(--teal-c)}.ph .phase-name{color:var(--teal)}.ph .tag{background:var(--teal-pale);color:var(--teal)}
+
+/* STAGES */
+.stage{display:grid;grid-template-columns:72px 1fr}
+.stage-spine{display:flex;flex-direction:column;align-items:center;padding-top:18px;position:relative}
+.stage-spine::after{content:'';position:absolute;top:62px;bottom:0;left:50%;transform:translateX(-50%);width:1px;background:rgba(30,30,40,.1)}
+.stage:last-child .stage-spine::after{display:none}
+.stage-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:18px;flex-shrink:0;z-index:2;position:relative}
+.stage-body{padding:15px 22px 24px;border-left:1px solid rgba(30,30,40,.1);position:relative}
+.stage-body::before{content:'';position:absolute;left:-1px;top:25px;width:17px;height:1px;background:rgba(30,30,40,.1)}
+.stage-n{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.2em;color:var(--mist);margin-bottom:3px}
+.stage-body h3{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;margin-bottom:8px;letter-spacing:-.01em}
+.stage-body p{font-size:14px;color:var(--slate);line-height:1.68;margin-bottom:11px;max-width:640px}
+.spills{display:flex;flex-wrap:wrap;gap:5px}
+.sp{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;padding:3px 9px;border-radius:2px}
+.s1{background:#fff3f0;color:var(--rust-b)}.s2{background:#fdf6e8;color:var(--gold)}
+.s3{background:#edf5f5;color:var(--teal-b)}.s4{background:#f0f0f8;color:var(--char)}
+.s5{background:var(--char);color:var(--paper)}.s6{background:var(--rust-b);color:var(--paper)}.s7{background:var(--night);color:var(--paper)}
+
+/* IR BAND */
+.ir-band{background:var(--gold-pale)}
+.ir-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.ir-body h3{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;margin-bottom:12px}
+.ir-body p{font-size:14px;color:var(--slate);line-height:1.68;margin-bottom:14px}
+.ir-note{background:rgba(255,255,255,.75);border-left:3px solid var(--gold-c);padding:13px 18px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.04em;color:var(--char);line-height:1.72}
+.rr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;width:108px;flex-shrink:0;color:var(--char)}
+.rt{flex:1;height:26px;background:rgba(140,101,32,.1);border-radius:2px;display:flex;align-items:center;padding:3px;gap:2px;overflow:hidden}
+.rs{height:20px;border-radius:1px;flex-shrink:0}
+.rv{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.07em;width:96px;flex-shrink:0;text-align:right;color:var(--slate)}
+
+/* NEURO */
+.neuro-band{background:var(--night);color:var(--paper);position:relative;overflow:hidden}
+.neuro-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 95% 50%,rgba(19,72,72,.35),transparent 60%),radial-gradient(ellipse 35% 45% at 0% 15%,rgba(155,53,37,.18),transparent 55%);pointer-events:none}
+.ph-hdr{display:grid;grid-template-columns:164px repeat(4,1fr);gap:2px;margin-bottom:2px}
+.phc{padding:11px 14px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
+.phc-i{background:rgba(224,85,69,.18);color:#f08878}
+.phc-d{background:rgba(180,133,48,.18);color:#d4a040}
+.phc-x{background:rgba(80,80,100,.15);color:#aaaacc}
+.phc-h{background:rgba(42,128,128,.18);color:#60c0b8}
+.nrow{display:grid;grid-template-columns:164px repeat(4,1fr);gap:2px;margin-bottom:2px}
+.nlab{padding:16px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;justify-content:center}
+.nchem{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;margin-bottom:2px}
+.nrole{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3)}
+.ncell{padding:13px 14px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;gap:7px}
+.nlvl{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.nbar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.nbf{height:100%;border-radius:3px;width:0;transition:width 1.15s var(--ease)}
+.ntxt{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.03em;color:rgba(245,240,232,.38);line-height:1.55}
+.nfoot{margin-top:20px;padding:18px 22px;background:rgba(255,255,255,.04);border-left:2px solid var(--teal-c);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;color:rgba(245,240,232,.38);line-height:1.8}
+
+/* QUOTE */
+.qband{background:var(--rust);color:var(--paper);padding:72px;position:relative;overflow:hidden}
+.qband::before{content:'\201C';position:absolute;font-family:'Playfair Display',serif;font-size:460px;line-height:1;top:-80px;left:-10px;color:rgba(255,255,255,.06);pointer-events:none}
+.qband blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(22px,3vw,38px);line-height:1.42;max-width:840px;position:relative}
+.qband cite{display:block;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,240,232,.45);font-style:normal}
+
+/* TACTICS */
+.tactics{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.tac{background:var(--cream);padding:26px 22px 22px;position:relative;transition:background .22s}
+.tac:hover{background:#fff}
+.tac-bar{position:absolute;top:0;left:0;right:0;height:3px}
+.tac-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:8px}
+.tac h3{font-family:'Playfair Display',serif;font-weight:700;font-size:21px;margin-bottom:8px;letter-spacing:-.01em}
+.tac p{font-size:13.5px;color:var(--slate);line-height:1.63}
+.tac-fx{margin-top:12px;padding:9px 13px;background:rgba(8,8,14,.04);border-left:2px solid var(--bone);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.04em;color:var(--char);line-height:1.58}
+.darvo-box{background:var(--gold-pale);border:1px solid rgba(140,101,32,.2);padding:34px 38px;margin-top:2px}
+.darvo-hdr{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-b);margin-bottom:18px}
+.darvo-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.dletter{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:.04em;line-height:1;opacity:.1;margin-bottom:2px}
+.darvo-cols h4{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;margin-bottom:6px}
+.darvo-cols p{font-size:13.5px;color:var(--slate);line-height:1.6}
+.dq{margin-top:9px;font-style:italic;font-size:13.5px;color:var(--slate);border-left:2px solid var(--bone);padding-left:11px;line-height:1.55}
+
+/* EFFECTS */
+.fx-band{background:var(--teal-pale)}
+.fx-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}
+.fx{background:#fff;padding:28px 24px}
+.fx-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:13px}
+.fx h3{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;color:var(--teal);letter-spacing:-.01em}
+.fx-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--mist);margin-top:2px}
+.fx-badge{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;background:var(--teal-pale);color:var(--teal-b);border-radius:2px;white-space:nowrap;flex-shrink:0}
+.fx p{font-size:13.5px;color:var(--slate);line-height:1.63;margin-bottom:13px}
+.fx-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.fx-list li{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:var(--char);padding:5px 9px;background:var(--teal-pale);display:flex;align-items:center;gap:6px}
+.fx-list li::before{content:'◆';color:var(--teal-c);font-size:6px;flex-shrink:0}
+.fawn-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:2px}
+.fw{background:#fff;padding:22px 14px;text-align:center}
+.fw-icon{font-size:26px;margin-bottom:9px;display:block}
+.fw h4{font-family:'Playfair Display',serif;font-weight:700;font-size:15px;margin-bottom:5px}
+.fw p{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.03em;color:var(--mist);line-height:1.55}
+
+/* ATTACHMENT THEORY BAND */
+.at-band{background:var(--night);color:var(--paper)}
+.at-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:8px}
+.atc{padding:26px 22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.atc h3{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;margin-bottom:8px;line-height:1.2}
+.atc p{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;color:rgba(245,240,232,.42);line-height:1.65}
+.atc-vuln{background:rgba(224,85,69,.12);border:1px solid rgba(224,85,69,.2)}
+.atc-vuln h3{color:var(--rust-c)}
+.atc-note{margin-top:16px;padding:16px 20px;background:rgba(255,255,255,.04);border-left:2px solid var(--teal-c);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;color:rgba(245,240,232,.4);line-height:1.8}
+
+/* BARRIERS */
+.bar-band{background:var(--char);color:var(--paper)}
+.bar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:6px}
+.barc{padding:28px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);text-align:center;transition:background .22s}
+.barc:hover{background:rgba(255,255,255,.08)}
+.barc-ico{font-size:30px;margin-bottom:14px;display:block}
+.barc h3{font-family:'Playfair Display',serif;font-weight:700;font-size:14px;line-height:1.25;margin-bottom:8px;color:var(--paper)}
+.barc p{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.03em;color:rgba(245,240,232,.35);line-height:1.65}
+.bar-note{margin-top:20px;padding:22px 26px;background:rgba(196,69,53,.14);border-left:3px solid var(--rust-b)}
+.bar-note p{font-size:15px;line-height:1.68;color:rgba(245,240,232,.72)}
+.bar-note em{font-style:italic;color:rgba(245,240,232,.48)}
+.bar-stat{margin-top:18px;padding:24px 28px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.bs-n{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:1;color:var(--rust-c);letter-spacing:.02em}
+.bs-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.35);margin-top:3px;line-height:1.7}
+.bs-bars{flex:1;min-width:180px}
+.bs-row{display:flex;gap:3px;align-items:flex-end;height:40px;margin-bottom:5px}
+.bs-seg{flex:1;border-radius:2px 2px 0 0}
+.bs-t{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:rgba(245,240,232,.38);max-width:230px;line-height:1.55}
+
+/* POST-SEP BAND */
+.psep-band{background:var(--rust-pale)}
+.psep-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:8px}
+.psepc{background:#fff;padding:24px 22px}
+.psepc h3{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;margin-bottom:8px;color:var(--rust)}
+.psepc p{font-size:13.5px;color:var(--slate);line-height:1.63}
+.psep-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.psep-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;padding:2px 8px;border-radius:2px;background:var(--rust-pale);color:var(--rust)}
+
+/* RECOVERY */
+.rec-band{background:var(--cream)}
+.rec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:6px}
+.recc{background:#fff;padding:28px 22px;border-top:3px solid var(--teal-c)}
+.rec-n{font-family:'Bebas Neue',sans-serif;font-size:80px;line-height:1;color:var(--teal-pale);margin-bottom:10px;letter-spacing:.02em}
+.recc h3{font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:var(--teal);margin-bottom:9px}
+.recc p{font-size:13px;color:var(--slate);line-height:1.65}
+.rec-extra{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:2px}
+.rext{background:#fff;padding:26px 28px}
+.rext-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-b);margin-bottom:12px}
+.rext h3{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;margin-bottom:10px}
+.rext p{font-size:13.5px;color:var(--slate);line-height:1.63}
+.res-list{list-style:none;margin-top:14px}
+.res-list li{padding:7px 0;border-bottom:1px solid var(--bone);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.res-list li:last-child{border-bottom:none}
+.res-n{font-family:'Playfair Display',serif;font-weight:700;font-size:14px}
+.res-c{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.05em;color:var(--teal-b)}
+
+/* FOOTER */
+footer{background:var(--night);color:rgba(245,240,232,.25);padding:36px 72px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;line-height:2}
+footer strong{color:rgba(245,240,232,.5)}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .wrap,.band{padding:56px 32px}
+  .stats{grid-template-columns:1fr 1fr}.stats .stat:nth-child(2){border-right:none}
+  .cycle-wrap,.ir-grid,.psep-grid,.rec-extra{grid-template-columns:1fr}
+  .phases,.tactics,.bar-grid,.at-grid{grid-template-columns:1fr 1fr}
+  .darvo-cols,.fx-grid{grid-template-columns:1fr}
+  .rec-grid{grid-template-columns:1fr 1fr}
+  .fawn-row{grid-template-columns:1fr 1fr}
+  .ph-hdr,.nrow{grid-template-columns:130px repeat(4,1fr)}
+  .cover-inner{padding:56px 32px 48px}.cover-ring{display:none}
+  footer{padding:32px}
+}
+@media(max-width:620px){
+  .wrap,.band{padding:44px 18px}
+  .stats,.phases,.tactics,.bar-grid,.at-grid{grid-template-columns:1fr}
+  .rec-grid{grid-template-columns:1fr}
+  .ph-hdr,.nrow{grid-template-columns:90px 1fr 1fr}
+  .nrow .ncell:nth-child(4),.nrow .ncell:nth-child(5),.ph-hdr>*:nth-child(4),.ph-hdr>*:nth-child(5){display:none}
+  .qband{padding:44px 20px}
+  footer{padding:24px 18px;flex-direction:column}
+}
+@media print{.nav,.progress-bar{display:none}.up,.stag>*{opacity:1!important;transform:none!important}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="pb"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">Trauma Bonding</div>
+  <a href="#cycle">The Cycle</a>
+  <a href="#stages">7 Stages</a>
+  <a href="#reinforce">Reinforcement</a>
+  <a href="#neuro">Brain Chemistry</a>
+  <a href="#tactics">Tactics</a>
+  <a href="#effects">Effects</a>
+  <a href="#attachment">Attachment</a>
+  <a href="#leaving">Why Leaving</a>
+  <a href="#postsep">Post-Separation</a>
+  <a href="#recovery">Recovery</a>
+</nav>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-mesh"></div>
+  <div class="cover-grain"></div>
+  <svg class="cover-ring" width="300" height="300" viewBox="0 0 300 300" fill="none">
+    <circle cx="150" cy="150" r="138" stroke="rgba(196,69,53,.15)" stroke-width="1"/>
+    <circle cx="150" cy="150" r="112" stroke="rgba(196,69,53,.09)" stroke-width="1"/>
+    <circle cx="150" cy="150" r="84" stroke="rgba(196,69,53,.06)" stroke-width="1"/>
+    <circle cx="150" cy="150" r="54" fill="rgba(196,69,53,.07)" stroke="rgba(196,69,53,.14)" stroke-width="1"/>
+    <text x="150" y="144" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(245,240,232,.3)" letter-spacing="3">CLINICAL</text>
+    <text x="150" y="156" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(245,240,232,.3)" letter-spacing="3">REFERENCE</text>
+    <text x="150" y="169" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(245,240,232,.18)" letter-spacing="3">2026</text>
+    <line x1="150" y1="12" x2="150" y2="24" stroke="rgba(196,69,53,.22)" stroke-width="1"/>
+    <line x1="288" y1="150" x2="276" y2="150" stroke="rgba(196,69,53,.22)" stroke-width="1"/>
+    <line x1="150" y1="288" x2="150" y2="276" stroke="rgba(196,69,53,.22)" stroke-width="1"/>
+    <line x1="12" y1="150" x2="24" y2="150" stroke="rgba(196,69,53,.22)" stroke-width="1"/>
+  </svg>
+  <div class="cover-inner">
+    <div class="cover-kicker up"><div class="kicker-bar"></div><span class="kicker-text">Specialist Reference &middot; Psychology of Abusive Relationships</span></div>
+    <h1 class="up" style="transition-delay:.09s">TRAUMA<br>BONDING<br><span class="dim">&amp; the Narcissistic</span><br><span class="dim">Abuse Cycle</span></h1>
+    <p class="cover-sub up" style="transition-delay:.17s">The architecture of attachment under harm &mdash; cycles, neurochemistry, manipulation tactics, and the path to recovery.</p>
+    <div class="cover-meta up" style="transition-delay:.24s">
+      <div class="cover-meta-item"><strong>10 Sections</strong>Specialist Clinical Coverage</div>
+      <div class="cover-meta-item"><strong>Scope</strong>DSM-5-TR &middot; ICD-11 &middot; Research</div>
+      <div class="cover-meta-item"><strong>Basis</strong>Van der Kolk &middot; Skinner &middot; Wright &middot; Wakefield</div>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats stag">
+  <div class="stat">
+    <div class="stat-n">60M+</div>
+    <div class="stat-l">Americans estimated<br>affected by narcissistic<br>relationships</div>
+    <div class="stat-s">Brown, Institute for Relational Harm Reduction, 2010</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">78%</div>
+    <div class="stat-l">Of abuse survivors develop<br>significant C-PTSD or<br>trauma-related symptoms</div>
+    <div class="stat-s">Authorea Clinical Survey, 2025</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">7&times;</div>
+    <div class="stat-l">Average attempts to leave<br>before a survivor<br>exits permanently</div>
+    <div class="stat-s">National Domestic Violence Research</div>
+  </div>
+  <div class="stat">
+    <div class="stat-n">6.2%</div>
+    <div class="stat-l">Lifetime NPD prevalence<br>in U.S. population<br>(up to 16% in clinical settings)</div>
+    <div class="stat-s">NIH Epidemiologic Survey &middot; n=34,653</div>
+  </div>
+</div>
+
+<!-- 01 CYCLE -->
+<hr class="hr">
+<div class="wrap" id="cycle">
+  <div class="eyebrow up"><span class="eyebrow-n">01</span><div class="eyebrow-dash"></div><span class="eyebrow-t">The Core Cycle</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s">The Narcissistic Abuse Cycle</h2>
+  <p class="intro up" style="transition-delay:.1s">A self-reinforcing loop of four phases that creates and deepens the trauma bond. Each repetition makes departure progressively harder &mdash; not through weakness, but through neurobiological conditioning that mirrors addiction.</p>
+  <div class="cycle-wrap">
+    <div class="phases stag">
+      <div class="phase pi">
+        <div class="phase-bar"></div>
+        <div class="phase-body">
+          <div class="phase-tag">Phase 01</div>
+          <div class="phase-name">Idealize</div>
+          <span class="phase-aka">Love Bombing</span>
+          <p class="phase-desc">The abuser showers the victim with overwhelming love and praise before any danger is visible. Dopamine and oxytocin flood simultaneously &mdash; what the body experiences as euphoria neurochemically identical to genuine love. The attachment system encodes this person as profoundly safe.</p>
+          <div class="tags"><span class="tag">Excessive flattery</span><span class="tag">Gift-giving</span><span class="tag">Future faking</span><span class="tag">Mirroring</span><span class="tag">Fast commitment</span><span class="tag">Soulmate narrative</span></div>
+        </div>
+      </div>
+      <div class="phase pd">
+        <div class="phase-bar"></div>
+        <div class="phase-body">
+          <div class="phase-tag">Phase 02</div>
+          <div class="phase-name">Devalue</div>
+          <span class="phase-aka">Criticism &amp; Control</span>
+          <p class="phase-desc">Approval is gradually or suddenly withdrawn. Criticism, contempt, and unpredictability replace warmth. Cortisol elevates chronically. The victim redoubles efforts to return to the idealization phase, not yet understanding that phase no longer exists for them.</p>
+          <div class="tags"><span class="tag">Constant criticism</span><span class="tag">Gaslighting</span><span class="tag">Silent treatment</span><span class="tag">Triangulation</span><span class="tag">Moving goalposts</span><span class="tag">Public humiliation</span></div>
+        </div>
+      </div>
+      <div class="phase px">
+        <div class="phase-bar"></div>
+        <div class="phase-body">
+          <div class="phase-tag">Phase 03</div>
+          <div class="phase-name">Discard</div>
+          <span class="phase-aka">Abandonment</span>
+          <p class="phase-desc">The abuser withdraws suddenly &mdash; to punish, seek new supply, or regain power. The threat of total loss activates the most primitive survival responses. The victim experiences psychological collapse &mdash; which intensifies the bond rather than breaking it.</p>
+          <div class="tags"><span class="tag">Abrupt withdrawal</span><span class="tag">Smear campaigns</span><span class="tag">Blame reversal</span><span class="tag">Financial abuse</span><span class="tag">Stonewalling</span></div>
+        </div>
+      </div>
+      <div class="phase ph">
+        <div class="phase-bar"></div>
+        <div class="phase-body">
+          <div class="phase-tag">Phase 04</div>
+          <div class="phase-name">Hoover</div>
+          <span class="phase-aka">Re-engagement</span>
+          <p class="phase-desc">Named after the vacuum &mdash; the abuser &ldquo;sucks&rdquo; the victim back. Apologies, promises, and manufactured crises appear just as healing begins. Reconciliation floods endorphins, re-encoding the abuser as the solution to pain they created. The cycle restarts, deeper.</p>
+          <div class="tags"><span class="tag">Apologies &amp; promises</span><span class="tag">Fake emergencies</span><span class="tag">&ldquo;I&rsquo;ve changed&rdquo;</span><span class="tag">Using children</span><span class="tag">Guilt &amp; pity</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="up" style="transition-delay:.2s">
+      <svg viewBox="0 0 400 460" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:440px;display:block;margin:0 auto">
+        <circle cx="200" cy="220" r="162" stroke="rgba(30,30,40,.06)" stroke-width="1" stroke-dasharray="4 7"/>
+        <circle cx="200" cy="220" r="142" stroke="rgba(30,30,40,.04)" stroke-width="1"/>
+        <path d="M200 78 A142 142 0 0 1 342 220" stroke="rgba(224,85,69,.85)" stroke-width="22" stroke-linecap="butt" fill="none"/>
+        <path d="M342 220 A142 142 0 0 1 200 362" stroke="rgba(212,162,72,.85)" stroke-width="22" stroke-linecap="butt" fill="none"/>
+        <path d="M200 362 A142 142 0 0 1 58 220" stroke="rgba(48,48,64,.8)" stroke-width="22" stroke-linecap="butt" fill="none"/>
+        <path d="M58 220 A142 142 0 0 1 200 78" stroke="rgba(42,128,128,.85)" stroke-width="22" stroke-linecap="butt" fill="none"/>
+        <polygon points="342,209 356,220 342,231" fill="rgba(212,162,72,.95)"/>
+        <polygon points="211,362 200,376 189,362" fill="rgba(48,48,64,.9)"/>
+        <polygon points="58,231 44,220 58,209" fill="rgba(42,128,128,.95)"/>
+        <polygon points="189,78 200,64 211,78" fill="rgba(224,85,69,.95)"/>
+        <circle cx="200" cy="220" r="90" fill="#08080e"/>
+        <circle cx="200" cy="220" r="90" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
+        <text x="200" y="206" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(245,240,232,.28)" letter-spacing="3">THE ENGINE</text>
+        <text x="200" y="223" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="16" fill="rgba(245,240,232,.9)" letter-spacing="2">INTERMITTENT</text>
+        <text x="200" y="240" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="16" fill="rgba(245,240,232,.9)" letter-spacing="2">REINFORCEMENT</text>
+        <text x="200" y="257" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(245,240,232,.2)" letter-spacing="2">Skinner, 1957</text>
+        <text x="305" y="101" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="15" letter-spacing="1.5" fill="rgba(224,85,69,.9)">IDEALIZE</text>
+        <text x="305" y="116" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(30,30,40,.4)" letter-spacing="1.5">LOVE BOMBING</text>
+        <line x1="294" y1="120" x2="277" y2="145" stroke="rgba(224,85,69,.25)" stroke-width="1"/>
+        <text x="310" y="334" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="15" letter-spacing="1.5" fill="rgba(180,133,48,.9)">DEVALUE</text>
+        <text x="310" y="349" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(30,30,40,.4)" letter-spacing="1.5">CRITICISM</text>
+        <line x1="297" y1="329" x2="280" y2="308" stroke="rgba(180,133,48,.25)" stroke-width="1"/>
+        <text x="92" y="334" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="15" letter-spacing="1.5" fill="rgba(48,48,64,.85)">DISCARD</text>
+        <text x="92" y="349" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(30,30,40,.4)" letter-spacing="1.5">ABANDON</text>
+        <line x1="103" y1="329" x2="120" y2="308" stroke="rgba(48,48,64,.2)" stroke-width="1"/>
+        <text x="88" y="101" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="15" letter-spacing="1.5" fill="rgba(42,128,128,.9)">HOOVER</text>
+        <text x="88" y="116" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7.5" fill="rgba(30,30,40,.4)" letter-spacing="1.5">RE-ENGAGE</text>
+        <line x1="103" y1="120" x2="120" y2="145" stroke="rgba(42,128,128,.25)" stroke-width="1"/>
+        <text x="200" y="440" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" fill="rgba(30,30,40,.3)" letter-spacing="2">&#x2193;  EACH CYCLE DEEPENS THE BOND  &#x2193;</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- 02 STAGES -->
+<hr class="hr">
+<div class="wrap" id="stages">
+  <div class="eyebrow up"><span class="eyebrow-n">02</span><div class="eyebrow-dash"></div><span class="eyebrow-t">Trauma Bond Formation</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s">The 7 Stages of Trauma Bonding</h2>
+  <p class="intro up" style="transition-delay:.1s">Trauma bonding is not a choice or a character flaw. It forms progressively as the abuser dismantles the victim&rsquo;s self-concept, autonomy, and support &mdash; engineering dependency at every stage.</p>
+  <div class="stag">
+    <div class="stage"><div class="stage-spine"><div class="stage-dot s1">1</div></div><div class="stage-body"><div class="stage-n">Stage One</div><h3>Love Bombing</h3><p>The abuser creates an overwhelming first impression of devotion &mdash; flattery, gifts, declarations of love &mdash; arriving faster than any healthy relationship allows. Dopamine and oxytocin flood simultaneously. The body experiences this as euphoria neurochemically identical to genuine love, forming deep attachment before any danger is visible.</p><div class="spills"><span class="sp s1">Excessive praise</span><span class="sp s1">Fast commitment</span><span class="sp s1">Future faking</span><span class="sp s1">Mirroring</span><span class="sp s1">Intensity</span></div></div></div>
+    <div class="stage"><div class="stage-spine"><div class="stage-dot s2">2</div></div><div class="stage-body"><div class="stage-n">Stage Two</div><h3>Trust &amp; Dependency Building</h3><p>The abuser engineers themselves as the center of the victim&rsquo;s world. Deep vulnerabilities are extracted and will later be weaponized. They position themselves as uniquely understanding &mdash; the only one who truly &ldquo;gets&rdquo; the victim. Financial entanglement and social isolation begin quietly while trust remains complete and unquestioned.</p><div class="spills"><span class="sp s2">Vulnerability extraction</span><span class="sp s2">Isolation begins</span><span class="sp s2">Financial entanglement</span><span class="sp s2">Exclusivity pressure</span></div></div></div>
+    <div class="stage"><div class="stage-spine"><div class="stage-dot s3">3</div></div><div class="stage-body"><div class="stage-n">Stage Three</div><h3>Criticism &amp; Devaluation</h3><p>Subtle criticism begins &mdash; first framed as jokes or concern. Confidence erodes slowly, then rapidly. As self-worth diminishes, the abuser gains power. The victim redoubles efforts to return to the idealization phase, not yet understanding that phase is permanently over. The implicit message becomes: <em>&ldquo;Only I could love someone like you.&rdquo;</em></p><div class="spills"><span class="sp s3">Backhanded compliments</span><span class="sp s3">Public humiliation</span><span class="sp s3">Moving goalposts</span><span class="sp s3">Comparison to others</span></div></div></div>
+    <div class="stage"><div class="stage-spine"><div class="stage-dot s4">4</div></div><div class="stage-body"><div class="stage-n">Stage Four</div><h3>Gaslighting</h3><p>The abuser systematically denies the victim&rsquo;s reality &mdash; perceptions, memories, experiences. Over time the victim loses confidence in their own cognition. Cognitive dissonance develops: the person they fell in love with cannot be the same person doing this. The victim begins to blame themselves for all conflict and question every perception they hold.</p><div class="spills"><span class="sp s4">Reality denial</span><span class="sp s4">Memory revision</span><span class="sp s4">Cognitive dissonance</span><span class="sp s4">Self-blame</span><span class="sp s4">DARVO</span></div></div></div>
+    <div class="stage"><div class="stage-spine"><div class="stage-dot s5">5</div></div><div class="stage-body"><div class="stage-n">Stage Five</div><h3>Emotional Resignation &amp; Exhaustion</h3><p>Chronic hypervigilance &mdash; scanning the abuser&rsquo;s mood, bracing for the next attack &mdash; produces profound fatigue. The capacity to resist, plan, or imagine a different life diminishes. Self-esteem reaches an all-time low. The victim sees no viable exit and may fear for their safety. Major commitments &mdash; marriage, children &mdash; often occur here.</p><div class="spills"><span class="sp s5">Hypervigilance</span><span class="sp s5">Emotional exhaustion</span><span class="sp s5">Learned helplessness</span><span class="sp s5">Fear of escalation</span></div></div></div>
+    <div class="stage"><div class="stage-spine"><div class="stage-dot s6">6</div></div><div class="stage-body"><div class="stage-n">Stage Six</div><h3>Loss of Self</h3><p>Prolonged gaslighting and manipulation produce identity erosion. The victim no longer knows who they are outside the relationship. They have internalized the abuser&rsquo;s narrative about themselves. The social world has been methodically isolated &mdash; friends, family, and outside perspectives removed. The relationship becomes the only remaining reality.</p><div class="spills"><span class="sp s6">Identity erosion</span><span class="sp s6">Complete isolation</span><span class="sp s6">Internalized shame</span><span class="sp s6">Dissociation</span></div></div></div>
+    <div class="stage"><div class="stage-spine"><div class="stage-dot s7">7</div></div><div class="stage-body"><div class="stage-n">Stage Seven</div><h3>The Trauma Bond is Complete</h3><p>Emotional attachment is now neurologically encoded as a survival mechanism. The victim craves the abuser&rsquo;s approval as the body craves oxygen. Even with full cognitive awareness of the abuse, leaving feels like physical withdrawal &mdash; because it is. The brain has wired the abuser as both the source of pain and its only possible relief. This is not weakness. It is the predictable outcome of systematic psychological conditioning.</p><div class="spills"><span class="sp s7">Biochemical dependency</span><span class="sp s7">Compulsive return</span><span class="sp s7">C-PTSD onset</span><span class="sp s7">Survival attachment</span></div></div></div>
+  </div>
+</div>
+
+<!-- 03 INTERMITTENT REINFORCEMENT -->
+<div class="band ir-band" id="reinforce"><div class="band-inner">
+  <div class="eyebrow up"><span class="eyebrow-n" style="color:var(--gold-b)">03</span><div class="eyebrow-dash" style="background:var(--gold-b)"></div><span class="eyebrow-t" style="color:var(--gold-b)">The Engine of Addiction</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s">Intermittent Reinforcement</h2>
+  <p class="intro up" style="transition-delay:.1s">The single most powerful mechanism sustaining a trauma bond. Variable-ratio reward schedules produce the strongest, most resistant behavioral conditioning known to psychology &mdash; and the narcissistic abuse cycle replicates this schedule precisely.</p>
+  <div class="ir-grid">
+    <div class="ir-body up">
+      <h3>The Slot Machine Model</h3>
+      <p>A machine that pays every time produces satisfaction &mdash; not addiction. One that never pays produces disengagement. One that pays <em>unpredictably and occasionally</em> produces the most compulsive, extinction-resistant behavior known to behavioral science.</p>
+      <p>B.F. Skinner (1957) demonstrated that variable-ratio reward schedules produce the strongest behavioral conditioning. The narcissistic cycle replicates this exactly: idealization delivers intense reward; devaluation delivers withdrawal; discard delivers the threat of total loss; hoovering delivers reward again &mdash; restarting the cycle at a deeper level of conditioning each time.</p>
+      <p>The neurological result is a trauma bond &mdash; chemically distinct from healthy love, but subjectively indistinguishable from it to the person experiencing it from within. The relationship feels uniquely intense, uniquely real &mdash; because neurochemically, it is.</p>
+      <div class="ir-note">&ldquo;The highs are intoxicating, the lows unbearable, and the cycle wires itself deep into memory and motivation circuits &mdash; making the relationship feel like a soulmate connection no one else understands.&rdquo;<br><span style="color:var(--mist);font-size:9px;letter-spacing:.1em">&mdash; Two Lights Therapy, 2025</span></div>
+    </div>
+    <div class="up" style="transition-delay:.15s">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-b);margin-bottom:14px">Reward Schedule Comparison</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);display:grid;grid-template-columns:108px 1fr 96px;gap:10px;margin-bottom:8px"><span>Schedule</span><span>Pattern</span><span style="text-align:right">Result</span></div>
+      <div class="rr"><div class="rl">Fixed ratio</div><div class="rt"><div class="rs" style="width:18%;background:var(--teal-c);opacity:.8"></div><div class="rs" style="width:18%;background:var(--teal-c);opacity:.8"></div><div class="rs" style="width:18%;background:var(--teal-c);opacity:.8"></div><div class="rs" style="width:18%;background:var(--teal-c);opacity:.8"></div><div class="rs" style="width:18%;background:var(--teal-c);opacity:.8"></div></div><div class="rv">No addiction</div></div>
+      <div class="rr"><div class="rl">No reward</div><div class="rt"><div class="rs" style="width:100%;background:rgba(30,30,40,.08)"></div></div><div class="rv">Disengages</div></div>
+      <div class="rr"><div class="rl">Variable ratio</div><div class="rt" style="background:rgba(196,69,53,.12)"><div class="rs" style="width:10%;background:rgba(30,30,40,.07)"></div><div class="rs" style="width:6%;background:var(--rust-c);opacity:.9"></div><div class="rs" style="width:16%;background:rgba(30,30,40,.07)"></div><div class="rs" style="width:22%;background:rgba(30,30,40,.07)"></div><div class="rs" style="width:5%;background:var(--rust-c);opacity:.9"></div><div class="rs" style="width:9%;background:rgba(30,30,40,.07)"></div><div class="rs" style="width:27%;background:rgba(30,30,40,.07)"></div><div class="rs" style="width:5%;background:var(--rust-c);opacity:.9"></div></div><div class="rv" style="color:var(--rust-b);font-weight:500">MAX ADDICTION</div></div>
+      <div style="margin-top:22px;padding:18px;background:rgba(255,255,255,.7);border:1px solid rgba(140,101,32,.18)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);margin-bottom:12px">Abuse Cycle &#x2192; Skinner Schedule</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px">
+          <div style="padding:11px 5px;background:var(--rust-pale);text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--rust-b)">IDEALIZE</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--mist);margin-top:4px;line-height:1.5">Intense<br>reward</div></div>
+          <div style="padding:11px 5px;background:var(--gold-pale);text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--gold)">DEVALUE</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--mist);margin-top:4px;line-height:1.5">Withdrawal<br>&amp; punishment</div></div>
+          <div style="padding:11px 5px;background:rgba(30,30,40,.05);text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--char)">DISCARD</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--mist);margin-top:4px;line-height:1.5">Threat of<br>total loss</div></div>
+          <div style="padding:11px 5px;background:var(--teal-pale);text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:.06em;color:var(--teal)">HOOVER</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--mist);margin-top:4px;line-height:1.5">Reward<br>returns</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- 04 NEUROCHEMISTRY -->
+<div class="band neuro-band" id="neuro"><div class="band-inner">
+  <div class="eyebrow up"><span class="eyebrow-n" style="color:var(--teal-c)">04</span><div class="eyebrow-dash" style="background:var(--teal-c)"></div><span class="eyebrow-t" style="color:var(--teal-c)">Brain Chemistry</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s;color:var(--paper)">Neurochemistry Across the Cycle</h2>
+  <p class="intro up" style="transition-delay:.1s;color:rgba(245,240,232,.48)">Leaving a trauma bond feels like withdrawal from a substance because neurobiologically, it is. Six neurochemicals are systematically activated and suppressed across the abuse cycle, creating chemical dependency on the very source of harm.</p>
+  <div class="up" style="transition-delay:.15s" id="ntbl">
+    <div class="ph-hdr">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:11px 14px"><div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;color:rgba(245,240,232,.28);text-transform:uppercase">Chemical</div></div>
+      <div class="phc phc-i">Phase 1<br>Idealize</div>
+      <div class="phc phc-d">Phase 2<br>Devalue</div>
+      <div class="phc phc-x">Phase 3<br>Discard</div>
+      <div class="phc phc-h">Phase 4<br>Hoover</div>
+    </div>
+    <div class="nrow"><div class="nlab"><div class="nchem" style="color:#f09080">Dopamine</div><div class="nrole">Reward &middot; Craving</div></div><div class="ncell"><div class="nlvl" style="color:#f09080">PEAK</div><div class="nbar"><div class="nbf" style="background:#e05545" data-w="95"></div></div><div class="ntxt">Floods during love bombing. Euphoric attachment forms before any evidence of danger exists.</div></div><div class="ncell"><div class="nlvl" style="color:#c07060">CRASH</div><div class="nbar"><div class="nbf" style="background:#b84030;opacity:.5" data-w="28"></div></div><div class="ntxt">Drops sharply. Creates obsessive craving and hypervigilance focused on the abuser&rsquo;s moods.</div></div><div class="ncell"><div class="nlvl" style="color:#906050">DEPLETED</div><div class="nbar"><div class="nbf" style="background:#9b3525;opacity:.3" data-w="10"></div></div><div class="ntxt">Near-zero. Hopelessness and desperate yearning for the abuser&rsquo;s return. Clear thinking impossible.</div></div><div class="ncell"><div class="nlvl" style="color:#e08070">HIGH</div><div class="nbar"><div class="nbf" style="background:#e05545;opacity:.82" data-w="80"></div></div><div class="ntxt">Spikes on reconciliation &mdash; relief from absence encoded as a powerful reward signal.</div></div></div>
+    <div class="nrow"><div class="nlab"><div class="nchem" style="color:#68c0b8">Oxytocin</div><div class="nrole">Bonding &middot; Trust</div></div><div class="ncell"><div class="nlvl" style="color:#68c0b8">PEAK</div><div class="nbar"><div class="nbf" style="background:#2a8080" data-w="92"></div></div><div class="ntxt">Physical intimacy during idealization triggers deep bonding before any warning signs appear.</div></div><div class="ncell"><div class="nlvl" style="color:#48a0a0">LOW</div><div class="nbar"><div class="nbf" style="background:#2a8080;opacity:.3" data-w="28"></div></div><div class="ntxt">Sporadic. Brief reconciliations still release oxytocin, re-bonding the victim to the source of harm.</div></div><div class="ncell"><div class="nlvl" style="color:#387070">ABSENT</div><div class="nbar"><div class="nbf" style="background:#2a8080;opacity:.09" data-w="5"></div></div><div class="ntxt">Withdrawal of connection triggers acute abandonment distress &mdash; physical as well as emotional.</div></div><div class="ncell"><div class="nlvl" style="color:#58b0a8">RETURNS</div><div class="nbar"><div class="nbf" style="background:#2a8080;opacity:.72" data-w="70"></div></div><div class="ntxt">Reconciliation re-releases bonding chemicals even after abuse &mdash; deepening attachment to harm.</div></div></div>
+    <div class="nrow"><div class="nlab"><div class="nchem" style="color:#c8a840">Cortisol</div><div class="nrole">Stress &middot; Threat</div></div><div class="ncell"><div class="nlvl" style="color:#806020">MINIMAL</div><div class="nbar"><div class="nbf" style="background:#b58530;opacity:.18" data-w="10"></div></div><div class="ntxt">Low. System feels safe. No perceived threat to attachment or to survival at this stage.</div></div><div class="ncell"><div class="nlvl" style="color:#c8a840">ELEVATED</div><div class="nbar"><div class="nbf" style="background:#b58530" data-w="75"></div></div><div class="ntxt">Chronic elevation. Hypervigilance and immune suppression begin. Cognitive impairment develops.</div></div><div class="ncell"><div class="nlvl" style="color:#d4a248">PEAK</div><div class="nbar"><div class="nbf" style="background:#b58530;opacity:.95" data-w="96"></div></div><div class="ntxt">Maximum stress response. Sustained high cortisol directly linked to shortened lifespan.</div></div><div class="ncell"><div class="nlvl" style="color:#a08838">DROPPING</div><div class="nbar"><div class="nbf" style="background:#b58530;opacity:.42" data-w="38"></div></div><div class="ntxt">The cortisol drop upon reconciliation is itself encoded as reward &mdash; powerfully reinforcing return.</div></div></div>
+    <div class="nrow"><div class="nlab"><div class="nchem" style="color:#e08070">Adrenaline</div><div class="nrole">Fight / Flight</div></div><div class="ncell"><div class="nlvl" style="color:#806050">MINIMAL</div><div class="nbar"><div class="nbf" style="background:#e05545;opacity:.14" data-w="8"></div></div><div class="ntxt">Essentially absent. Nervous system in positive activation. No perceived threat to survival.</div></div><div class="ncell"><div class="nlvl" style="color:#c06050">HIGH</div><div class="nbar"><div class="nbf" style="background:#e05545;opacity:.78" data-w="76"></div></div><div class="ntxt">Frequent conflict triggers acute stress response. Hyperarousal becomes the nervous system baseline.</div></div><div class="ncell"><div class="nlvl" style="color:#e08070">PEAK</div><div class="nbar"><div class="nbf" style="background:#e05545" data-w="96"></div></div><div class="ntxt">Abandonment activates primitive survival threat response &mdash; the body treats it as life-or-death.</div></div><div class="ncell"><div class="nlvl" style="color:#b06050">DROPPING</div><div class="nbar"><div class="nbf" style="background:#e05545;opacity:.38" data-w="34"></div></div><div class="ntxt">The adrenaline drop on reconciliation feels like profound relief &mdash; encoded as powerfully rewarding.</div></div></div>
+    <div class="nrow"><div class="nlab"><div class="nchem" style="color:#a0a8d8">Serotonin</div><div class="nrole">Mood &middot; Stability</div></div><div class="ncell"><div class="nlvl" style="color:#a0a8d8">NORMAL</div><div class="nbar"><div class="nbf" style="background:#8888c0;opacity:.82" data-w="80"></div></div><div class="ntxt">Adequate. Positive emotional baseline. Good decision-making capacity and impulse control intact.</div></div><div class="ncell"><div class="nlvl" style="color:#707098">DECLINING</div><div class="nbar"><div class="nbf" style="background:#8888c0;opacity:.44" data-w="44"></div></div><div class="ntxt">Progressive suppression. Depression begins. Capacity to plan an exit or imagine change impairs.</div></div><div class="ncell"><div class="nlvl" style="color:#505080">DEPLETED</div><div class="nbar"><div class="nbf" style="background:#8888c0;opacity:.14" data-w="12"></div></div><div class="ntxt">Severe depletion. Profound hopelessness. Exit feels cognitively and emotionally impossible.</div></div><div class="ncell"><div class="nlvl" style="color:#8080b8">PARTIAL</div><div class="nbar"><div class="nbf" style="background:#8888c0;opacity:.58" data-w="54"></div></div><div class="ntxt">A window of improved mood &mdash; exploited by the abuser to re-bond before the window closes.</div></div></div>
+    <div class="nrow"><div class="nlab"><div class="nchem" style="color:#88c088">Endorphins</div><div class="nrole">Pain Relief</div></div><div class="ncell"><div class="nlvl" style="color:#70a070">MODERATE</div><div class="nbar"><div class="nbf" style="background:#90c090;opacity:.52" data-w="52"></div></div><div class="ntxt">Normal social bonding release during affectionate interaction. Baseline positive state.</div></div><div class="ncell"><div class="nlvl" style="color:#508050">LOW</div><div class="nbar"><div class="nbf" style="background:#90c090;opacity:.15" data-w="14"></div></div><div class="ntxt">Minimal. Withdrawal of affection withdraws the endorphin baseline established during idealization.</div></div><div class="ncell"><div class="nlvl" style="color:#406040">ABSENT</div><div class="nbar"><div class="nbf" style="background:#90c090;opacity:.06" data-w="4"></div></div><div class="ntxt">Near-zero. Pure pain state &mdash; physical as well as emotional. The body itself hurts.</div></div><div class="ncell"><div class="nlvl" style="color:#88c088">PEAK</div><div class="nbar"><div class="nbf" style="background:#90c090;opacity:.9" data-w="92"></div></div><div class="ntxt">Contrast effect: after deep pain, reconciliation&rsquo;s relief is disproportionately intense &mdash; more powerful than ordinary love ever felt. This is the hook.</div></div></div>
+  </div>
+  <div class="nfoot up" style="transition-delay:.2s">CLINICAL NOTE &mdash; The dual encoding of the abuser as both pain-source and pain-relief is the central neurobiological mechanism of trauma bonding. The brain equates the abuser with the soothing of distress they themselves create &mdash; a process clinically indistinguishable from substance addiction. Treatment for complex PTSD overlaps substantially with addiction recovery protocols. (Van der Kolk, 2014 &middot; Dutton &amp; Goodman, 2005 &middot; Ferster &amp; Skinner, 1957)</div>
+</div></div>
+
+<!-- PULL QUOTE -->
+<div class="qband">
+  <blockquote class="up">Trauma bonding is not a failure of intelligence or strength. It is the predictable, documented outcome of systematic neurobiological conditioning &mdash; and the appropriate question is never <em>&ldquo;why didn&rsquo;t she leave?&rdquo;</em> but always <em>&ldquo;why did he abuse her?&rdquo;</em></blockquote>
+  <cite class="up" style="transition-delay:.1s">&mdash; Clinical consensus &middot; Relational Trauma Research &middot; Van der Kolk, 2014</cite>
+</div>
+
+<!-- 05 TACTICS -->
+<hr class="hr">
+<div class="wrap" id="tactics">
+  <div class="eyebrow up"><span class="eyebrow-n">05</span><div class="eyebrow-dash"></div><span class="eyebrow-t">The Manipulation Arsenal</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s">Core Abuser Tactics</h2>
+  <p class="intro up" style="transition-delay:.1s">These tools are deployed systematically &mdash; not randomly &mdash; to maintain control, undermine reality, and prevent exit. Recognizing them by name is the beginning of reclaiming one&rsquo;s own perception of what is true.</p>
+  <div class="tactics stag">
+    <div class="tac"><div class="tac-bar" style="background:var(--rust-c)"></div><div class="tac-tag">Tactic 01</div><h3>Gaslighting</h3><p>The abuser causes the victim to question their own memory, perception, and sanity. Facts are denied, events rewritten, reactions framed as evidence of instability. Over time this produces profound self-doubt and dependency on the abuser to define what is real. Most victims develop cognitive dissonance &mdash; holding two irreconcilable truths simultaneously.</p><div class="tac-fx">Victim effect &rarr; Loss of trust in own perception &middot; Confusion &middot; Self-blame &middot; Social withdrawal to avoid explaining the relationship</div></div>
+    <div class="tac"><div class="tac-bar" style="background:var(--gold-c)"></div><div class="tac-tag">Tactic 02</div><h3>DARVO</h3><p><strong>D</strong>eny &middot; <strong>A</strong>ttack &middot; <strong>R</strong>everse <strong>V</strong>ictim and <strong>O</strong>ffender. When confronted, the narcissist denies the behavior occurred, attacks the confronting person&rsquo;s credibility, then claims to be the real victim. The confronter ends up apologizing for raising the original concern &mdash; accountability is completely inverted.</p><div class="tac-fx">Victim effect &rarr; Abandons legitimate grievances &middot; Guilt &middot; Confusion &middot; Walks on eggshells around all future conflict</div></div>
+    <div class="tac"><div class="tac-bar" style="background:var(--teal-c)"></div><div class="tac-tag">Tactic 03</div><h3>Isolation</h3><p>Systematic severing of the victim&rsquo;s support network &mdash; framed initially as jealousy, protectiveness, or preference. As isolation deepens, the abuser&rsquo;s perspective is the only one remaining. Departure becomes practically impossible: no one to call, nowhere to go, profound shame about what others would think after years of absence.</p><div class="tac-fx">Victim effect &rarr; No outside perspective &middot; Financial dependency &middot; Nowhere to go &middot; Shame prevents reconnection</div></div>
+    <div class="tac"><div class="tac-bar" style="background:var(--char)"></div><div class="tac-tag">Tactic 04</div><h3>Triangulation</h3><p>Introducing a third party &mdash; real or implied &mdash; to provoke jealousy, insecurity, and competition. The victim is perpetually competing for approval they will never fully receive, keeping them focused on performing and earning rather than evaluating the relationship itself. The &ldquo;other person&rdquo; may be entirely fabricated.</p><div class="tac-fx">Victim effect &rarr; Chronic jealousy &middot; Anxiety &middot; Fawning behavior &middot; Obsessive monitoring &middot; Reduced self-worth</div></div>
+    <div class="tac"><div class="tac-bar" style="background:var(--rust-b)"></div><div class="tac-tag">Tactic 05</div><h3>Silent Treatment</h3><p>Deliberate, prolonged withdrawal of communication used as punishment. Experienced as emotional abandonment, triggering profound anxiety &mdash; especially in those with prior attachment wounds. The silence ends when the victim has &ldquo;earned&rdquo; a return, cementing the power dynamic and teaching the victim that the abuser controls all emotional access.</p><div class="tac-fx">Victim effect &rarr; Abandonment terror &middot; Desperate people-pleasing &middot; Hypervigilance &middot; Anxiety and dissociation</div></div>
+    <div class="tac"><div class="tac-bar" style="background:var(--slate)"></div><div class="tac-tag">Tactic 06</div><h3>Future Faking</h3><p>Making elaborate promises &mdash; moving, children, changing behaviors &mdash; with no intention of follow-through. These promises delay departure and reinstate hope during reconciliation phases. The future never arrives. Each broken promise is rationalized or forgotten in the next idealization phase, resetting the cycle once more.</p><div class="tac-fx">Victim effect &rarr; Hope that delays departure &middot; Sunk cost investment &middot; Fantasy bonding &middot; Waiting for someone who will never arrive</div></div>
+  </div>
+  <div class="darvo-box up" style="transition-delay:.1s">
+    <div class="darvo-hdr">Spotlight: DARVO in Action &mdash; How Accountability Gets Inverted</div>
+    <div class="darvo-cols stag">
+      <div><div class="dletter">D</div><h4>Deny</h4><p>The abuser categorically denies the incident occurred or rewrites its meaning. The goal is to make the victim doubt whether their memory is accurate at all.</p><div class="dq">&ldquo;That never happened. I never said that. You&rsquo;re making things up &mdash; you always do this.&rdquo;</div></div>
+      <div><div class="dletter">A</div><h4>Attack</h4><p>The confronting person&rsquo;s credibility, mental stability, and motives are attacked. Focus shifts from the abuser&rsquo;s behavior to the victim&rsquo;s perceived flaws.</p><div class="dq">&ldquo;You&rsquo;re paranoid. You&rsquo;re too sensitive. Everyone can see how unstable and irrational you are.&rdquo;</div></div>
+      <div><div class="dletter">RVO</div><h4>Reverse Victim &amp; Offender</h4><p>The abuser positions themselves as the true victim. The original victim ends up apologizing for raising a legitimate concern about being harmed.</p><div class="dq">&ldquo;I can&rsquo;t believe you&rsquo;d accuse me of this. After everything I do for you. I&rsquo;m the one being hurt here.&rdquo;</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 EFFECTS -->
+<div class="band fx-band" id="effects"><div class="band-inner">
+  <div class="eyebrow up"><span class="eyebrow-n" style="color:var(--teal-b)">06</span><div class="eyebrow-dash" style="background:var(--teal-b)"></div><span class="eyebrow-t" style="color:var(--teal-b)">Impact on the Survivor</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s;color:var(--teal)">Psychological &amp; Physical Effects</h2>
+  <p class="intro up" style="transition-delay:.1s;color:var(--slate)">Prolonged narcissistic abuse produces measurable, clinical-level damage across psychological, neurological, and physical health domains &mdash; often persisting long after the relationship ends.</p>
+  <div class="fx-grid stag">
+    <div class="fx"><div class="fx-top"><div><h3>Complex PTSD</h3><div class="fx-sub">C-PTSD &middot; ICD-11</div></div><div class="fx-badge">Primary Diagnosis</div></div><p>Unlike single-incident PTSD, C-PTSD develops from chronic, repeated trauma within a power-imbalanced relationship. Characterized by emotional dysregulation, profoundly negative self-concept, and relational difficulties persisting long after the relationship ends. 78% of abuse survivors show significant trauma-related symptoms.</p><ul class="fx-list"><li>Emotional flashbacks</li><li>Hypervigilance</li><li>Dissociation episodes</li><li>Shame spirals</li><li>Difficulty trusting others</li><li>Negative core self-belief</li></ul></div>
+    <div class="fx"><div class="fx-top"><div><h3>Cognitive Dissonance</h3><div class="fx-sub">Core Psychological Conflict</div></div><div class="fx-badge">Identity Level</div></div><p>The survivor holds two irreconcilable beliefs: &ldquo;This person loves me&rdquo; and &ldquo;This person is hurting me.&rdquo; The mind resolves this by rationalizing abuse, minimizing it, or assigning self-blame &mdash; rather than accepting that someone they love is causing deliberate harm. This is not stupidity. It is psychological survival under extreme confusion.</p><ul class="fx-list"><li>Minimizing abuse</li><li>Defending the abuser</li><li>Self-blame for harm done</li><li>Reality confusion</li><li>Cannot leave despite awareness</li><li>Double-bind thinking</li></ul></div>
+    <div class="fx"><div class="fx-top"><div><h3>Hypervigilance</h3><div class="fx-sub">Nervous System Dysregulation</div></div><div class="fx-badge">Physiological</div></div><p>The nervous system reorganizes around detecting and responding to the abuser&rsquo;s moods as a survival priority. Walking on eggshells becomes a constant neurological state. This hyperarousal eventually generalizes beyond the relationship &mdash; affecting all subsequent environments, relationships, and resting states, often for years after departure.</p><ul class="fx-list"><li>Exaggerated startle response</li><li>Sleep disruption</li><li>Constant threat-scanning</li><li>Chronic physical tension</li><li>Mood monitoring compulsion</li><li>Anticipatory dread</li></ul></div>
+    <div class="fx"><div class="fx-top"><div><h3>Physical Health</h3><div class="fx-sub">Somatic &amp; Medical</div></div><div class="fx-badge">Somatic</div></div><p>Chronic stress hormones produce measurable physical damage. The body keeps the score &mdash; physiological dysregulation is a consistent finding in long-term abuse survivors, even when psychological dimensions are not consciously acknowledged. Sustained high cortisol is directly linked to reduced life expectancy and accelerated cellular aging.</p><ul class="fx-list"><li>Immune system suppression</li><li>Chronic pain syndromes</li><li>Insomnia &amp; fatigue</li><li>Cardiovascular stress</li><li>Autoimmune flares</li><li>GI disorders</li></ul></div>
+  </div>
+  <div style="background:rgba(255,255,255,.75);padding:18px 24px 12px;margin-top:2px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-b);margin-bottom:4px">The Four Trauma Responses in Abusive Relationships</div>
+    <p style="font-size:13.5px;color:var(--slate)"><strong>Fawn</strong> is the dominant trauma response in narcissistic abuse &mdash; and the least recognized or discussed in mainstream psychology.</p>
+  </div>
+  <div class="fawn-row">
+    <div class="fw" style="border-top:3px solid #e07070"><span class="fw-icon">&#x2694;</span><h4>Fight</h4><p>Confronting or arguing. Often triggers escalation and is gradually conditioned out of the victim&rsquo;s behavioral repertoire over time.</p></div>
+    <div class="fw" style="border-top:3px solid #7098d8"><span class="fw-icon">&#x2197;</span><h4>Flight</h4><p>Physical or emotional withdrawal, dissociation, leaving the room. Becomes increasingly constrained as isolation deepens.</p></div>
+    <div class="fw" style="border-top:3px solid #a0a0c8"><span class="fw-icon">&#x2B21;</span><h4>Freeze</h4><p>Paralysis in the face of threat &mdash; inability to respond, speak, or act. Common during severe episodes and intense gaslighting.</p></div>
+    <div class="fw" style="border-top:3px solid var(--rust-c)"><span class="fw-icon">&#x1FAE7;</span><h4>Fawn</h4><p>Appeasement through people-pleasing. Suppressing all personal needs to prevent conflict. Becomes dominant in long-term narcissistic abuse and generalizes to all subsequent relationships.</p></div>
+  </div>
+</div></div>
+
+<!-- 07 ATTACHMENT THEORY -->
+<div class="band at-band" id="attachment"><div class="band-inner">
+  <div class="eyebrow up"><span class="eyebrow-n" style="color:var(--teal-c)">07</span><div class="eyebrow-dash" style="background:var(--teal-c)"></div><span class="eyebrow-t" style="color:var(--teal-c)">Vulnerability Factors</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s;color:var(--paper)">Attachment Theory &amp; Vulnerability</h2>
+  <p class="intro up" style="transition-delay:.1s;color:rgba(245,240,232,.48)">Trauma bonding exploits pre-existing attachment patterns. People with insecure attachment styles &mdash; formed in childhood &mdash; are disproportionately vulnerable to narcissistic targeting and bond formation.</p>
+  <div class="at-grid stag">
+    <div class="atc">
+      <h3 style="color:rgba(245,240,232,.75)">Secure Attachment</h3>
+      <p>Formed when early caregivers were consistently responsive. Individuals tolerate uncertainty without panic, trust their perceptions, and can identify and exit abusive dynamics more readily. Not immune &mdash; but more resourced to recognize and respond to danger signals early.</p>
+    </div>
+    <div class="atc">
+      <h3 style="color:#68c0b8">Anxious Attachment</h3>
+      <p>Formed when caregivers were inconsistently available &mdash; sometimes warm, sometimes absent. Creates hypervigilance to relationship threat and intense fear of abandonment. Love bombing feels like the consistent attunement they always craved. Intermittent reinforcement triggers familiar, deeply conditioned longing patterns.</p>
+    </div>
+    <div class="atc atc-vuln">
+      <h3>Disorganized Attachment</h3>
+      <p>Formed when caregivers were themselves a source of fear or harm. Creates profound confusion: the person who is supposed to be safe IS the threat. This pattern directly mirrors the narcissistic abuse dynamic and creates the highest statistical vulnerability to severe trauma bonding and repeat abusive relationships.</p>
+    </div>
+  </div>
+  <div class="atc-note up" style="transition-delay:.15s">CLINICAL NOTE &mdash; Attachment patterns are not destiny. They are adaptive responses to early environments that can be understood, processed, and shifted through trauma-informed therapeutic work &mdash; particularly Internal Family Systems (IFS), EMDR, and somatic approaches. Understanding one&rsquo;s attachment history is not about assigning blame for being targeted: it is about understanding the psychological terrain the abuser exploited, in order to build resilience and recognition for the future. (Bowlby, 1969 &middot; Ainsworth, 1978 &middot; Hesse &amp; Main, 2000)</div>
+</div></div>
+
+<!-- 08 WHY LEAVING IS HARD -->
+<div class="band bar-band" id="leaving"><div class="band-inner">
+  <div class="eyebrow up"><span class="eyebrow-n" style="color:var(--rust-c)">08</span><div class="eyebrow-dash" style="background:var(--rust-c)"></div><span class="eyebrow-t" style="color:var(--rust-c)">The Exit Barrier</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s;color:var(--paper)">&ldquo;Why Don&rsquo;t You Just Leave?&rdquo;</h2>
+  <p class="intro up" style="transition-delay:.1s;color:rgba(245,240,232,.48)">This question reflects a fundamental misunderstanding of how trauma bonding operates. Departure requires overcoming five interlocking barriers &mdash; each deliberately constructed by the abuser over months or years.</p>
+  <div class="bar-grid stag">
+    <div class="barc"><span class="barc-ico">&#x1F9E0;</span><h3>Neurobiological Dependency</h3><p>Brain chemistry of trauma bonding is physiologically identical to addiction. Departure triggers withdrawal &mdash; anxiety, obsessive thinking, physical pain &mdash; indistinguishable from drug detox. This is not metaphor. It is neuroscience.</p></div>
+    <div class="barc"><span class="barc-ico">&#x1FA9E;</span><h3>Eroded Identity &amp; Self-Worth</h3><p>Years of devaluation produce genuine belief that no one else would want them &mdash; that they deserve this treatment &mdash; that they cannot function alone. The abuser&rsquo;s assessment has been fully internalized as fact.</p></div>
+    <div class="barc"><span class="barc-ico">&#x1F310;</span><h3>Systemic Isolation</h3><p>Friends, family, and support networks have been methodically eliminated. There is nowhere to go, no one to call, and profound shame about what others might think after years of absence from their lives.</p></div>
+    <div class="barc"><span class="barc-ico">&#x1F4B0;</span><h3>Financial Entrapment</h3><p>Economic abuse &mdash; controlling money, sabotaging employment, accumulating debt in the victim&rsquo;s name &mdash; renders financial independence functionally impossible without significant external support.</p></div>
+    <div class="barc"><span class="barc-ico">&#x26A1;</span><h3>Fear of Escalation</h3><p>Research consistently shows the departure period is statistically the most dangerous time for abuse survivors. The fear of escalation upon leaving is not irrational &mdash; it is an accurate read of the available evidence.</p></div>
+  </div>
+  <div class="bar-note up" style="transition-delay:.1s"><p>Remaining in an abusive relationship is not a failure of intelligence, strength, courage, or self-respect. It is the <em>predictable, clinically documented outcome</em> of systematic psychological conditioning &mdash; and often a rational response to a genuinely dangerous situation. The appropriate question is never <em>&ldquo;Why didn&rsquo;t she leave?&rdquo;</em> but always <em>&ldquo;Why did he abuse her?&rdquo;</em></p></div>
+  <div class="bar-stat up" style="transition-delay:.15s">
+    <div><div class="bs-n">7&times;</div><div class="bs-l">average attempts<br>before final exit</div></div>
+    <div class="bs-bars">
+      <div class="bs-row">
+        <div class="bs-seg" style="height:20%;background:rgba(224,85,69,.28)"></div>
+        <div class="bs-seg" style="height:34%;background:rgba(224,85,69,.38)"></div>
+        <div class="bs-seg" style="height:50%;background:rgba(224,85,69,.48)"></div>
+        <div class="bs-seg" style="height:62%;background:rgba(224,85,69,.58)"></div>
+        <div class="bs-seg" style="height:75%;background:rgba(224,85,69,.68)"></div>
+        <div class="bs-seg" style="height:88%;background:rgba(224,85,69,.82)"></div>
+        <div class="bs-seg" style="height:100%;background:var(--teal-c)"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between"><span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(245,240,232,.22);letter-spacing:.05em">Attempt 1</span><span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(245,240,232,.55);letter-spacing:.05em">Final exit &#x2191;</span></div>
+    </div>
+    <div class="bs-t">Each attempt is not failure &mdash; it is the accumulation of resources, support, and courage that make permanent departure possible.</div>
+  </div>
+</div></div>
+
+<!-- 09 POST-SEPARATION ABUSE -->
+<div class="band psep-band" id="postsep"><div class="band-inner">
+  <div class="eyebrow up"><span class="eyebrow-n" style="color:var(--rust-b)">09</span><div class="eyebrow-dash" style="background:var(--rust-b)"></div><span class="eyebrow-t" style="color:var(--rust-b)">After Leaving</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s;color:var(--rust)">Post-Separation Abuse</h2>
+  <p class="intro up" style="transition-delay:.1s;color:var(--slate)">Physical separation does not end narcissistic abuse. For many survivors &mdash; especially those sharing children or financial entanglements &mdash; abuse escalates and transforms after departure. This is among the least recognized dimensions of the experience.</p>
+  <div class="psep-grid stag">
+    <div class="psepc"><h3>Legal System Weaponization</h3><p>The family court system becomes a new arena for control. Relentless litigation, false accusations, custody manipulation, and contempt proceedings are used to drain the survivor financially, keep them perpetually entangled, and use the children as leverage. This is sometimes called &ldquo;litigation abuse&rdquo; or &ldquo;legal abuse.&rdquo;</p><div class="psep-tags"><span class="psep-tag">Custody weaponization</span><span class="psep-tag">Parental alienation</span><span class="psep-tag">False accusations</span><span class="psep-tag">Financial drain</span></div></div>
+    <div class="psepc"><h3>Reputation &amp; Smear Campaigns</h3><p>The abuser moves aggressively to control the narrative, painting themselves as the victim to mutual friends, family, employers, and community. Flying monkeys &mdash; people recruited (often unwittingly) to extend the abuser&rsquo;s reach &mdash; carry messages, gather intelligence, and apply social pressure on the abuser&rsquo;s behalf.</p><div class="psep-tags"><span class="psep-tag">Smear campaigns</span><span class="psep-tag">Flying monkeys</span><span class="psep-tag">Social circle takeover</span><span class="psep-tag">Narrative control</span></div></div>
+    <div class="psepc"><h3>Continued Hoovering Attempts</h3><p>Even after formal separation, hoovering attempts continue &mdash; sometimes for years. These are often timed precisely to moments of vulnerability: new relationships, professional setbacks, illness, grief. Each successful hoover deepens the cycle. The abuser monitors the survivor&rsquo;s life for strategic re-entry opportunities.</p><div class="psep-tags"><span class="psep-tag">Strategic timing</span><span class="psep-tag">Fake crises</span><span class="psep-tag">Children as messengers</span><span class="psep-tag">Surveillance</span></div></div>
+    <div class="psepc"><h3>Financial &amp; Economic Abuse</h3><p>Post-separation economic abuse includes withholding court-ordered support, hiding assets, sabotaging the survivor&rsquo;s employment through harassment of their workplace, refusing to cooperate on shared financial obligations, and deliberately prolonging financial proceedings to maximize cost and stress to the survivor.</p><div class="psep-tags"><span class="psep-tag">Support withholding</span><span class="psep-tag">Asset hiding</span><span class="psep-tag">Employment sabotage</span><span class="psep-tag">Dragged proceedings</span></div></div>
+  </div>
+</div></div>
+
+<!-- 10 RECOVERY -->
+<div class="band rec-band" id="recovery"><div class="band-inner">
+  <div class="eyebrow up"><span class="eyebrow-n" style="color:var(--teal-b)">10</span><div class="eyebrow-dash" style="background:var(--teal-b)"></div><span class="eyebrow-t" style="color:var(--teal-b)">The Path Forward</span></div>
+  <h2 class="h2 up" style="transition-delay:.05s;color:var(--teal)">Breaking the Bond: Recovery</h2>
+  <p class="intro up" style="transition-delay:.1s;color:var(--slate)">Recovery from narcissistic abuse and trauma bonding is nonlinear and requires time, professional support, and compassionate self-understanding. These stages overlap, cycle, and repeat &mdash; and that is entirely normal and expected.</p>
+  <div class="rec-grid stag">
+    <div class="recc"><div class="rec-n">01</div><h3>Safety &amp; Stabilization</h3><p>Physical safety is the prerequisite for everything. Crisis planning, safe housing, legal protection, and financial access. No psychological healing can begin while the threat remains active. External resources, shelter services, and legal representation may all be required at this stage.</p></div>
+    <div class="recc"><div class="rec-n">02</div><h3>Education &amp; Recognition</h3><p>Naming what happened &mdash; narcissistic abuse, trauma bonding, gaslighting &mdash; breaks the abuser&rsquo;s control over the survivor&rsquo;s perception of reality. Understanding the <em>why</em> of the bond reduces shame and self-blame dramatically. Knowledge is the beginning of reclaiming cognition and trusting one&rsquo;s own perceptions.</p></div>
+    <div class="recc"><div class="rec-n">03</div><h3>Trauma-Informed Therapy</h3><p>EMDR, somatic therapy, Internal Family Systems (IFS), and DBT are evidence-based modalities for complex trauma. Not all therapists understand narcissistic abuse &mdash; seeking a specialist in relational and complex trauma is important. The right therapeutic relationship is itself a healing corrective experience.</p></div>
+    <div class="recc"><div class="rec-n">04</div><h3>Identity Reconstruction</h3><p>Reclaiming interests, relationships, values, and a sense of self that exists independently of the abuser&rsquo;s narrative. The longest and ultimately most transformative stage. The self that emerges is often more grounded, self-aware, and compassionate than anything that existed before.</p></div>
+  </div>
+  <div class="rec-extra stag" style="margin-top:2px">
+    <div class="rext">
+      <div class="rext-lbl">Contact Strategies</div>
+      <h3>No Contact &amp; Grey Rock</h3>
+      <p>The trauma bond cannot heal while the abuser maintains access. Each contact restarts the neurochemical cycle. <strong>No Contact</strong> &mdash; complete cessation of all communication where possible &mdash; is the most effective single intervention for allowing the bond to weaken.</p>
+      <p style="margin-top:12px;font-size:13.5px;color:var(--slate)">When no contact is impossible (shared children, legal proceedings), the <strong>Grey Rock Method</strong> provides a practical alternative: become as emotionally uninteresting as possible &mdash; flat, minimal, emotionless responses that provide no emotional supply. The abuser requires reaction to sustain the dynamic; grey rock systematically denies it. Document all interactions in writing wherever possible.</p>
+    </div>
+    <div class="rext">
+      <div class="rext-lbl">Crisis Resources &middot; 24/7 &middot; Confidential</div>
+      <h3>Immediate Support</h3>
+      <p style="font-size:13.5px;color:var(--slate)">If you or someone you know is in a dangerous or abusive situation, these resources provide confidential support around the clock. You do not need to be in immediate danger to reach out.</p>
+      <ul class="res-list">
+        <li><span class="res-n">National DV Hotline</span><span class="res-c">1-800-799-7233</span></li>
+        <li><span class="res-n">Crisis Text Line</span><span class="res-c">Text HOME &rarr; 741741</span></li>
+        <li><span class="res-n">thehotline.org</span><span class="res-c">Online chat &middot; 24/7</span></li>
+        <li><span class="res-n">SAMHSA Helpline</span><span class="res-c">1-800-662-4357</span></li>
+        <li><span class="res-n">loveisrespect.org</span><span class="res-c">Teen &amp; young adult DV</span></li>
+      </ul>
+    </div>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer>
+  <div><strong>Trauma Bonding &amp; Narcissistic Abuse</strong><br>Specialist Clinical Reference Guide &middot; 2026<br>Sources: Van der Kolk (2014) &middot; Ferster &amp; Skinner (1957) &middot; Wright LMFT (2026)<br>Wakefield CTRM&trade; &middot; Dutton &amp; Goodman (2005) &middot; Bowlby (1969) &middot; DSM-5-TR &middot; ICD-11</div>
+  <div style="text-align:right"><strong>For Educational Purposes Only</strong><br>Not a substitute for clinical care<br>Emergency: 911 &middot; DV Hotline: 1-800-799-7233<br>thehotline.org &middot; Text HOME to 741741</div>
+</footer>
+
+<script>
+// Scroll progress bar
+const pb = document.getElementById('pb');
+document.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  if(pb) pb.style.width = Math.min(pct,100) + '%';
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(e => e.forEach(x => {
+  if(x.isIntersecting){ x.target.classList.add('in'); obs.unobserve(x.target); }
+}), {threshold:.07, rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('.up,.stag').forEach(el => obs.observe(el));
+
+// Animate neuro bars
+const barObs = new IntersectionObserver(e => e.forEach(x => {
+  if(x.isIntersecting){
+    x.target.querySelectorAll('.nbf[data-w]').forEach(b => {
+      setTimeout(() => { b.style.width = b.dataset.w + '%'; }, 250);
+    });
+    barObs.unobserve(x.target);
+  }
+}), {threshold:.1});
+const nt = document.getElementById('ntbl');
+if(nt) barObs.observe(nt);
+
+// Trigger already-visible elements on load
+window.addEventListener('load', () => {
+  document.querySelectorAll('.up,.stag').forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+  });
+});
+</script>
+</body>
+</html>

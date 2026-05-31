@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Clear Eyes">
+<meta name="theme-color" content="#080c18">
+<title>Clear Eyes — A Complete Guide to Coercive Control, Trauma Bonding & Recovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#080c18;--ink:#111520;--card:#141828;--border:rgba(255,255,255,.07);
+  --paper:#f5f0e4;--cream:#faf7f0;--mist:rgba(245,240,228,.4);--ghost:rgba(245,240,228,.18);
+  --gold:#c4882a;--gold-b:#e5a340;--gold-pale:rgba(196,136,42,.12);
+  --rose:#8a3040;--rose-b:#b34055;--rose-pale:rgba(138,48,64,.16);
+  --teal:#1a5c5c;--teal-b:#2a9090;--teal-pale:rgba(26,92,92,.18);
+  --green:#2e7d5b;--green-b:#3fa676;--green-pale:rgba(46,125,91,.16);
+  --plum:#5a3a66;--plum-b:#8a5a9c;--plum-pale:rgba(138,90,156,.16);
+  --slate:#7a8090;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%;background:var(--night);scroll-behavior:smooth}
+body{background:var(--night);color:var(--paper);font-family:'Lato',sans-serif;line-height:1.65;overflow-x:hidden;-webkit-touch-callout:none;padding-bottom:max(24px,var(--safe-bot))}
+a{-webkit-tap-highlight-color:transparent;touch-action:manipulation;color:var(--gold-b)}
+button{-webkit-tap-highlight-color:transparent;font-family:inherit}
+input,textarea{font-family:inherit;font-size:16px}
+
+.pb{position:fixed;top:0;left:0;right:0;height:2px;background:var(--gold);width:0%;z-index:400;transition:width .1s linear}
+
+.nav{position:sticky;top:0;z-index:300;background:rgba(8,12,24,.93);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-top:var(--safe-top)}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--gold-b);padding:10px 12px;border-right:1px solid var(--border);flex-shrink:0;white-space:nowrap;font-weight:700}
+.nav a{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ghost);text-decoration:none;padding:10px 10px;white-space:nowrap;flex-shrink:0;transition:color .18s,background .18s}
+.nav a:active{color:var(--gold-b);background:rgba(255,255,255,.05)}
+
+.up{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.up.in{opacity:1;transform:none}
+
+.cover{min-height:80vh;background:var(--night);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 20px;padding-top:calc(28px + var(--safe-top))}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 120% 60% at 78% 12%,rgba(196,136,42,.1),transparent 55%),radial-gradient(ellipse 90% 100% at 8% 85%,rgba(26,92,92,.08),transparent 60%);pointer-events:none}
+.cover-eyebrow{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cover-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold);opacity:.6}
+.cover h1{font-family:'Cormorant Garant',serif;font-size:60px;font-weight:700;line-height:.9;color:var(--paper);letter-spacing:-.02em;margin-bottom:16px}
+.cover h1 em{font-style:italic;color:var(--gold-b)}
+.cover-sub{font-family:'Cormorant Garant',serif;font-style:italic;font-size:18px;color:var(--mist);line-height:1.5;max-width:96%;margin-bottom:18px}
+.cover-rule{width:34px;height:2px;background:var(--gold);margin-bottom:16px;opacity:.7}
+.cover-note{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--ghost);line-height:1.9;text-transform:uppercase}
+.cover-toc{margin-top:20px;display:grid;gap:1px}
+.cover-toc a{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--border);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--mist);text-decoration:none;text-transform:uppercase}
+.cover-toc a:last-child{border-bottom:1px solid var(--border)}
+.cover-toc a .n{color:var(--gold-b);font-weight:700;font-size:9px;min-width:22px}
+.cover-toc a:active{color:var(--gold-b)}
+
+.sec{padding:30px 20px;position:relative}
+.sec+.sec{border-top:1px solid var(--border)}
+.part-head{padding:30px 20px 6px;background:var(--ink);border-top:2px solid var(--gold)}
+.part-head .pt-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-b);margin-bottom:8px}
+.part-head .pt-title{font-family:'Cormorant Garant',serif;font-size:30px;font-weight:700;line-height:1.05;color:var(--paper)}
+.part-head .pt-sub{font-family:'Cormorant Garant',serif;font-style:italic;font-size:15px;color:var(--mist);margin-top:6px;line-height:1.5}
+.eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.eyebrow-n{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--gold);font-weight:700}
+.eyebrow-line{flex:1;height:1px;background:var(--border)}
+.eyebrow-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+h2{font-family:'Cormorant Garant',serif;font-size:33px;font-weight:700;line-height:1.0;letter-spacing:-.01em;margin-bottom:10px;color:var(--paper)}
+h2 em{font-style:italic;color:var(--gold-b)}
+.lead{font-family:'Cormorant Garant',serif;font-style:italic;font-size:16px;color:var(--mist);line-height:1.62;margin-bottom:20px}
+.body{font-size:13.5px;color:rgba(245,240,228,.7);line-height:1.72;margin-bottom:14px}
+.body strong{color:var(--paper);font-weight:700}
+.rule{border:none;border-top:1px solid var(--border);margin:18px 0}
+
+.framing{background:var(--teal-pale);border:1px solid rgba(42,144,144,.3);border-radius:4px;padding:16px 14px;margin-top:18px}
+.framing h4{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-b);margin-bottom:8px}
+.framing p{font-size:13px;color:rgba(245,240,228,.7);line-height:1.66;margin-bottom:8px}
+.framing p:last-child{margin-bottom:0}
+.framing strong{color:var(--paper);font-weight:700}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;background:var(--rose);gap:0}
+.stat{padding:16px 14px;border-right:1px solid rgba(255,255,255,.1)}
+.stat:nth-child(2n){border-right:none}
+.stat:nth-child(3),.stat:nth-child(4){border-top:1px solid rgba(255,255,255,.1)}
+.stat-n{font-family:'Cormorant Garant',serif;font-weight:700;font-size:34px;line-height:1;color:var(--paper);margin-bottom:3px}
+.stat-l{font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,240,228,.5);line-height:1.7}
+.stat-footnotes{padding:14px 20px 4px;background:var(--ink)}
+.stat-footnotes p{font-family:'Space Mono',monospace;font-size:8px;line-height:1.7;color:var(--ghost);letter-spacing:.02em;margin-bottom:8px}
+.stat-footnotes p:last-child{margin-bottom:0}
+
+.phase-stack{display:grid;gap:2px;margin-top:4px}
+.phase{background:var(--card);padding:16px 14px;border-left:3px solid var(--gold);position:relative;overflow:hidden}
+.phase.p2{border-left-color:var(--rose-b)}
+.phase.p3{border-left-color:rgba(245,240,228,.22)}
+.phase.p4{border-left-color:var(--teal-b)}
+.phase-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.18em;color:var(--slate);margin-bottom:5px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.phase-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.phase.p2 .phase-dot{background:var(--rose-b)}
+.phase.p3 .phase-dot{background:rgba(245,240,228,.22)}
+.phase.p4 .phase-dot{background:var(--teal-b)}
+.phase h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:20px;color:var(--paper);margin-bottom:4px;line-height:1.1}
+.phase-aka{font-family:'Cormorant Garant',serif;font-style:italic;font-size:12px;color:var(--slate);margin-bottom:8px;display:block}
+.phase p{font-size:13px;color:rgba(245,240,228,.6);line-height:1.6;margin-bottom:8px}
+.phase-feel{font-family:'Cormorant Garant',serif;font-style:italic;font-size:13px;color:var(--gold-b);padding:8px 10px;background:var(--gold-pale);border-radius:3px;line-height:1.5}
+.phase.p2 .phase-feel{color:var(--rose-b);background:var(--rose-pale)}
+.phase.p3 .phase-feel{color:rgba(245,240,228,.5);background:rgba(255,255,255,.04)}
+.phase.p4 .phase-feel{color:var(--teal-b);background:var(--teal-pale)}
+
+.insight{background:var(--card);border:1px solid var(--border);padding:16px 14px;margin-bottom:2px;border-radius:2px}
+.insight-q{font-family:'Cormorant Garant',serif;font-weight:700;font-size:17px;color:var(--paper);margin-bottom:6px;line-height:1.3}
+.insight-a{font-size:13px;color:rgba(245,240,228,.6);line-height:1.68}
+.insight-a strong{color:var(--gold-b);font-weight:700}
+
+.pull{padding:24px 20px;margin:0 -20px;font-family:'Cormorant Garant',serif;font-style:italic;font-size:20px;line-height:1.48;color:var(--paper)}
+.pull.rose{background:var(--rose)}
+.pull.teal{background:var(--teal)}
+.pull.plum{background:var(--plum)}
+.pull.green{background:var(--green)}
+.pull cite{display:block;margin-top:10px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,228,.45);font-style:normal}
+
+.truth-stack{display:grid;gap:2px;margin-top:4px}
+.truth{background:var(--card);padding:14px;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.truth-n{font-family:'Cormorant Garant',serif;font-size:28px;font-weight:700;line-height:1;padding-top:2px;color:rgba(196,136,42,.4)}
+.truth h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:15px;color:var(--paper);margin-bottom:4px;line-height:1.2}
+.truth p{font-size:12.5px;color:rgba(245,240,228,.55);line-height:1.6}
+
+.warrant{background:var(--gold-pale);border-left:3px solid var(--gold-b);padding:14px;margin-top:14px;border-radius:3px}
+.warrant p{font-family:'Cormorant Garant',serif;font-style:italic;font-size:14.5px;color:var(--paper);line-height:1.6}
+
+.signals{list-style:none;margin-top:8px}
+.signals li{font-size:13px;color:rgba(245,240,228,.62);padding:9px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:16px 1fr;gap:8px;align-items:start;line-height:1.55}
+.signals li:last-child{border-bottom:none}
+.signals li::before{content:'\25C6';font-size:5px;color:var(--gold);padding-top:5px}
+.signals li strong{color:var(--paper);font-weight:700}
+
+/* COMORBIDITY: WEAPON CARDS */
+.weapon-stack{display:grid;gap:2px;margin-top:4px}
+.weapon{background:var(--card);padding:15px 14px;border-left:3px solid var(--plum-b)}
+.weapon .said{font-family:'Cormorant Garant',serif;font-style:italic;font-size:16px;color:var(--plum-b);line-height:1.4;margin-bottom:8px}
+.weapon .said::before{content:'\201C'}
+.weapon .said::after{content:'\201D'}
+.weapon .truth-label{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin-bottom:4px}
+.weapon p{font-size:12.5px;color:rgba(245,240,228,.66);line-height:1.62}
+.weapon p strong{color:var(--paper);font-weight:700}
+
+/* TWO-TRUTHS */
+.twotruths{display:grid;gap:2px;margin-top:6px}
+.tt{background:var(--card);padding:14px;border-radius:3px;border:1px solid var(--border)}
+.tt h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--green-b);margin-bottom:6px;line-height:1.25}
+.tt p{font-size:12.5px;color:rgba(245,240,228,.66);line-height:1.62}
+.tt .amp{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);text-align:center;padding:6px 0}
+
+/* SELF-MED DIAGRAM */
+.loop{background:var(--ink);border:1px solid var(--border);border-radius:6px;padding:18px 16px;margin-top:6px}
+.loop-step{display:flex;align-items:center;gap:12px;padding:7px 0}
+.loop-num{width:26px;height:26px;border-radius:50%;background:var(--plum-pale);color:var(--plum-b);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.loop-step p{font-size:12.5px;color:rgba(245,240,228,.7);line-height:1.5}
+.loop-step p strong{color:var(--paper)}
+.loop-arrow{text-align:center;color:var(--plum-b);font-size:14px;line-height:.6;padding:2px 0 2px 12px}
+.loop-break{margin-top:14px;padding:12px;background:var(--green-pale);border-left:3px solid var(--green-b);border-radius:3px}
+.loop-break p{font-family:'Cormorant Garant',serif;font-style:italic;font-size:14px;color:var(--paper);line-height:1.55}
+
+/* READ-FIRST TRUTH CARD */
+.truthcard{background:linear-gradient(160deg,var(--card),var(--ink));border:1px solid var(--teal-pale);border-radius:6px;padding:22px 18px;margin-top:6px}
+.truthcard p{font-family:'Cormorant Garant',serif;font-size:18px;line-height:1.5;color:var(--paper);margin-bottom:14px}
+.truthcard p:last-child{margin-bottom:0}
+.truthcard em{font-style:italic;color:var(--teal-b)}
+.truthcard .big{font-size:23px;font-weight:700;line-height:1.3}
+
+/* SCREENSHOT CARD */
+.card-shot{background:var(--ink);border:1.5px solid var(--gold);border-radius:8px;padding:20px 18px;margin-top:6px;position:relative}
+.card-shot::before{content:'SCREENSHOT THIS';position:absolute;top:-8px;left:16px;background:var(--night);padding:0 8px;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.16em;color:var(--gold-b)}
+.card-shot h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:20px;color:var(--gold-b);margin-bottom:12px;line-height:1.2}
+.card-shot ol{list-style:none;counter-reset:c}
+.card-shot li{counter-increment:c;font-size:13.5px;color:rgba(245,240,228,.78);line-height:1.5;padding:7px 0 7px 28px;position:relative;border-bottom:1px solid var(--border)}
+.card-shot li:last-child{border-bottom:none}
+.card-shot li::before{content:counter(c);position:absolute;left:0;top:7px;width:18px;height:18px;background:var(--gold-pale);color:var(--gold-b);border-radius:50%;font-family:'Space Mono',monospace;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.card-shot li strong{color:var(--paper)}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin-top:6px}
+.check-item{display:grid;grid-template-columns:24px 1fr;gap:11px;align-items:start;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border:1.5px solid var(--slate);border-radius:5px;margin-top:2px;flex-shrink:0;transition:all .2s var(--ease);position:relative;background:transparent}
+.check-item.checked .check-box{background:var(--rose-b);border-color:var(--rose-b)}
+.check-item.checked .check-box::after{content:'\2713';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.check-text{font-size:13.5px;color:rgba(245,240,228,.72);line-height:1.55}
+.check-text strong{color:var(--paper);font-weight:700;display:block;margin-bottom:2px;font-family:'Cormorant Garant',serif;font-size:15.5px}
+.check-item.checked .check-text{color:var(--mist)}
+.check-tally{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--rose-b);text-transform:uppercase;margin-top:14px;padding:12px;background:var(--rose-pale);border-radius:4px;line-height:1.6;display:none}
+.check-tally.show{display:block}
+
+/* FEELING VS FACT */
+.fvf{display:grid;gap:2px;margin-top:6px}
+.fvf-row{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.fvf-cell{padding:13px 12px;background:var(--card)}
+.fvf-cell.feel{border-left:3px solid var(--rose-b)}
+.fvf-cell.fact{border-left:3px solid var(--teal-b)}
+.fvf-label{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+.fvf-cell.feel .fvf-label{color:var(--rose-b)}
+.fvf-cell.fact .fvf-label{color:var(--teal-b)}
+.fvf-cell p{font-size:12px;color:rgba(245,240,228,.72);line-height:1.5}
+
+/* PROTOCOL */
+.protocol{counter-reset:p;margin-top:6px}
+.p-step{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.p-step:last-child{border-bottom:none}
+.p-num{counter-increment:p;font-family:'Cormorant Garant',serif;font-size:30px;font-weight:700;line-height:1;color:rgba(42,144,144,.4)}
+.p-num::before{content:counter(p)}
+.p-step h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper);margin-bottom:3px;line-height:1.2}
+.p-step p{font-size:12.5px;color:rgba(245,240,228,.6);line-height:1.6}
+
+/* WRITE BLOCKS */
+.write-block{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 14px;margin-top:6px}
+.write-block label{display:block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-b);margin-bottom:8px}
+.write-block textarea{width:100%;min-height:120px;background:var(--ink);border:1px solid var(--border);border-radius:4px;color:var(--paper);padding:12px;line-height:1.6;resize:vertical}
+.write-block textarea::placeholder{color:var(--ghost)}
+.write-hint{font-size:11.5px;color:var(--mist);line-height:1.6;margin-top:10px;font-style:italic;font-family:'Cormorant Garant',serif}
+.save-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.save-btn{background:var(--teal);color:var(--paper);border:none;padding:10px 18px;border-radius:5px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .2s}
+.save-btn:active{background:var(--teal-b)}
+.save-status{font-family:'Space Mono',monospace;font-size:9px;color:var(--green-b);letter-spacing:.06em;opacity:0;transition:opacity .3s}
+.save-status.show{opacity:1}
+.save-warn{font-family:'Space Mono',monospace;font-size:8px;color:var(--gold-b);line-height:1.7;letter-spacing:.03em;margin-top:12px;padding:10px;background:var(--gold-pale);border-radius:4px}
+
+/* SAFETY */
+.safety{background:var(--rose-pale);border:1px solid rgba(179,64,85,.35);border-radius:6px;padding:16px 14px;margin-top:6px}
+.safety h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:17px;color:var(--rose-b);margin-bottom:8px}
+.safety ul{list-style:none}
+.safety li{font-size:13px;color:rgba(245,240,228,.72);line-height:1.55;padding:7px 0 7px 18px;position:relative;border-bottom:1px solid var(--border)}
+.safety li:last-child{border-bottom:none}
+.safety li::before{content:'\25C6';position:absolute;left:0;top:8px;font-size:5px;color:var(--rose-b)}
+.safety li strong{color:var(--paper);font-weight:700}
+
+/* RESOURCES */
+.resources{background:var(--ink);border:1px solid var(--border);padding:16px 14px;margin-top:6px;border-radius:6px}
+.resources h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--green-b);margin-bottom:12px}
+.res-list{list-style:none;font-size:12.5px}
+.res-list li{padding:9px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.res-list li:last-child{border-bottom:none}
+.res-n{color:var(--paper);font-weight:700;font-size:13px}
+.res-c{font-family:'Space Mono',monospace;font-size:9px;color:var(--green-b);letter-spacing:.03em;text-align:right;white-space:nowrap}
+.res-sub{font-family:'Space Mono',monospace;font-size:8px;color:var(--slate);display:block;margin-top:2px;letter-spacing:.02em}
+
+.closing{text-align:center;padding:36px 20px;border-top:1px solid var(--border)}
+.closing p{font-family:'Cormorant Garant',serif;font-style:italic;font-size:22px;line-height:1.45;color:var(--paper);margin-bottom:10px}
+.closing .small{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-style:normal;line-height:1.8}
+
+footer{background:var(--ink);border-top:1px solid var(--border);padding:20px;padding-bottom:max(20px,var(--safe-bot));font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.07em;color:var(--ghost);line-height:1.9}
+footer strong{color:rgba(245,240,228,.4);font-weight:700}
+footer em{color:var(--mist);font-style:italic}
+
+@media print{.nav,.pb{display:none}body{background:#fff;color:#000}.up{opacity:1;transform:none}}
+
+.companions{background:var(--night);border-top:1px solid var(--border);padding:24px 20px;padding-bottom:24px}
+.companions h4{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin-bottom:14px}
+.comp-grid{display:grid;gap:8px}
+.comp-link{display:flex;align-items:baseline;gap:10px;padding:11px 13px;border:1px solid var(--border);border-radius:6px;text-decoration:none;background:var(--card);transition:border-color .2s}
+.comp-link:active{border-color:var(--teal-b)}
+.comp-link .cl-name{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper)}
+.comp-link .cl-desc{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.04em;color:var(--mist);text-transform:uppercase}
+.comp-link.current{background:var(--ink);border-style:dashed;pointer-events:none}
+.comp-link.current .cl-name{color:var(--teal-b)}
+.comp-link.current .cl-desc::after{content:' \2022 you are here';color:var(--teal-b)}
+</style>
+</head>
+<body>
+
+<div class="pb" id="pb"></div>
+
+<nav class="nav">
+  <div class="nav-logo">CLEAR EYES</div>
+  <a href="#cycle">The Cycle</a>
+  <a href="#engine">Why</a>
+  <a href="#blame">Blame &amp; Addiction</a>
+  <a href="#weaponized">Weaponized</a>
+  <a href="#loop">The Loop</a>
+  <a href="#leaving">Leaving</a>
+  <a href="#first">When Pull Comes</a>
+  <a href="#card">The Card</a>
+  <a href="#hoover">Is It Happening</a>
+  <a href="#reasons">My Reasons</a>
+  <a href="#protocol">If Contacted</a>
+  <a href="#safety">Safety</a>
+  <a href="#people">My People</a>
+</nav>
+
+<header class="cover">
+  <div class="cover-eyebrow">A complete companion</div>
+  <h1>CLEAR<br><em>EYES</em></h1>
+  <div class="cover-rule"></div>
+  <p class="cover-sub">Understanding coercive control and trauma bonding &mdash; and finding your way out and staying out &mdash; even when the blame has landed on you.</p>
+  <div class="cover-note">Understand · Recognise · Leave · Stay · 2026</div>
+  <nav class="cover-toc">
+    <a href="#part-understand"><span class="n">I</span><span>Understanding what happened</span></a>
+    <a href="#part-blame"><span class="n">II</span><span>The blame, guilt &amp; your own struggles</span></a>
+    <a href="#part-leave"><span class="n">III</span><span>Leaving &amp; staying gone</span></a>
+    <a href="#part-help"><span class="n">IV</span><span>Safety, your people &amp; help</span></a>
+  </nav>
+</header>
+
+<!-- ============ PART I ============ -->
+<div class="part-head" id="part-understand">
+  <div class="pt-label">Part One</div>
+  <div class="pt-title">Understanding What Happened</div>
+  <div class="pt-sub">You can't trust-fall out of a trap you can't see. First, the shape of it.</div>
+</div>
+
+<div class="stats up">
+  <div class="stat"><div class="stat-n">~7&times;</div><div class="stat-l">Commonly cited attempts to leave before final exit*</div></div>
+  <div class="stat"><div class="stat-n">0.5&ndash;6%</div><div class="stat-l">Estimated NPD prevalence range, US adults**</div></div>
+  <div class="stat"><div class="stat-n">43%</div><div class="stat-l">Of female survivors report substance-use coercion***</div></div>
+  <div class="stat"><div class="stat-n">0</div><div class="stat-l">Times it was your fault</div></div>
+</div>
+<div class="stat-footnotes up">
+  <p>* The "seven times" figure is widely repeated by advocacy organisations (helpline-collated data, not a peer-reviewed study); some cite eight. Treat it as illustrative &mdash; the point is that leaving is rarely one clean event.</p>
+  <p>** Estimates vary by study and method. The often-quoted 6.2% is the high end (one large 2008 survey, broad criteria); DSM-5-TR and most clinical sources estimate lower (~0.5&ndash;5%).</p>
+  <p>*** National Center on Domestic Violence, Trauma &amp; Mental Health (Warshaw et al., 2014): 43% of surveyed female survivors said a partner coerced them through substance use.</p>
+</div>
+
+<section class="sec" id="cycle">
+  <div class="eyebrow up"><span class="eyebrow-n">01</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The four phases</span></div>
+  <h2 class="up" style="transition-delay:.05s">The <em>Cycle</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Four phases, repeating. Each turn tightens the bond and makes the last one feel further away than it was.</p>
+
+  <div class="framing up" style="transition-delay:.1s">
+    <h4>A note on language before we begin</h4>
+    <p>This guide uses words like "narcissistic abuse" because that's how many people first find their experience named &mdash; and being named matters. But know this: <strong>"narcissistic abuse" is not a clinical diagnosis</strong>, and most people who abuse do not have a diagnosable personality disorder. Abuse is a <strong>pattern of coercive control</strong> &mdash; a series of choices &mdash; not a medical condition.</p>
+    <p>Which means: <strong>you don't need to diagnose anyone to recognise harm and act on it.</strong></p>
+  </div>
+
+  <div class="phase-stack up" style="transition-delay:.12s">
+    <div class="phase p1">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 1</div>
+      <h3>Idealize</h3><span class="phase-aka">Love Bombing</span>
+      <p>Overwhelming affection and praise. They reflect your best qualities back at you &mdash; you feel profoundly seen. That feeling is real. What isn't real is that they caused it; you were, in part, falling for your own goodness reflected back.</p>
+      <div class="phase-feel">"I've never felt this understood." &mdash; You're experiencing your own light shown back to you.</div>
+    </div>
+    <div class="phase p2">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 2</div>
+      <h3>Devalue</h3><span class="phase-aka">Criticism, cold, contempt</span>
+      <p>Warmth is withdrawn without warning. Criticism begins, then escalates. You start asking what you did wrong. The answer is nothing &mdash; but the question itself is the point. You're now doing double work: managing your pain and theirs.</p>
+      <div class="phase-feel">"What did I do? I've been trying so hard." &mdash; The confusion is the mechanism, not a side effect.</div>
+    </div>
+    <div class="phase p3">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 3</div>
+      <h3>Discard</h3><span class="phase-aka">Withdrawal, abandonment</span>
+      <p>They leave, go silent, or threaten to. The threat of abandonment fires your deepest survival wiring &mdash; the brain treats it like physical danger. Not weakness: neurobiology doing exactly what it evolved to do.</p>
+      <div class="phase-feel">"I can't breathe without them." &mdash; What feels like love here is a nervous system in alarm.</div>
+    </div>
+    <div class="phase p4">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 4</div>
+      <h3>Hoover</h3><span class="phase-aka">The return</span>
+      <p>They come back &mdash; apologies, promises, the person you first met. Relief floods you &mdash; dopamine (reward), oxytocin (bonding), and cortisol (stress dropping) shift at once. Researchers describe this as activating the same neurobiological systems (reward, affiliation, stress regulation) that are disrupted in substance dependence. The cycle restarts, deeper &mdash; the intermittency itself strengthens the bond each time (Dutton &amp; Painter, 1993).</p>
+      <div class="phase-feel">"This is the real them. It'll be different now." &mdash; It felt exactly like this last time, too.</div>
+    </div>
+  </div>
+
+  <div class="warrant up" style="transition-delay:.18s"><p>The cycle isn't random. Each phase has a function. Research identifies <strong>two necessary conditions</strong> for trauma bonding: a <strong>power imbalance</strong> (financial, social, emotional, or physical control) and <strong>intermittent reinforcement</strong> (the unpredictable alternation of warmth and harm). Both must be present. Together they build a dependency that overlaps with the brain's reward, bonding, and stress systems &mdash; which is why logic alone rarely breaks it. (Dutton &amp; Painter, 1981, 1993)</p></div>
+</section>
+
+<section class="sec" id="engine">
+  <div class="eyebrow up"><span class="eyebrow-n">02</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The engine</span></div>
+  <h2 class="up" style="transition-delay:.05s">Why It <em>Happens</em></h2>
+  <p class="lead up" style="transition-delay:.08s">When the pattern fits this picture, the cruelty has a source. Understanding it doesn't excuse it &mdash; it removes you from the centre of it.</p>
+  <div class="framing up" style="transition-delay:.1s">
+    <h4>One explanation, not the only one</h4>
+    <p>The "self-hatred behind the mask" picture below comes from psychodynamic theory and fits some abusive people well, especially those with strong narcissistic traits. <strong>It's a useful lens, not a settled fact, and doesn't describe everyone.</strong> Some who harm feel little inner conflict at all. Either way, the cause lives in them, not in you.</p>
+  </div>
+  <div class="up" style="transition-delay:.12s">
+    <div class="insight"><div class="insight-q">Why are they so cruel?</div><div class="insight-a">In the <em>vulnerable</em> narcissism pattern, empirical research confirms shame mediates the link between narcissistic vulnerability and aggression &mdash; the person cannot hold self-hatred inward and directs it outward. In the <em>grandiose</em> pattern, cruelty can be more deliberate and less shame-driven. Either way: <strong>the cruelty originates in them, and was never earned by you.</strong></div></div>
+    <div class="insight"><div class="insight-q">Why build you up, then tear you down?</div><div class="insight-a">When you reflect their idealised self, they're warm. When you start showing them something true, they can't bear it. <strong>They attack the mirror, not the woman.</strong></div></div>
+    <div class="insight"><div class="insight-q">Why do they keep coming back?</div><div class="insight-a">Often not for you, but for what you provide: validation that quiets the self-hatred, a reflection they can control. <strong>They come back for the supply, and may not know the difference.</strong></div></div>
+    <div class="insight"><div class="insight-q">Why is nothing you do ever enough?</div><div class="insight-a">Because the problem was never your performance. It lives inside them, and predates you. <strong>You were never the cause, and could never be the cure.</strong></div></div>
+  </div>
+</section>
+
+<!-- ============ PART II ============ -->
+<div class="part-head" id="part-blame">
+  <div class="pt-label">Part Two</div>
+  <div class="pt-title">The Blame, The Guilt &amp; Your Own Struggles</div>
+  <div class="pt-sub">If you've been told you're the real problem &mdash; the drinker, the unstable one, the reason it all happens &mdash; this part is for you.</div>
+</div>
+
+<section class="sec" id="blame">
+  <div class="eyebrow up"><span class="eyebrow-n">03</span><div class="eyebrow-line"></div><span class="eyebrow-tag">"But maybe I really am the problem"</span></div>
+  <h2 class="up" style="transition-delay:.05s">When You're Carrying <em>Your Own Struggles</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Drinking. Using. Depression. Anger that scares you. Memory that won't hold. If you have struggles of your own, you may have been told they are the reason for everything. Let's look at that honestly &mdash; and fairly.</p>
+
+  <div class="body up" style="transition-delay:.1s">
+    <p>Here is the truth that abuse makes almost impossible to hold: <strong>two things can be real at the same time.</strong> You can have a genuine problem with alcohol or drugs &mdash; one that deserves real care &mdash; <em>and</em> be the target of abuse that you did nothing to earn. Neither one cancels the other. Neither one is permission for the other.</p>
+    <p>An abusive partner needs you to believe these two facts are the same fact. They need "you drink" to mean "so this is your fault." It does not. <strong>A drinking problem is something to heal. It is never a reason to be controlled, frightened, or harmed.</strong></p>
+  </div>
+
+  <div class="twotruths up" style="transition-delay:.12s">
+    <div class="tt"><h3>True: you may have a real problem</h3><p>Your substance use, your depression, your reactions &mdash; these can be real and worth addressing with honest, compassionate help. Naming them isn't agreeing with your abuser; it's taking your own life back.</p></div>
+    <div class="tt"><div class="amp">&mdash; and at the same time &mdash;</div></div>
+    <div class="tt"><h3>True: it does not justify the abuse</h3><p>Nothing about your struggles makes you deserve fear, control, or harm. There is no amount of drinking that earns abuse. The harm was a choice someone else made &mdash; every single time.</p></div>
+  </div>
+
+  <div class="warrant up" style="transition-delay:.16s"><p>"I wasn't a perfect partner" is true of every human being alive. It is not the same as "I caused the abuse." Hold the first with honesty. Put the second down &mdash; it was never yours.</p></div>
+</section>
+
+<div class="pull plum up">They didn't hurt you because you drank. Many people drink and are never harmed for it. They hurt you because they chose to &mdash; and your struggle just gave them a story that let them keep choosing it.</div>
+
+<section class="sec" id="weaponized">
+  <div class="eyebrow up"><span class="eyebrow-n">04</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Substance-use coercion &amp; DARVO</span></div>
+  <h2 class="up" style="transition-delay:.05s">How Your Struggle Gets <em>Weaponized</em></h2>
+  <p class="lead up" style="transition-delay:.08s">This has a name. Researchers call it "substance-use coercion" &mdash; a recognised tactic of control. Once you see the moves, they lose some of their grip. Here's what it sounds like, and what's really happening underneath.</p>
+
+  <div class="weapon-stack up" style="transition-delay:.12s">
+    <div class="weapon">
+      <div class="said">You're a drunk &mdash; no one will ever believe you.</div>
+      <div class="truth-label">What's really happening</div>
+      <p>This is about <strong>credibility</strong>. By making your struggle the headline, they make sure that if you ever reach out &mdash; to police, family, a court &mdash; your word can be dismissed. Undermining your believability is a documented control tactic, not an accident.</p>
+    </div>
+    <div class="weapon">
+      <div class="said">Look what you made me do. If you weren't like this, I wouldn't have to.</div>
+      <div class="truth-label">What's really happening</div>
+      <p>This is <strong>DARVO</strong> &mdash; Deny, Attack, Reverse Victim &amp; Offender. They deny the harm, attack your stability, and flip the roles so you become the offender. Research links DARVO directly to increased self-blame in the person being harmed. The guilt you feel is the tactic <em>working</em>, not evidence that it's deserved.</p>
+    </div>
+    <div class="weapon">
+      <div class="said">Here, have another. Let's just drink and forget the fight.</div>
+      <div class="truth-label">What's really happening</div>
+      <p>Encouraging or pushing your use keeps you <strong>easier to control</strong> &mdash; less able to plan, remember clearly, or leave. Studies report that a majority of abusers actively discourage or sabotage attempts to get sober, because your dependence serves them.</p>
+    </div>
+    <div class="weapon">
+      <div class="said">You don't even remember what happened. You're making it up.</div>
+      <div class="truth-label">What's really happening</div>
+      <p>If substances or trauma have affected your memory, that gap becomes a weapon &mdash; a place to insert their version of reality. This is gaslighting aimed at the seam where you're most vulnerable. <strong>A shaky memory of an event does not mean the harm didn't happen.</strong></p>
+    </div>
+    <div class="weapon">
+      <div class="said">I'll tell them you're an unfit mother. They'll take the kids.</div>
+      <div class="truth-label">What's really happening</div>
+      <p>Threats to use your struggle against you in custody or with authorities are a way to <strong>trap you in place</strong>. They are frightening precisely because they hold a grain of plausibility &mdash; which is what makes documentation and an advocate so important (see Part Four).</p>
+    </div>
+  </div>
+
+  <div class="framing up" style="transition-delay:.16s">
+    <h4>If you ever lashed back</h4>
+    <p>Many people who are cornered eventually shout, throw something, or hit back &mdash; and are then told <em>they</em> are the abuser. Clinicians increasingly call this a <strong>reactive defence</strong>, not abuse: a survival response to sustained provocation. It can feel like proof you're "just as bad." It isn't. A single defensive reaction inside a long pattern of control is not the same as the pattern itself.</p>
+  </div>
+</section>
+
+<section class="sec" id="loop">
+  <div class="eyebrow up"><span class="eyebrow-n">05</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Why the drinking grew</span></div>
+  <h2 class="up" style="transition-delay:.05s">The Pain Loop &mdash; and <em>How It Breaks</em></h2>
+  <p class="lead up" style="transition-delay:.08s">If your use got worse during the relationship, there's a reason that has nothing to do with weakness. It's one of the most studied patterns in trauma psychology: the self-medication loop.</p>
+
+  <div class="loop up" style="transition-delay:.12s">
+    <div class="loop-step"><div class="loop-num">1</div><p><strong>The harm</strong> &mdash; fear, humiliation, chronic stress with no safe outlet.</p></div>
+    <div class="loop-arrow">&darr;</div>
+    <div class="loop-step"><div class="loop-num">2</div><p><strong>The numbing</strong> &mdash; a drink quiets the alarm. For a moment, you can breathe. (Research calls this self-medication; trauma usually comes <em>first</em>, the substance after.)</p></div>
+    <div class="loop-arrow">&darr;</div>
+    <div class="loop-step"><div class="loop-num">3</div><p><strong>The blame</strong> &mdash; "See? You're the drunk. This is you." The use becomes their evidence, and your shame.</p></div>
+    <div class="loop-arrow">&darr;</div>
+    <div class="loop-step"><div class="loop-num">4</div><p><strong>More harm, more shame</strong> &mdash; which makes the next drink make more sense. The loop tightens.</p></div>
+  </div>
+
+  <div class="loop-break up" style="transition-delay:.16s">
+    <p>Here's the hopeful part the shame hides from you: because the trauma and the substance are <em>linked</em>, treating them together works. The current standard of care is <strong>integrated, trauma-informed treatment</strong> &mdash; addressing the pain and the substance use as one connected thing, not two separate failures. You don't have to "get clean first to deserve help with the abuse," or vice versa. Both, together, is the path that the evidence supports.</p>
+  </div>
+
+  <div class="warrant up" style="transition-delay:.2s"><p>You are not a bad person with a drinking problem. You may be a hurt person who found the only relief that was available. That reframe isn't an excuse &mdash; it's the doorway to the right kind of help.</p></div>
+</section>
+
+<div class="pull green up">Getting honest about your own struggles and refusing to carry the blame for someone else's cruelty are not opposites. They're the same act of self-respect.</div>
+
+<!-- ============ PART III ============ -->
+<div class="part-head" id="part-leave">
+  <div class="pt-label">Part Three</div>
+  <div class="pt-title">Leaving &amp; Staying Gone</div>
+  <div class="pt-sub">Knowing the cycle isn't enough &mdash; because when the pull comes, clarity vanishes. This part is for that moment.</div>
+</div>
+
+<section class="sec" id="first">
+  <div class="eyebrow up"><span class="eyebrow-n">06</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Before anything else</span></div>
+  <h2 class="up" style="transition-delay:.05s">When The Pull <em>Comes Back</em></h2>
+  <p class="lead up" style="transition-delay:.08s">You're reading this because a clear-headed version of you knew a foggy version might return. Listen to the clear one.</p>
+  <div class="truthcard up" style="transition-delay:.12s">
+    <p class="big">If you feel the pull to go back &mdash; stop here and breathe.</p>
+    <p>The pull is <em>real</em>. But real is not the same as <em>true</em>. Research on traumatic bonding identifies two conditions that created this pull: a <strong>power imbalance</strong> that narrowed your options, and <strong>intermittent reinforcement</strong> that trained your nervous system to chase relief from the same source as the pain. What feels like love right now is often those two things working as designed.</p>
+    <p>You did not leave because you were confused. <strong>You're confused now because you left.</strong> That's the cycle working as designed &mdash; not proof you were wrong.</p>
+    <p>You don't have to decide anything this moment. <em>You just have to not act yet.</em> Read on. Then wait.</p>
+  </div>
+</section>
+
+<section class="sec" id="card">
+  <div class="eyebrow up"><span class="eyebrow-n">07</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Keep this where you'll find it</span></div>
+  <h2 class="up" style="transition-delay:.05s">The <em>Card</em></h2>
+  <p class="lead up" style="transition-delay:.08s">If you only have ten seconds, keep this. Screenshot it. Tape it inside a cabinet.</p>
+  <div class="card-shot up" style="transition-delay:.12s">
+    <h3>When the pull comes, before I respond:</h3>
+    <ol>
+      <li>I won't reply for at least <strong>48 hours</strong>. Nothing real falls apart in 48 hours.</li>
+      <li>I'll contact <strong>one safe person</strong> before I contact them.</li>
+      <li>I'll re-read my own reasons for leaving (below).</li>
+      <li>I'll remember the warmth always came back &mdash; right before it vanished again.</li>
+      <li>This feeling passes whether or not I go back. Going back is the only choice that can't be undone.</li>
+      <li>My drinking (or struggle) is not a reason to return. Their story about it was never the truth.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="hoover">
+  <div class="eyebrow up"><span class="eyebrow-n">08</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The return &mdash; "hoovering"</span></div>
+  <h2 class="up" style="transition-delay:.05s">Is It <em>Happening Again?</em></h2>
+  <p class="lead up" style="transition-delay:.08s">The pull back in rarely looks like danger. It looks like hope. Tap each one that's happening &mdash; seeing them counted can cut the fog.</p>
+  <ul class="checklist up" style="transition-delay:.12s" id="hooverlist">
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>A sweeping apology</strong>The words you always wanted &mdash; with no real change behind them.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>"I've changed / I'm getting help now"</strong>Possible &mdash; some people do change through sustained voluntary work. Real change shows up over months to years of action, not in a message sent the week you left. The warmth right now is Phase 1 again, not evidence of change.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>A sudden crisis</strong>They're sick, in trouble, "only you can help." Manufactured need pulls on your compassion.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>"Remember when"</strong>Flooding you with Phase 1 memories &mdash; the version of them that rarely stayed.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Messages through other people</strong>Friends, family, or your children carrying word that they "miss you."</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Perfect timing</strong>Contact landing on a holiday, anniversary, or a hard day they know about.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Using your struggle as a hook</strong>"You'll relapse without me." "You can't cope alone." Turning your vulnerability into a reason to return.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Pity, threats, or guilt</strong>"I can't live without you." "Look what you're doing to me." Different tactics, same goal: reopen the door.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Love-bombing, round two</strong>Gifts, intensity, the very beginning again. It felt like that the first time too.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Showing up uninvited</strong>At your door, work, your usual places. (If this frightens you, go to Safety.)</div></li>
+  </ul>
+  <div class="check-tally" id="tally"></div>
+</section>
+
+<section class="sec" id="feeling">
+  <div class="eyebrow up"><span class="eyebrow-n">09</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Naming the fog</span></div>
+  <h2 class="up" style="transition-delay:.05s">The Feeling Is Not <em>The Fact</em></h2>
+  <p class="lead up" style="transition-delay:.08s">When the longing hits, your mind hands you an explanation pointing back toward them. Here's what's usually on the other side.</p>
+  <div class="fvf up" style="transition-delay:.12s">
+    <div class="fvf-row"><div class="fvf-cell feel"><div class="fvf-label">Feels like</div><p>"I miss them so much it hurts. That must mean it was love."</p></div><div class="fvf-cell fact"><div class="fvf-label">Likely true</div><p>Missing someone and being safe with them are different things. Withdrawal hurts. The ache is real; it isn't evidence.</p></div></div>
+    <div class="fvf-row"><div class="fvf-cell feel"><div class="fvf-label">Feels like</div><p>"Maybe I overreacted. Maybe it wasn't that bad."</p></div><div class="fvf-cell fact"><div class="fvf-label">Likely true</div><p>Minimising is how you survived. Distance is letting the fog clear &mdash; not exaggerating. Trust what you knew when you were clear.</p></div></div>
+    <div class="fvf-row"><div class="fvf-cell feel"><div class="fvf-label">Feels like</div><p>"They were right &mdash; I'm a mess. Who else would put up with me?"</p></div><div class="fvf-cell fact"><div class="fvf-label">Likely true</div><p>That belief was constructed through systematic isolation &mdash; a deliberate tactic that maintained the power imbalance the bond depended on. Your struggles are real and workable; they do not make you unlovable or unworthy of safety.</p></div></div>
+    <div class="fvf-row"><div class="fvf-cell feel"><div class="fvf-label">Feels like</div><p>"If I just explain it right this time, they'll finally get it."</p></div><div class="fvf-cell fact"><div class="fvf-label">Likely true</div><p>You've explained it many times. The problem was never your words. One more conversation is the hook, not the solution.</p></div></div>
+  </div>
+</section>
+
+<div class="pull teal up">You're not going back to the person who hurt you. You're going back to the hope of the person they pretended to be. That person was never available to stay.</div>
+
+<section class="sec" id="reasons">
+  <div class="eyebrow up"><span class="eyebrow-n">10</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Your own voice, for later</span></div>
+  <h2 class="up" style="transition-delay:.05s">My <em>Reasons</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Write these now, while you see clearly. A message to the version of you who forgets.</p>
+  <div class="write-block up" style="transition-delay:.12s">
+    <label for="reasons-why">Why I left / why I want to leave</label>
+    <textarea id="reasons-why" placeholder="The things I never want to forget. The moments. How I felt in my own home. What I promised myself..."></textarea>
+    <p class="write-hint">Be specific. Specific memories cut fog better than general ones. Your future self will need the details, because the fog erases those first.</p>
+    <label for="reasons-promise" style="margin-top:18px">What I want for myself instead</label>
+    <textarea id="reasons-promise" placeholder="The life I'm reaching for. How I want to wake up feeling. Who I am when I'm not managing someone else's moods..."></textarea>
+    <div class="save-row"><button class="save-btn" id="savebtn">Save to this device</button><span class="save-status" id="savestatus">Saved.</span></div>
+    <p class="save-warn">&#9888; This saves your words only on this device, in this browser &mdash; never sent anywhere. But anyone with access to this device could read it. If that's a risk, don't save: screenshot to a private place, write on paper you keep safe, or send to one trusted person. To erase, tap Save with the boxes empty.</p>
+  </div>
+</section>
+
+<section class="sec" id="protocol">
+  <div class="eyebrow up"><span class="eyebrow-n">11</span><div class="eyebrow-line"></div><span class="eyebrow-tag">A plan made in advance</span></div>
+  <h2 class="up" style="transition-delay:.05s">If They <em>Reach Out</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Decide now what you'll do, so you don't have to decide in the flood. This is the plan.</p>
+  <div class="protocol up" style="transition-delay:.12s">
+    <div class="p-step"><div class="p-num"></div><div><h3>Don't respond right away</h3><p>The urge to reply instantly is the pull, not you. Urges peak and then fall &mdash; usually within 20&ndash;30 minutes to a few hours &mdash; whether or not you act. 48 hours is a good floor for any decision about contact. Nothing genuine is lost by waiting.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Tell one safe person immediately</h3><p>"They reached out. I'm not okay right now." Saying it out loud breaks the secrecy the cycle depends on.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Re-read your own reasons</h3><p>Scroll up to "My Reasons." That's the clear you, talking to the wavering you. Believe that one.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Name the hook if it's about your struggle</h3><p>If the message is "you'll fall apart without me," recognise it: your recovery is <em>safer</em> away from the person who profited from your pain. Lean on real support, not them.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>If you must communicate, keep it flat</h3><p>For unavoidable contact (co-parenting, logistics): short, factual, unemotional &mdash; "grey rock." No feelings to feed on, no opening to widen. Boring is safe.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Let the wave pass</h3><p>The urge peaks and falls, every time, usually within hours. You don't have to fight it forever &mdash; just outlast this one wave.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ PART IV ============ -->
+<div class="part-head" id="part-help">
+  <div class="pt-label">Part Four</div>
+  <div class="pt-title">Safety, Your People &amp; Help</div>
+  <div class="pt-sub">You were never meant to carry this alone &mdash; and with your own struggles in the mix, the right kind of help matters even more.</div>
+</div>
+
+<section class="sec" id="safety">
+  <div class="eyebrow up"><span class="eyebrow-n">12</span><div class="eyebrow-line"></div><span class="eyebrow-tag">This part matters most</span></div>
+  <h2 class="up" style="transition-delay:.05s">Staying <em>Safe</em></h2>
+  <p class="lead up" style="transition-delay:.08s">The time around leaving can be the most dangerous. Planning ahead isn't paranoia &mdash; it's wisdom.</p>
+  <div class="safety up" style="transition-delay:.12s">
+    <h3>Practical safety steps</h3>
+    <ul>
+      <li><strong>Treat escalation as information.</strong> Anger, threats, or showing up uninvited &mdash; take it seriously even if part of you wants to minimise it.</li>
+      <li><strong>Keep a record.</strong> Save threatening messages; log unwanted contact with dates. If they've lied about your substance use to others, documentation of <em>their</em> behaviour helps counter it later.</li>
+      <li><strong>Get an advocate early &mdash; especially with custody or credibility threats.</strong> Domestic-violence advocates understand substance-use coercion and can help you prepare so your struggle isn't turned against you. You don't have to navigate the system alone.</li>
+      <li><strong>Ask for trauma-informed, integrated care.</strong> If substance use is part of your story, look for help that treats trauma and substance use <em>together</em> &mdash; that's the current standard and it works better than tackling either alone.</li>
+      <li><strong>Tell a few trusted people</strong> what's happening &mdash; a safety net at home, at work, wherever you spend time.</li>
+      <li><strong>Know your exits.</strong> Keep essentials (keys, phone, ID, some cash, any medication) reachable.</li>
+      <li><strong>If you're ever in immediate danger, call 911.</strong> Safety comes before any plan on this page.</li>
+    </ul>
+  </div>
+  <div class="resources up" style="transition-delay:.16s">
+    <h3>Support &amp; Crisis &mdash; free, confidential, 24/7</h3>
+    <ul class="res-list">
+      <li><span class="res-n">National DV Hotline<span class="res-sub">safety planning, advocates, options</span></span><span class="res-c">1-800-799-7233</span></li>
+      <li><span class="res-n">DV Hotline (text)</span><span class="res-c">START to 88788</span></li>
+      <li><span class="res-n">SAMHSA Helpline<span class="res-sub">substance use &amp; mental health, free referrals</span></span><span class="res-c">1-800-662-4357</span></li>
+      <li><span class="res-n">Crisis Text Line</span><span class="res-c">HOME to 741741</span></li>
+      <li><span class="res-n">thehotline.org</span><span class="res-c">live chat</span></li>
+      <li><span class="res-n">Immediate danger</span><span class="res-c">911</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="people">
+  <div class="eyebrow up"><span class="eyebrow-n">13</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Who you call instead</span></div>
+  <h2 class="up" style="transition-delay:.05s">My <em>People</em></h2>
+  <p class="lead up" style="transition-delay:.08s">When the pull says "call them," this is who you call instead. Fill it in now, so the names are ready before you need them.</p>
+  <div class="write-block up" style="transition-delay:.12s">
+    <label for="people-list">The people I'll reach for first</label>
+    <textarea id="people-list" placeholder="Name — phone — what they're good for&#10;e.g. Sarah — 555-0100 — just listens, no judgement&#10;e.g. My sponsor — 555-0142 — for the hard nights&#10;e.g. DV advocate — 555-0177"></textarea>
+    <p class="write-hint">Aim for two or three. Different people for different moments &mdash; one who calms you, one who'll come over, one who'll tell you the truth. If recovery is part of your path, a sponsor or counsellor belongs on this list too.</p>
+    <div class="save-row"><button class="save-btn" id="savebtn2">Save to this device</button><span class="save-status" id="savestatus2">Saved.</span></div>
+  </div>
+</section>
+
+<div class="closing up">
+  <p>You can be a work in progress and still not deserve a single thing they did to you.</p>
+  <p>Healing your own struggles and refusing their blame are the same road home.</p>
+  <span class="small">You already did the hardest part.<br>This is just helping you keep it.</span>
+</div>
+
+<nav class="companions">
+  <h4>Companion guides</h4>
+  <div class="comp-grid">
+    <a class="comp-link current"><span class="cl-name">Clear Eyes</span><span class="cl-desc">the complete guide</span></a>
+    <a class="comp-link" href="TheCycle.html"><span class="cl-name">The Cycle</span><span class="cl-desc">understand the pattern</span></a>
+    <a class="comp-link" href="TheAnchor.html"><span class="cl-name">The Anchor</span><span class="cl-desc">leaving &amp; staying gone</span></a>
+    <a class="comp-link" href="TheUndertow.html"><span class="cl-name">The Undertow</span><span class="cl-desc">catch yourself drifting back</span></a>
+  </div>
+</nav>
+<footer>
+  <strong>Clear Eyes</strong> &mdash; Understanding · Recognising · Leaving · Staying · 2026<br><br>
+  <strong>Key sources &amp; further reading:</strong><br>
+  Dutton &amp; Painter (1981, 1993) &mdash; traumatic bonding; two necessary conditions: power imbalance &amp; intermittent reinforcement<br>
+  Carnes, P. (1997), <em>The Betrayal Bond</em><br>
+  Wuest &amp; Merritt-Gray (1999) &mdash; stages of leaving abusive relationships; cyclical return is normal<br>
+  Freyd, J. (1997) &amp; Harsey &amp; Freyd (2020) &mdash; DARVO and self-blame<br>
+  Warshaw et al. (2014), Nat. Center on DV, Trauma &amp; Mental Health &mdash; substance-use coercion<br>
+  Khantzian (1985/1997) &mdash; self-medication hypothesis<br>
+  van der Kolk, B. (2014), <em>The Body Keeps the Score</em><br>
+  DSM-5-TR (2022); Stinson et al. (2008), NESARC prevalence<br><br>
+  <strong>Important:</strong> "Narcissistic abuse" is not a formal diagnosis. This guide describes a recognised <em>pattern of coercive control</em>, drawing on attachment theory, trauma research, and the literature on substance-use coercion. It is for education and self-support only and is not a substitute for a therapist, advocate, or safety professional. If anything here conflicts with advice from someone supporting you directly, follow theirs.<br><br>
+  Your written notes are stored only in this browser on this device and are never transmitted anywhere. Clear them by saving with empty boxes, or by clearing your browser data.<br><br>
+  <strong>Immediate danger:</strong> 911 · <strong>DV Hotline:</strong> 1-800-799-7233 · <strong>Text:</strong> START to 88788 · <strong>SAMHSA:</strong> 1-800-662-4357
+</footer>
+
+<script>
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+window.addEventListener('scroll',()=>{const h=document.body.scrollHeight-window.innerHeight;document.getElementById('pb').style.width=(h>0?window.scrollY/h*100:0)+'%';},{passive:true});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.05});
+document.querySelectorAll('.up').forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>{document.querySelectorAll('.up').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in')})});
+const list=document.getElementById('hooverlist'),tally=document.getElementById('tally');
+list.querySelectorAll('.check-item').forEach(item=>{item.addEventListener('click',()=>{item.classList.toggle('checked');const n=list.querySelectorAll('.check-item.checked').length;if(n===0){tally.classList.remove('show');tally.textContent='';}else{tally.classList.add('show');let m;if(n===1)m="You marked 1 sign. Even one is worth pausing on. This is the pattern reaching for you again \u2014 not a fresh start.";else if(n<=3)m="You marked "+n+" signs. This looks like the return phase of the cycle, dressed as something new. Slow down before you respond.";else m="You marked "+n+" signs. This is the cycle, clearly. The warmth is the bait \u2014 you've seen exactly this before. Please go to 'If They Reach Out' and reach for one of your people first.";tally.textContent=m;}});});
+function wire(btnId,statusId,keys){const btn=document.getElementById(btnId),status=document.getElementById(statusId);if(!btn)return;try{keys.forEach(k=>{const el=document.getElementById(k),v=localStorage.getItem('clear_'+k);if(el&&v!==null)el.value=v;});}catch(e){}btn.addEventListener('click',()=>{try{keys.forEach(k=>{const el=document.getElementById(k);if(el)localStorage.setItem('clear_'+k,el.value);});status.textContent='Saved to this device.';}catch(e){status.textContent='Could not save here \u2014 screenshot instead.';}status.classList.add('show');setTimeout(()=>status.classList.remove('show'),2600);});}
+wire('savebtn','savestatus',['reasons-why','reasons-promise']);
+wire('savebtn2','savestatus2',['people-list']);
+</script>
+</body>
+</html>

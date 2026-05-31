@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="The Cycle">
+<meta name="theme-color" content="#080c18">
+<title>The Cycle — Understanding Narcissistic Abuse</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#080c18;--ink:#111520;--card:#141828;--border:rgba(255,255,255,.07);
+  --paper:#f5f0e4;--cream:#faf7f0;--mist:rgba(245,240,228,.38);--ghost:rgba(245,240,228,.18);
+  --gold:#c4882a;--gold-b:#e5a340;--gold-pale:rgba(196,136,42,.12);
+  --rose:#8a3040;--rose-b:#b34055;--rose-pale:rgba(138,48,64,.14);
+  --teal:#1a5c5c;--teal-b:#268080;--teal-pale:rgba(26,92,92,.18);
+  --slate:#7a8090;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%;background:var(--night);scroll-behavior:auto}
+body{background:var(--night);color:var(--paper);font-family:'Lato',sans-serif;line-height:1.65;overflow-x:hidden;-webkit-user-select:none;-webkit-touch-callout:none;padding-bottom:max(20px,var(--safe-bot))}
+a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button{-webkit-tap-highlight-color:transparent}
+
+/* PROGRESS */
+.pb{position:fixed;top:0;left:0;right:0;height:2px;background:var(--gold);width:0%;z-index:400;transition:width .1s linear}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:300;
+  background:rgba(8,12,24,.92);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:0;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding-top:var(--safe-top);
+}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;
+  color:var(--gold-b);padding:10px 12px;
+  border-right:1px solid var(--border);
+  flex-shrink:0;white-space:nowrap;font-weight:700
+}
+.nav a{
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ghost);
+  text-decoration:none;padding:10px 11px;white-space:nowrap;flex-shrink:0;
+  border-radius:0;transition:color .18s,background .18s
+}
+.nav a:active{color:var(--gold-b);background:rgba(255,255,255,.05)}
+
+/* FADE-IN */
+.up{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.up.in{opacity:1;transform:none}
+
+/* COVER */
+.cover{
+  min-height:82vh;
+  background:var(--night);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:28px 20px;
+  padding-top:calc(28px + var(--safe-top))
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 120% 60% at 80% 10%,rgba(196,136,42,.08),transparent 55%),
+    radial-gradient(ellipse 80% 100% at 10% 80%,rgba(138,48,64,.06),transparent 60%);
+  pointer-events:none
+}
+.cover-eyebrow{
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.22em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px
+}
+.cover-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold);opacity:.5}
+.cover h1{
+  font-family:'Cormorant Garant',serif;font-size:58px;font-weight:700;
+  line-height:.9;color:var(--paper);letter-spacing:-.02em;margin-bottom:16px
+}
+.cover h1 em{font-style:italic;color:var(--gold-b)}
+.cover-sub{
+  font-family:'Cormorant Garant',serif;font-style:italic;
+  font-size:17px;color:var(--mist);line-height:1.55;
+  max-width:92%;margin-bottom:20px
+}
+.cover-rule{width:32px;height:2px;background:var(--gold);margin-bottom:14px;opacity:.6}
+.cover-note{
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;
+  color:var(--ghost);line-height:1.9;text-transform:uppercase
+}
+
+/* SECTION */
+.sec{padding:32px 20px;position:relative}
+.sec+.sec{border-top:1px solid var(--border)}
+.eyebrow{
+  display:flex;align-items:center;gap:8px;margin-bottom:10px
+}
+.eyebrow-n{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--gold);font-weight:700}
+.eyebrow-line{flex:1;height:1px;background:var(--border)}
+.eyebrow-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+h2{
+  font-family:'Cormorant Garant',serif;font-size:34px;font-weight:700;
+  line-height:1.0;letter-spacing:-.01em;margin-bottom:10px;color:var(--paper)
+}
+h2 em{font-style:italic;color:var(--gold-b)}
+.lead{
+  font-family:'Cormorant Garant',serif;font-style:italic;
+  font-size:16px;color:var(--mist);line-height:1.65;margin-bottom:20px
+}
+.body{font-size:13.5px;color:rgba(245,240,228,.68);line-height:1.72;margin-bottom:14px}
+.rule{border:none;border-top:1px solid var(--border);margin:18px 0}
+
+/* PHASE CARDS */
+.phase-stack{display:grid;gap:2px;margin-top:4px}
+.phase{
+  background:var(--card);
+  padding:16px 14px;
+  border-left:3px solid var(--gold);
+  position:relative;overflow:hidden
+}
+.phase.p2{border-left-color:var(--rose-b)}
+.phase.p3{border-left-color:rgba(245,240,228,.22)}
+.phase.p4{border-left-color:var(--teal-b)}
+.phase-tag{
+  font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.18em;
+  color:var(--slate);margin-bottom:5px;text-transform:uppercase;
+  display:flex;align-items:center;gap:6px
+}
+.phase-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.phase.p2 .phase-dot{background:var(--rose-b)}
+.phase.p3 .phase-dot{background:rgba(245,240,228,.22)}
+.phase.p4 .phase-dot{background:var(--teal-b)}
+.phase h3{
+  font-family:'Cormorant Garant',serif;font-weight:700;font-size:20px;
+  color:var(--paper);margin-bottom:4px;line-height:1.1
+}
+.phase-aka{
+  font-family:'Cormorant Garant',serif;font-style:italic;
+  font-size:12px;color:var(--slate);margin-bottom:8px;display:block
+}
+.phase p{font-size:13px;color:rgba(245,240,228,.6);line-height:1.6;margin-bottom:8px}
+.phase-feel{
+  font-family:'Cormorant Garant',serif;font-style:italic;
+  font-size:13px;color:var(--gold-b);
+  padding:8px 10px;background:var(--gold-pale);
+  border-radius:3px;line-height:1.5
+}
+.phase.p2 .phase-feel{color:var(--rose-b);background:var(--rose-pale)}
+.phase.p3 .phase-feel{color:rgba(245,240,228,.5);background:rgba(255,255,255,.04)}
+.phase.p4 .phase-feel{color:var(--teal-b);background:var(--teal-pale)}
+
+/* INSIGHT BLOCKS */
+.insight{
+  background:var(--card);border:1px solid var(--border);
+  padding:16px 14px;margin-bottom:2px;
+  border-radius:2px
+}
+.insight-q{
+  font-family:'Cormorant Garant',serif;font-weight:700;
+  font-size:17px;color:var(--paper);margin-bottom:6px;line-height:1.3
+}
+.insight-a{font-size:13px;color:rgba(245,240,228,.6);line-height:1.68}
+.insight-a strong{color:var(--gold-b);font-weight:700}
+
+/* PULL QUOTE */
+.pull{
+  background:var(--rose);
+  padding:24px 20px;margin:0 -20px;
+  font-family:'Cormorant Garant',serif;font-style:italic;
+  font-size:20px;line-height:1.5;color:var(--paper)
+}
+.pull cite{
+  display:block;margin-top:10px;
+  font-family:'Space Mono',monospace;font-size:8px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(245,240,228,.4);font-style:normal
+}
+
+/* TRUTH CARDS */
+.truth-stack{display:grid;gap:2px;margin-top:4px}
+.truth{
+  background:var(--card);padding:14px;
+  display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start
+}
+.truth-n{
+  font-family:'Cormorant Garant',serif;font-size:28px;font-weight:700;
+  color:var(--gold-pale);line-height:1;padding-top:2px;
+  color:rgba(196,136,42,.4)
+}
+.truth h3{
+  font-family:'Cormorant Garant',serif;font-weight:700;
+  font-size:15px;color:var(--paper);margin-bottom:4px;line-height:1.2
+}
+.truth p{font-size:12.5px;color:rgba(245,240,228,.55);line-height:1.6}
+
+/* THE QUESTION */
+.question-block{
+  background:var(--ink);border:1px solid var(--border);
+  padding:22px 18px;margin-top:6px;border-radius:4px;text-align:center
+}
+.question-block .q{
+  font-family:'Cormorant Garant',serif;font-style:italic;
+  font-size:22px;color:var(--mist);line-height:1.4;margin-bottom:16px
+}
+.question-block .divider{
+  width:20px;height:1px;background:var(--gold);margin:0 auto 16px;opacity:.5
+}
+.question-block .a{
+  font-family:'Cormorant Garant',serif;font-weight:700;
+  font-size:26px;color:var(--paper);line-height:1.2;margin-bottom:8px
+}
+.question-block .a em{color:var(--gold-b);font-style:italic}
+.question-block .a-sub{
+  font-family:'Space Mono',monospace;font-size:8px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);line-height:1.8
+}
+
+/* STAT ROW */
+.stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--rose);gap:0
+}
+.stat{padding:16px 14px;border-right:1px solid rgba(255,255,255,.1)}
+.stat:nth-child(2n){border-right:none}
+.stat:nth-child(3),.stat:nth-child(4){border-top:1px solid rgba(255,255,255,.1)}
+.stat-n{
+  font-family:'Cormorant Garant',serif;font-weight:700;
+  font-size:38px;line-height:1;color:var(--paper);margin-bottom:3px
+}
+.stat-l{
+  font-family:'Space Mono',monospace;font-size:7.5px;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(245,240,228,.5);line-height:1.8
+}
+
+/* WARRANT BLOCK */
+.warrant{
+  background:var(--gold-pale);border-left:3px solid var(--gold-b);
+  padding:14px;margin-top:14px;border-radius:3px
+}
+.warrant p{
+  font-family:'Cormorant Garant',serif;font-style:italic;
+  font-size:14.5px;color:var(--paper);line-height:1.6
+}
+
+/* SIGNAL LIST */
+.signals{list-style:none;margin-top:8px}
+.signals li{
+  font-size:13px;color:rgba(245,240,228,.62);
+  padding:9px 0;border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:16px 1fr;gap:8px;align-items:start;
+  line-height:1.55
+}
+.signals li:last-child{border-bottom:none}
+.signals li::before{
+  content:'◆';font-size:5px;color:var(--gold);
+  padding-top:5px
+}
+.signals li strong{color:var(--paper);font-weight:700}
+
+/* RESOURCES */
+.resources{
+  background:var(--ink);border:1px solid var(--border);
+  padding:16px 14px;margin-top:6px;border-radius:4px
+}
+.resources h3{
+  font-family:'Cormorant Garant',serif;font-weight:700;
+  font-size:16px;color:var(--teal-b);margin-bottom:12px
+}
+.res-list{list-style:none;font-size:12.5px}
+.res-list li{
+  padding:8px 0;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center
+}
+.res-list li:last-child{border-bottom:none}
+.res-n{color:var(--paper);font-weight:700;font-size:13px}
+.res-c{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:var(--teal-b);letter-spacing:.04em
+}
+
+/* FOOTER */
+footer{
+  background:var(--ink);border-top:1px solid var(--border);
+  padding:20px;
+  padding-bottom:max(20px,var(--safe-bot));
+  font-family:'Space Mono',monospace;font-size:7.5px;
+  letter-spacing:.08em;color:var(--ghost);line-height:1.9
+}
+footer strong{color:rgba(245,240,228,.4);font-weight:700}
+
+/* STAT FOOTNOTES */
+.stat-footnotes{padding:14px 20px 4px;background:var(--ink)}
+.stat-footnotes p{font-family:'Space Mono',monospace;font-size:8px;line-height:1.7;color:var(--ghost);letter-spacing:.02em;margin-bottom:8px}
+.stat-footnotes p:last-child{margin-bottom:0}
+/* FRAMING CALLOUT */
+.framing{background:var(--teal-pale);border:1px solid rgba(38,128,128,.3);border-radius:4px;padding:16px 14px;margin-top:18px}
+.framing h4{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-b);margin-bottom:8px}
+.framing p{font-size:13px;color:rgba(245,240,228,.7);line-height:1.66;margin-bottom:8px}
+.framing p:last-child{margin-bottom:0}
+.framing strong{color:var(--paper);font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="pb" id="pb"></div>
+
+<nav class="nav">
+  <div class="nav-logo">TC</div>
+  <a href="#cycle">The Cycle</a>
+  <a href="#engine">Why</a>
+  <a href="#supply">Supply</a>
+  <a href="#fix">Can't Fix</a>
+  <a href="#leaving">Leaving</a>
+  <a href="#signals">Signs</a>
+  <a href="#answer">Answer</a>
+</nav>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-eyebrow">Educational Guide</div>
+  <h1>THE<br><em>CYCLE</em></h1>
+  <div class="cover-rule"></div>
+  <p class="cover-sub">Understanding narcissistic abuse — why it happens, why it holds, and why none of it was ever about you.</p>
+  <div class="cover-note">Narcissistic Abuse · Trauma Bonding · 2026</div>
+</header>
+
+<!-- STATS -->
+<div class="stats up">
+  <div class="stat"><div class="stat-n">~7×</div><div class="stat-l">Commonly cited attempts to leave before final exit*</div></div>
+  <div class="stat"><div class="stat-n">0.5&ndash;6%</div><div class="stat-l">Estimated NPD prevalence range, US adults**</div></div>
+  <div class="stat"><div class="stat-n">Most</div><div class="stat-l">Abusers do not have a diagnosable disorder***</div></div>
+  <div class="stat"><div class="stat-n">0</div><div class="stat-l">Times it was your fault</div></div>
+</div>
+<div class="stat-footnotes up">
+  <p>* The "seven times" figure is widely repeated by advocacy organisations (drawn from helpline-collated data, not a peer-reviewed study); some sources cite eight. Treat it as illustrative, not exact &mdash; the real point is that leaving is rarely a single, clean event.</p>
+  <p>** Estimates vary by study and method. The often-quoted 6.2% is the high end, from one large 2008 survey using broad criteria; the DSM-5-TR and most clinical sources estimate lower (roughly 0.5&ndash;5%).</p>
+  <p>*** Abuse is a pattern of behaviour, not a diagnosis. You do not need to know whether a person "is a narcissist" to recognise harm and act on it.</p>
+</div>
+
+<!-- THE CYCLE -->
+<section class="sec" id="cycle">
+  <div class="eyebrow up"><span class="eyebrow-n">01</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The Four Phases</span></div>
+  <h2 class="up" style="transition-delay:.05s">The <em>Cycle</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Four phases. Repeating endlessly. Each cycle tightens the bond and makes the last one feel further away than it was.</p>
+
+  <div class="framing up" style="transition-delay:.1s">
+    <h4>A note on language before we begin</h4>
+    <p>This guide uses the words "narcissistic abuse" because that is how many people first find their experience named &mdash; and being named matters. But it is worth knowing: <strong>"narcissistic abuse" is not a clinical diagnosis</strong>, and most people who abuse do not have a diagnosable personality disorder. Abuse is a <strong>pattern of coercive control</strong> &mdash; a series of choices &mdash; not a medical condition.</p>
+    <p>This matters for one practical reason: <strong>you do not need to diagnose anyone to recognise harm and act on it.</strong> Whether or not the person fits a label, the pattern below is real, the harm is real, and your response to it is valid.</p>
+  </div>
+
+  <div class="phase-stack up" style="transition-delay:.12s">
+
+    <div class="phase p1">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 1</div>
+      <h3>Idealize</h3>
+      <span class="phase-aka">Love Bombing</span>
+      <p>Overwhelming affection, attention, and praise. He studies you and reflects your best qualities back at you — you feel profoundly seen. That feeling is real. What's not real is that he caused it. You were falling in love with yourself, reflected.</p>
+      <div class="phase-feel">"I've never felt this understood before." — You are experiencing your own goodness shown back to you. He found the frequency and tuned to it.</div>
+    </div>
+
+    <div class="phase p2">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 2</div>
+      <h3>Devalue</h3>
+      <span class="phase-aka">Criticism, Cold, Contempt</span>
+      <p>Without warning, warmth is withdrawn. Criticism begins — subtle at first, then escalating. You start asking what you did wrong. Answer: nothing. He cannot sustain the idealised reflection. When you start showing him something real, he attacks it.</p>
+      <div class="phase-feel">"What did I do? I've been trying so hard." — You are now doing double work: managing your own pain AND managing his. This is by design.</div>
+    </div>
+
+    <div class="phase p3">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 3</div>
+      <h3>Discard</h3>
+      <span class="phase-aka">Withdrawal, Abandonment</span>
+      <p>He leaves, goes silent, or threatens to. The terror of abandonment activates your deepest survival wiring. Your brain interprets the threat of losing him the same way it processes physical danger. This is not weakness — it is neurobiology doing exactly what it was built to do.</p>
+      <div class="phase-feel">"I can't breathe without him. I'll do anything." — What feels like love at this stage is your nervous system in a threat response. The bond deepens precisely because the fear is real.</div>
+    </div>
+
+    <div class="phase p4">
+      <div class="phase-tag"><span class="phase-dot"></span>Phase 4</div>
+      <h3>Hoover</h3>
+      <span class="phase-aka">The Return</span>
+      <p>He comes back. Apologies, promises, the man you first met. Your brain floods with relief &mdash; the same reward and bonding systems involved in dopamine and oxytocin signalling. Researchers describe this as <em>overlapping with</em> the brain's addiction pathways, which is part of why the pull feels so physical. (The chemistry is real but more complex than any single tidy comparison.) He is not choosing you. He is choosing what you provide.</p>
+      <div class="phase-feel">"This is the real him. He came back. Things will be different." — The cycle restarts. Deeper than before. The bond is tightened each time.</div>
+    </div>
+
+  </div>
+
+  <div class="warrant up" style="transition-delay:.18s">
+    <p>The cycle is not random. Each phase serves a function. Together they produce a neurochemical dependency that is clinically identical to addiction — complete with tolerance, withdrawal, and compulsive return.</p>
+  </div>
+</section>
+
+<!-- WHY HE DOES IT -->
+<section class="sec" id="engine">
+  <div class="eyebrow up"><span class="eyebrow-n">02</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The Engine</span></div>
+  <h2 class="up" style="transition-delay:.05s">Why He <em>Does This</em></h2>
+  <p class="lead up" style="transition-delay:.08s">When the pattern fits this picture, the cruelty has a source. Understanding it doesn't excuse it &mdash; but it removes you from the centre of it.</p>
+  <div class="framing up" style="transition-delay:.1s">
+    <h4>One explanation, not the only one</h4>
+    <p>The "self-hatred behind the mask" picture below comes from psychodynamic theory and describes one recognisable pattern &mdash; it fits some abusive people well, especially those with strong narcissistic traits. <strong>It is a useful lens, not a settled fact, and it does not describe every abuser.</strong> Some who harm feel little inner conflict at all. Either way, the cause lives in them, not in you.</p>
+  </div>
+
+  <div class="insight-stack up" style="transition-delay:.12s">
+
+    <div class="insight">
+      <div class="insight-q">Why is he so cruel?</div>
+      <div class="insight-a">Because he hates himself — and he cannot direct that hatred inward without collapsing. So he directs it outward, at the person closest to him. <strong>Every cruel word he gave you was aimed at himself.</strong> You were just the nearest surface.</div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-q">Why does he build you up and then tear you down?</div>
+      <div class="insight-a">When you reflect his idealised self back at him, he loves you. When you start showing him something true — cracks, reality, the man behind the mask — he cannot bear it. <strong>He attacks the mirror, not the woman.</strong> The mirror just happened to be you.</div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-q">Why does he come back every time?</div>
+      <div class="insight-a">Not for you. For what you provide: a reflection he can control, validation that temporarily quiets the self-hatred, a false self he can maintain in your presence. <strong>He comes back for the supply, not the person.</strong> He doesn't know the difference.</div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-q">Why does nothing you do ever seem to be enough?</div>
+      <div class="insight-a">Because the problem was never your performance. He is running from his own internal reality. No amount of love, patience, or self-improvement can fix a problem that lives inside him. <strong>You were never the cause. You could never be the cure.</strong></div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-q">Does he know he's doing this?</div>
+      <div class="insight-a">It varies. Where this pattern is driven by deep shame, the defence is often partly unconscious &mdash; built early in life, maintained automatically. But many people who abuse are quite aware of choosing when, where, and toward whom they do it. <strong>Awareness or its absence does not change the harm, and it is not your job to work out which one you are dealing with.</strong></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NARCISSISTIC SUPPLY -->
+<section class="sec" id="supply">
+  <div class="eyebrow up"><span class="eyebrow-n">03</span><div class="eyebrow-line"></div><span class="eyebrow-tag">What You Were to Him</span></div>
+  <h2 class="up" style="transition-delay:.05s">Narcissistic <em>Supply</em></h2>
+  <p class="lead up" style="transition-delay:.08s">You weren't his partner. You were his source. The distinction matters.</p>
+  <p class="body up" style="transition-delay:.1s">Narcissistic supply is the term for the external validation a narcissist requires to maintain his false self. Without it, the self-hatred breaks through. You were selected — not loved — because you were a high-quality source.</p>
+
+  <div class="truth-stack up" style="transition-delay:.14s">
+    <div class="truth">
+      <div class="truth-n">01</div>
+      <div><h3>You were chosen for your light</h3><p>Empathy, warmth, resilience, loyalty — qualities that made you an excellent mirror. He didn't fall in love with you. He fell in love with what your brightness showed him about himself.</p></div>
+    </div>
+    <div class="truth">
+      <div class="truth-n">02</div>
+      <div><h3>Your empathy was the target</h3><p>The very thing that makes you want to understand, forgive, and try harder is the thing that kept you in the cycle. Your capacity for compassion was the vulnerability that was exploited.</p></div>
+    </div>
+    <div class="truth">
+      <div class="truth-n">03</div>
+      <div><h3>His coldness was withdrawal of supply</h3><p>When he went cold, he wasn't punishing you for something real. He was withdrawing the resource he controlled to trigger your anxiety, recalibrate your behaviour, and restore the supply he needed.</p></div>
+    </div>
+    <div class="truth">
+      <div class="truth-n">04</div>
+      <div><h3>You were never seen</h3><p>Not because you weren't worth seeing — because he was incapable of it. Genuine seeing requires the ability to hold another person as separate from oneself. He could not do this. Every image he had of you was a projection.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<div class="pull up">
+  The cruelty was never a reflection of your worth. It was a reflection of his wound — thrown outward because he had nowhere else to put it.
+  <cite>&mdash; a recurring theme in trauma-informed therapy</cite>
+</div>
+
+<!-- WHY YOU CAN'T FIX IT -->
+<section class="sec" id="fix">
+  <div class="eyebrow up"><span class="eyebrow-n">04</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The Impossible Task</span></div>
+  <h2 class="up" style="transition-delay:.05s">Why You <em>Can't Fix It</em></h2>
+  <p class="lead up" style="transition-delay:.08s">You have been trying to solve a problem that was never yours. Here is why it cannot be solved from where you are standing.</p>
+
+  <div class="insight-stack up" style="transition-delay:.12s">
+    <div class="insight">
+      <div class="insight-q">The wound predates you by decades</div>
+      <div class="insight-a">The narcissistic defence was built in childhood to survive experiences of shame, abandonment, or conditional love. You didn't create it. <strong>You cannot heal what you didn't wound.</strong></div>
+    </div>
+    <div class="insight">
+      <div class="insight-q">He cannot access the wound with you present</div>
+      <div class="insight-a">Genuine healing requires a person to confront their own reality without the buffer of supply. <strong>As long as you are there providing validation, the motivation to do the work doesn't exist.</strong> Your presence enables avoidance of the very thing that would require change.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-q">Loving harder makes the cycle tighter</div>
+      <div class="insight-a">Every time you stayed, forgave, and tried again, you taught the cycle that it works. Your love and patience did not soften him — they confirmed that the behaviour had no lasting consequences. <strong>Unconditional love in this dynamic is not a gift. It is fuel.</strong></div>
+    </div>
+    <div class="insight">
+      <div class="insight-q">Change requires his choice, not your effort</div>
+      <div class="insight-a">Some people who harm others do change &mdash; through sustained, voluntary work and genuine accountability, usually over a long time. What the evidence does not support is change produced by a partner loving harder, staying longer, or tolerating more. <strong>You cannot want someone's healing more than they do and expect it to work.</strong></div>
+    </div>
+  </div>
+
+  <div class="warrant up" style="transition-delay:.18s">
+    <p>Recognising this is not giving up on him. It is giving up the belief that his suffering is something you caused — or something you can carry.</p>
+  </div>
+</section>
+
+<!-- WHY LEAVING IS HARD -->
+<section class="sec" id="leaving">
+  <div class="eyebrow up"><span class="eyebrow-n">05</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The Exit</span></div>
+  <h2 class="up" style="transition-delay:.05s">Why Leaving <em>Feels Impossible</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Not weakness. Wiring. There is a clinical reason you couldn't just leave — and it has nothing to do with how smart or strong you are.</p>
+
+  <ul class="signals up" style="transition-delay:.12s">
+    <li><span></span><div><strong>Your brain wired him as survival.</strong> Intermittent reinforcement — unpredictable reward — creates stronger compulsive attachment than consistent love ever could. Your brain learned to chase his approval the way it chases oxygen.</div></li>
+    <li><span></span><div><strong>He is both the poison and the pain relief.</strong> He creates the wound and then soothes it. Your nervous system cannot separate the source of pain from the source of comfort &mdash; because they are the same person. Leaving can trigger something that closely resembles substance withdrawal: real, physical, and temporary.</div></li>
+    <li><span></span><div><strong>He became your reality.</strong> Years of gaslighting and isolation eroded your trust in your own perception. You stopped believing what you saw. His version of events became the only version available.</div></li>
+    <li><span></span><div><strong>The departure window is the most dangerous time.</strong> The fear of leaving is not irrational. Statistically, the period of separation is when abuse escalates most sharply. Your fear was reading the evidence accurately.</div></li>
+    <li><span></span><div><strong>You were trying to leave a person you loved.</strong> The man from Phase 1 was real to you — the warmth, the connection, the hope. Leaving required grieving someone who never fully existed. That grief is legitimate and it is not simple.</div></li>
+  </ul>
+
+  <div class="warrant up" style="transition-delay:.2s">
+    <p>Seven attempts is the average number of times a person leaves before the final exit. Every attempt was brave. The ones that didn't stick were not failures — they were part of the process of becoming certain enough to go.</p>
+  </div>
+</section>
+
+<!-- WARNING SIGNALS -->
+<section class="sec" id="signals">
+  <div class="eyebrow up"><span class="eyebrow-n">06</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Recognition</span></div>
+  <h2 class="up" style="transition-delay:.05s">Signs You Are <em>In It</em></h2>
+  <p class="lead up" style="transition-delay:.08s">These are not character flaws. They are symptoms. A normal response to an abnormal situation.</p>
+
+  <ul class="signals up" style="transition-delay:.12s">
+    <li><span></span><div>You apologise constantly — often without knowing what for</div></li>
+    <li><span></span><div>You feel responsible for his moods and emotions</div></li>
+    <li><span></span><div>You walk on eggshells, reading the room before you speak</div></li>
+    <li><span></span><div>You make yourself smaller to avoid triggering his anger</div></li>
+    <li><span></span><div>You feel crazy — and he has confirmed that you are</div></li>
+    <li><span></span><div>You remember a version of him that no longer shows up consistently</div></li>
+    <li><span></span><div>You defend him to friends and family who are concerned</div></li>
+    <li><span></span><div>You have tried to leave and found yourself unable to stay gone</div></li>
+    <li><span></span><div>You believe that if you could just be better, things would return to how they were at the start</div></li>
+    <li><span></span><div>You feel more alone inside the relationship than you did before it</div></li>
+  </ul>
+</section>
+
+<!-- THE QUESTION AND ITS ANSWER -->
+<section class="sec" id="answer">
+  <div class="eyebrow up"><span class="eyebrow-n">07</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The One Question</span></div>
+  <h2 class="up" style="transition-delay:.05s">The <em>Answer</em></h2>
+  <p class="lead up" style="transition-delay:.08s">There is one question every person in this cycle eventually arrives at.</p>
+
+  <div class="question-block up" style="transition-delay:.14s">
+    <div class="q">How do you love a man who hates himself?</div>
+    <div class="divider"></div>
+    <div class="a">You love <em>yourself</em> instead.</div>
+    <div class="a-sub">
+      Not because he isn't worth loving.<br>
+      Because you cannot save someone from themselves.<br>
+      And you were never meant to try.
+    </div>
+  </div>
+
+  <div class="warrant up" style="transition-delay:.2s">
+    <p>Choosing yourself is not abandonment. It is the recognition that you are also a person who deserves to be seen — not used as a surface for someone else's reflection.</p>
+  </div>
+
+  <div class="rule up" style="transition-delay:.22s"></div>
+
+  <div class="resources up" style="transition-delay:.24s">
+    <h3>Crisis & Support — 24/7</h3>
+    <ul class="res-list">
+      <li><span class="res-n">National DV Hotline</span><span class="res-c">1-800-799-7233</span></li>
+      <li><span class="res-n">Crisis Text Line</span><span class="res-c">Text HOME to 741741</span></li>
+      <li><span class="res-n">thehotline.org</span><span class="res-c">Chat 24/7</span></li>
+      <li><span class="res-n">SAMHSA Helpline</span><span class="res-c">1-800-662-4357</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <strong>The Cycle</strong> &mdash; Educational Reference · v2 · 2026<br><br>
+  <strong>Key sources &amp; further reading:</strong><br>
+  Dutton &amp; Painter (1981), "Traumatic Bonding" &mdash; origin of the term<br>
+  Carnes, P. (1997), <em>The Betrayal Bond</em><br>
+  van der Kolk, B. (2014), <em>The Body Keeps the Score</em><br>
+  Stinson et al. (2008), NESARC NPD prevalence study<br>
+  DSM-5-TR (2022) &mdash; NPD diagnostic criteria<br>
+  National Domestic Violence Hotline &mdash; thehotline.org<br><br>
+  <strong>Important:</strong> "Narcissistic abuse" is not a formal diagnosis. This guide describes a recognised <em>pattern of coercive control</em>, drawing on attachment theory, behavioural psychology, and trauma research. It is for education only and is not a substitute for care from a qualified professional. If anything here conflicts with advice from your own therapist or advocate, follow theirs.<br><br>
+  <strong>Emergency:</strong> 911 · <strong>DV Hotline:</strong> 1-800-799-7233 · <strong>Text:</strong> START to 88788
+</footer>
+
+<script>
+// Disable scroll zoom
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('pb').style.width=(window.scrollY/h*100)+'%';
+},{passive:true});
+
+// Scroll reveal
+const obs=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}});
+},{threshold:.06});
+document.querySelectorAll('.up').forEach(el=>obs.observe(el));
+
+// Kick visible ones on load
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.up').forEach(el=>{
+    if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in');
+  });
+});
+</script>
+</body>
+</html>

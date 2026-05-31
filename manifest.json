@@ -1,0 +1,46 @@
+{
+  "name": "Clear Eyes",
+  "short_name": "Clear Eyes",
+  "description": "Understanding narcissistic abuse, trauma bonding & recovery",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#080c18",
+  "theme_color": "#080c18",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "The Cycle",
+      "url": "/the-cycle.html",
+      "description": "Understanding the four phases"
+    },
+    {
+      "name": "The Anchor",
+      "url": "/the-anchor.html",
+      "description": "When the pull comes back"
+    },
+    {
+      "name": "The Undertow",
+      "url": "/the-undertow.html",
+      "description": "Self-check tool"
+    },
+    {
+      "name": "Clear Eyes",
+      "url": "/clear-eyes.html",
+      "description": "The complete guide"
+    }
+  ]
+}

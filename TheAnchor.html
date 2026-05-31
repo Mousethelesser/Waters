@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="The Anchor">
+<meta name="theme-color" content="#080c18">
+<title>The Anchor — For When the Pull Comes Back</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#080c18;--ink:#111520;--card:#141828;--border:rgba(255,255,255,.07);
+  --paper:#f5f0e4;--cream:#faf7f0;--mist:rgba(245,240,228,.4);--ghost:rgba(245,240,228,.18);
+  --gold:#c4882a;--gold-b:#e5a340;--gold-pale:rgba(196,136,42,.12);
+  --rose:#8a3040;--rose-b:#b34055;--rose-pale:rgba(138,48,64,.16);
+  --teal:#1a5c5c;--teal-b:#2a9090;--teal-pale:rgba(26,92,92,.18);
+  --green:#2e7d5b;--green-b:#3fa676;
+  --slate:#7a8090;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%;background:var(--night);scroll-behavior:smooth}
+body{background:var(--night);color:var(--paper);font-family:'Lato',sans-serif;line-height:1.65;overflow-x:hidden;-webkit-touch-callout:none;padding-bottom:max(24px,var(--safe-bot))}
+a{-webkit-tap-highlight-color:transparent;touch-action:manipulation;color:var(--gold-b)}
+button{-webkit-tap-highlight-color:transparent;font-family:inherit}
+input,textarea{font-family:inherit;font-size:16px}
+
+/* PROGRESS */
+.pb{position:fixed;top:0;left:0;right:0;height:2px;background:var(--teal-b);width:0%;z-index:400;transition:width .1s linear}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:300;background:rgba(8,12,24,.93);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-top:var(--safe-top)}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--teal-b);padding:10px 12px;border-right:1px solid var(--border);flex-shrink:0;white-space:nowrap;font-weight:700}
+.nav a{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ghost);text-decoration:none;padding:10px 11px;white-space:nowrap;flex-shrink:0;transition:color .18s,background .18s}
+.nav a:active{color:var(--teal-b);background:rgba(255,255,255,.05)}
+
+.up{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.up.in{opacity:1;transform:none}
+
+/* COVER */
+.cover{min-height:74vh;background:var(--night);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 20px;padding-top:calc(28px + var(--safe-top))}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 120% 60% at 75% 12%,rgba(26,92,92,.12),transparent 55%),radial-gradient(ellipse 90% 100% at 8% 85%,rgba(196,136,42,.06),transparent 60%);pointer-events:none}
+.cover-eyebrow{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.22em;color:var(--teal-b);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cover-eyebrow::before{content:'';width:20px;height:1px;background:var(--teal-b);opacity:.6}
+.cover h1{font-family:'Cormorant Garant',serif;font-size:62px;font-weight:700;line-height:.88;color:var(--paper);letter-spacing:-.02em;margin-bottom:16px}
+.cover h1 em{font-style:italic;color:var(--teal-b)}
+.cover-sub{font-family:'Cormorant Garant',serif;font-style:italic;font-size:18px;color:var(--mist);line-height:1.5;max-width:94%;margin-bottom:18px}
+.cover-rule{width:34px;height:2px;background:var(--teal-b);margin-bottom:16px;opacity:.7}
+.cover-note{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--ghost);line-height:1.9;text-transform:uppercase}
+
+/* SECTION */
+.sec{padding:30px 20px;position:relative}
+.sec+.sec{border-top:1px solid var(--border)}
+.eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.eyebrow-n{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--teal-b);font-weight:700}
+.eyebrow-line{flex:1;height:1px;background:var(--border)}
+.eyebrow-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+h2{font-family:'Cormorant Garant',serif;font-size:34px;font-weight:700;line-height:1.0;letter-spacing:-.01em;margin-bottom:10px;color:var(--paper)}
+h2 em{font-style:italic;color:var(--teal-b)}
+.lead{font-family:'Cormorant Garant',serif;font-style:italic;font-size:16px;color:var(--mist);line-height:1.62;margin-bottom:20px}
+.body{font-size:13.5px;color:rgba(245,240,228,.7);line-height:1.72;margin-bottom:14px}
+.body strong{color:var(--paper);font-weight:700}
+.rule{border:none;border-top:1px solid var(--border);margin:18px 0}
+
+/* THE FIRST-READ TRUTH BLOCK */
+.truthcard{background:linear-gradient(160deg,var(--card),var(--ink));border:1px solid var(--teal-pale);border-radius:6px;padding:22px 18px;margin-top:6px}
+.truthcard p{font-family:'Cormorant Garant',serif;font-size:18px;line-height:1.5;color:var(--paper);margin-bottom:14px}
+.truthcard p:last-child{margin-bottom:0}
+.truthcard em{font-style:italic;color:var(--teal-b)}
+.truthcard .big{font-size:23px;font-weight:700;line-height:1.3}
+
+/* SCREENSHOT CARD */
+.card-shot{background:var(--ink);border:1.5px solid var(--gold);border-radius:8px;padding:20px 18px;margin-top:6px;position:relative}
+.card-shot::before{content:'SCREENSHOT THIS';position:absolute;top:-8px;left:16px;background:var(--night);padding:0 8px;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.16em;color:var(--gold-b)}
+.card-shot h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:20px;color:var(--gold-b);margin-bottom:12px;line-height:1.2}
+.card-shot ol{list-style:none;counter-reset:c}
+.card-shot li{counter-increment:c;font-size:13.5px;color:rgba(245,240,228,.78);line-height:1.5;padding:7px 0 7px 28px;position:relative;border-bottom:1px solid var(--border)}
+.card-shot li:last-child{border-bottom:none}
+.card-shot li::before{content:counter(c);position:absolute;left:0;top:7px;width:18px;height:18px;background:var(--gold-pale);color:var(--gold-b);border-radius:50%;font-family:'Space Mono',monospace;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin-top:6px}
+.check-item{display:grid;grid-template-columns:24px 1fr;gap:11px;align-items:start;padding:13px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border:1.5px solid var(--slate);border-radius:5px;margin-top:2px;flex-shrink:0;transition:all .2s var(--ease);position:relative;background:transparent}
+.check-item.checked .check-box{background:var(--rose-b);border-color:var(--rose-b)}
+.check-item.checked .check-box::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.check-text{font-size:13.5px;color:rgba(245,240,228,.72);line-height:1.55}
+.check-text strong{color:var(--paper);font-weight:700;display:block;margin-bottom:2px;font-family:'Cormorant Garant',serif;font-size:15.5px}
+.check-item.checked .check-text{color:var(--mist)}
+.check-tally{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--rose-b);text-transform:uppercase;margin-top:14px;padding:12px;background:var(--rose-pale);border-radius:4px;line-height:1.6;display:none}
+.check-tally.show{display:block}
+
+/* FEELING VS FACT TABLE */
+.fvf{display:grid;gap:2px;margin-top:6px}
+.fvf-row{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.fvf-cell{padding:13px 12px;background:var(--card)}
+.fvf-cell.feel{border-left:3px solid var(--rose-b)}
+.fvf-cell.fact{border-left:3px solid var(--teal-b)}
+.fvf-label{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+.fvf-cell.feel .fvf-label{color:var(--rose-b)}
+.fvf-cell.fact .fvf-label{color:var(--teal-b)}
+.fvf-cell p{font-size:12px;color:rgba(245,240,228,.72);line-height:1.5}
+
+/* PROTOCOL STEPS */
+.protocol{counter-reset:p;margin-top:6px}
+.p-step{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.p-step:last-child{border-bottom:none}
+.p-num{counter-increment:p;font-family:'Cormorant Garant',serif;font-size:30px;font-weight:700;color:var(--teal-pale);line-height:1;color:rgba(42,144,144,.4)}
+.p-num::before{content:counter(p)}
+.p-step h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper);margin-bottom:3px;line-height:1.2}
+.p-step p{font-size:12.5px;color:rgba(245,240,228,.6);line-height:1.6}
+
+/* WRITABLE / PERSONAL */
+.write-block{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 14px;margin-top:6px}
+.write-block label{display:block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-b);margin-bottom:8px}
+.write-block textarea{width:100%;min-height:120px;background:var(--ink);border:1px solid var(--border);border-radius:4px;color:var(--paper);padding:12px;line-height:1.6;resize:vertical}
+.write-block textarea::placeholder{color:var(--ghost)}
+.write-hint{font-size:11.5px;color:var(--mist);line-height:1.6;margin-top:10px;font-style:italic;font-family:'Cormorant Garant',serif}
+.save-row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.save-btn{background:var(--teal);color:var(--paper);border:none;padding:10px 18px;border-radius:5px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .2s}
+.save-btn:active{background:var(--teal-b)}
+.save-status{font-family:'Space Mono',monospace;font-size:9px;color:var(--green-b);letter-spacing:.06em;opacity:0;transition:opacity .3s}
+.save-status.show{opacity:1}
+.save-warn{font-family:'Space Mono',monospace;font-size:8px;color:var(--gold-b);line-height:1.7;letter-spacing:.03em;margin-top:12px;padding:10px;background:var(--gold-pale);border-radius:4px}
+
+/* PULL QUOTE */
+.pull{background:var(--teal);padding:24px 20px;margin:0 -20px;font-family:'Cormorant Garant',serif;font-style:italic;font-size:21px;line-height:1.45;color:var(--paper)}
+.pull cite{display:block;margin-top:10px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,228,.45);font-style:normal}
+
+/* SAFETY BANNER */
+.safety{background:var(--rose-pale);border:1px solid rgba(179,64,85,.35);border-radius:6px;padding:16px 14px;margin-top:6px}
+.safety h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:17px;color:var(--rose-b);margin-bottom:8px}
+.safety ul{list-style:none}
+.safety li{font-size:13px;color:rgba(245,240,228,.72);line-height:1.55;padding:7px 0 7px 18px;position:relative;border-bottom:1px solid var(--border)}
+.safety li:last-child{border-bottom:none}
+.safety li::before{content:'◆';position:absolute;left:0;top:8px;font-size:5px;color:var(--rose-b)}
+.safety li strong{color:var(--paper);font-weight:700}
+
+/* RESOURCES */
+.resources{background:var(--ink);border:1px solid var(--border);padding:16px 14px;margin-top:6px;border-radius:6px}
+.resources h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--green-b);margin-bottom:12px}
+.res-list{list-style:none;font-size:12.5px}
+.res-list li{padding:9px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.res-list li:last-child{border-bottom:none}
+.res-n{color:var(--paper);font-weight:700;font-size:13px}
+.res-c{font-family:'Space Mono',monospace;font-size:9px;color:var(--green-b);letter-spacing:.03em;text-align:right;white-space:nowrap}
+
+/* CLOSING */
+.closing{text-align:center;padding:36px 20px;border-top:1px solid var(--border)}
+.closing p{font-family:'Cormorant Garant',serif;font-style:italic;font-size:22px;line-height:1.45;color:var(--paper);margin-bottom:10px}
+.closing .small{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-style:normal;line-height:1.8}
+
+footer{background:var(--ink);border-top:1px solid var(--border);padding:20px;padding-bottom:max(20px,var(--safe-bot));font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.07em;color:var(--ghost);line-height:1.9}
+footer strong{color:rgba(245,240,228,.4);font-weight:700}
+
+@media print{
+  .nav,.pb{display:none}
+  body{background:#fff;color:#000}
+  .up{opacity:1;transform:none}
+}
+
+.companions{background:var(--night);border-top:1px solid var(--border);padding:24px 20px;padding-bottom:24px}
+.companions h4{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin-bottom:14px}
+.comp-grid{display:grid;gap:8px}
+.comp-link{display:flex;align-items:baseline;gap:10px;padding:11px 13px;border:1px solid var(--border);border-radius:6px;text-decoration:none;background:var(--card);transition:border-color .2s}
+.comp-link:active{border-color:var(--teal-b)}
+.comp-link .cl-name{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper)}
+.comp-link .cl-desc{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.04em;color:var(--mist);text-transform:uppercase}
+.comp-link.current{background:var(--ink);border-style:dashed;pointer-events:none}
+.comp-link.current .cl-name{color:var(--teal-b)}
+.comp-link.current .cl-desc::after{content:' \2022 you are here';color:var(--teal-b)}
+</style>
+</head>
+<body>
+
+<div class="pb" id="pb"></div>
+
+<nav class="nav">
+  <div class="nav-logo">⚓ ANCHOR</div>
+  <a href="#first">Read First</a>
+  <a href="#card">The Card</a>
+  <a href="#hoover">Is It Happening?</a>
+  <a href="#feeling">Feeling vs Fact</a>
+  <a href="#reasons">My Reasons</a>
+  <a href="#protocol">If Contacted</a>
+  <a href="#safety">Safety</a>
+  <a href="#people">My People</a>
+</nav>
+
+<header class="cover">
+  <div class="cover-eyebrow">A companion for leaving &amp; staying gone</div>
+  <h1>THE<br><em>ANCHOR</em></h1>
+  <div class="cover-rule"></div>
+  <p class="cover-sub">For the moment the pull comes back &mdash; and you can't quite remember why you left.</p>
+  <div class="cover-note">Keep this close · Read it when you feel the pull · 2026</div>
+</header>
+
+<!-- READ THIS FIRST -->
+<section class="sec" id="first">
+  <div class="eyebrow up"><span class="eyebrow-n">00</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Before anything else</span></div>
+  <h2 class="up" style="transition-delay:.05s">Read This <em>First</em></h2>
+  <p class="lead up" style="transition-delay:.08s">You are reading this because a clear-headed version of you knew a foggy version might come back. Listen to the clear one.</p>
+
+  <div class="truthcard up" style="transition-delay:.12s">
+    <p class="big">If you're reading this because you feel the pull to go back &mdash; stop here and breathe.</p>
+    <p>The pull you feel right now is <em>real</em>. But real is not the same as <em>true</em>. Research on traumatic bonding identifies two conditions that built this pull: a <strong>power imbalance</strong> that narrowed your options, and <strong>intermittent reinforcement</strong> that trained your nervous system to chase relief from the same source as the pain. What feels like love right now is often those two things working as designed &mdash; not a signal to go back.</p>
+    <p>You did not leave because you were confused. <strong>You are confused now because you left.</strong> That's the cycle working exactly as designed &mdash; and it does not mean you were wrong.</p>
+    <p>You don't have to decide anything in this moment. <em>You just have to not act yet.</em> Read the rest. Then wait.</p>
+  </div>
+</section>
+
+<!-- THE CARD -->
+<section class="sec" id="card">
+  <div class="eyebrow up"><span class="eyebrow-n">01</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Keep this where you can find it</span></div>
+  <h2 class="up" style="transition-delay:.05s">The <em>Card</em></h2>
+  <p class="lead up" style="transition-delay:.08s">If you only have ten seconds, this is the part to keep. Screenshot it. Set it as a note. Tape it inside a cabinet.</p>
+
+  <div class="card-shot up" style="transition-delay:.12s">
+    <h3>When the pull comes, before I respond:</h3>
+    <ol>
+      <li>I will not reply for at least <strong>48 hours.</strong> Nothing real falls apart in 48 hours.</li>
+      <li>I will call or text <strong>one safe person</strong> before I call them.</li>
+      <li>I will re-read my own reasons for leaving (further down).</li>
+      <li>I will remember: the warmth always came back &mdash; right before it disappeared again. That alternation was the mechanism, not the exception.</li>
+      <li>This feeling will pass whether or not I go back. Going back is the only option that can't be undone.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- IS IT HAPPENING AGAIN -->
+<section class="sec" id="hoover">
+  <div class="eyebrow up"><span class="eyebrow-n">02</span><div class="eyebrow-line"></div><span class="eyebrow-tag">The return &mdash; "hoovering"</span></div>
+  <h2 class="up" style="transition-delay:.05s">Is It <em>Happening Again?</em></h2>
+  <p class="lead up" style="transition-delay:.08s">The pull back in rarely looks like danger. It looks like hope. Tap each one that's happening &mdash; seeing them counted can cut through the fog.</p>
+
+  <ul class="checklist up" style="transition-delay:.12s" id="hooverlist">
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>A sudden, sweeping apology</strong>Especially one that sounds like the words you always wanted &mdash; but with no real change behind it.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>"I've changed / I'm getting help now"</strong>Possible &mdash; some people do change through sustained voluntary work. But real change shows up over months of action, not in a message sent the week you left. The warmth you feel right now is Phase 1, not proof of change.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>A crisis or emergency</strong>Suddenly they're sick, in trouble, or "the only person who can help is you." Manufactured need pulls on your compassion.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Nostalgia &amp; "remember when"</strong>Flooding you with the good memories from Phase 1 &mdash; the version of them that you fell for, who rarely stayed.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Messages through other people</strong>Mutual friends, family, or children carrying word that they "miss you" or "aren't doing well."</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Perfect timing</strong>Contact that lands on a holiday, an anniversary, a hard day they know about &mdash; when you're most likely to be lonely.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>"Just one conversation"</strong>A request that sounds so small it feels unreasonable to refuse. The door only has to open a crack.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Pity, threats, or guilt</strong>"I can't live without you." "Look what you're doing to me." "After everything I did for you." Different tactics, same goal: reopen the door.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Love-bombing, round two</strong>Gifts, grand gestures, intensity that feels like the very beginning again. It felt like that the first time too.</div></li>
+    <li class="check-item"><div class="check-box"></div><div class="check-text"><strong>Showing up uninvited</strong>At your door, your work, your usual places. (If this is happening and it frightens you, skip to the Safety section.)</div></li>
+  </ul>
+
+  <div class="check-tally" id="tally"></div>
+</section>
+
+<!-- FEELING VS FACT -->
+<section class="sec" id="feeling">
+  <div class="eyebrow up"><span class="eyebrow-n">03</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Naming the fog</span></div>
+  <h2 class="up" style="transition-delay:.05s">The Feeling Is Not <em>The Fact</em></h2>
+  <p class="lead up" style="transition-delay:.08s">When the longing hits, your mind hands you an explanation that points back toward them. Here's what's usually on the other side of it.</p>
+
+  <div class="fvf up" style="transition-delay:.12s">
+    <div class="fvf-row">
+      <div class="fvf-cell feel"><div class="fvf-label">What it feels like</div><p>"I miss them so much it hurts. That must mean it was love."</p></div>
+      <div class="fvf-cell fact"><div class="fvf-label">What's likely true</div><p>Missing someone and being safe with them are different things. Withdrawal hurts. The ache is real; it isn't evidence.</p></div>
+    </div>
+    <div class="fvf-row">
+      <div class="fvf-cell feel"><div class="fvf-label">What it feels like</div><p>"Maybe I overreacted. Maybe it wasn't that bad."</p></div>
+      <div class="fvf-cell fact"><div class="fvf-label">What's likely true</div><p>Minimising is how you survived it. The distance is letting the fog clear &mdash; not exaggerating things. Trust what you wrote down when you were clear.</p></div>
+    </div>
+    <div class="fvf-row">
+      <div class="fvf-cell feel"><div class="fvf-label">What it feels like</div><p>"They seem so different now. People can change."</p></div>
+      <div class="fvf-cell fact"><div class="fvf-label">What's likely true</div><p>People can. But you've seen this exact warmth before &mdash; it's Phase 1, and it has always returned to Phase 2. Change is measured in months of action, not a moment of charm.</p></div>
+    </div>
+    <div class="fvf-row">
+      <div class="fvf-cell feel"><div class="fvf-label">What it feels like</div><p>"No one else will ever understand me like they did."</p></div>
+      <div class="fvf-cell fact"><div class="fvf-label">What's likely true</div><p>That belief was constructed through systematic isolation &mdash; a documented tactic that serves the power imbalance the bond depends on. It is not a fact about your future.</p></div>
+    </div>
+    <div class="fvf-row">
+      <div class="fvf-cell feel"><div class="fvf-label">What it feels like</div><p>"If I just explain it right this time, they'll finally get it."</p></div>
+      <div class="fvf-cell fact"><div class="fvf-label">What's likely true</div><p>You have explained it, many times. The problem was never your words. One more conversation is the hook, not the solution.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="pull up">You are not going back to the person who hurt you. You're going back to the hope of the person they pretended to be. That person was never available to stay.</div>
+
+<!-- MY REASONS -->
+<section class="sec" id="reasons">
+  <div class="eyebrow up"><span class="eyebrow-n">04</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Your own voice, for later</span></div>
+  <h2 class="up" style="transition-delay:.05s">My <em>Reasons</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Write these now, while you can see clearly. This is you, leaving a message for the version of you who forgets.</p>
+
+  <div class="write-block up" style="transition-delay:.12s">
+    <label for="reasons-why">Why I left / why I want to leave</label>
+    <textarea id="reasons-why" placeholder="The things I never want to forget. The moments. The way I felt in my own home. What I promised myself..."></textarea>
+    <p class="write-hint">Be specific. Specific memories cut through fog better than general ones. "The night of ___." "How I felt when ___." Your future self will need the details, because the fog erases them first.</p>
+
+    <label for="reasons-promise" style="margin-top:18px">What I want for myself instead</label>
+    <textarea id="reasons-promise" placeholder="The life I'm reaching for. How I want to feel when I wake up. Who I am when I'm not managing someone else's moods..."></textarea>
+
+    <div class="save-row">
+      <button class="save-btn" id="savebtn">Save to this device</button>
+      <span class="save-status" id="savestatus">Saved.</span>
+    </div>
+    <p class="save-warn" id="savewarn">⚠ This saves your words only on this device, in this browser &mdash; nowhere else, never sent anywhere. But anyone with access to this device could read it. If that's a risk, don't save: screenshot it to a private place, write it on paper you keep safe, or send it to one trusted person instead. To erase saved words, tap Save with the boxes empty.</p>
+  </div>
+</section>
+
+<!-- IF CONTACTED -->
+<section class="sec" id="protocol">
+  <div class="eyebrow up"><span class="eyebrow-n">05</span><div class="eyebrow-line"></div><span class="eyebrow-tag">A plan made in advance</span></div>
+  <h2 class="up" style="transition-delay:.05s">If They <em>Reach Out</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Decide now what you'll do, so you don't have to decide in the flood of the moment. This is the plan.</p>
+
+  <div class="protocol up" style="transition-delay:.12s">
+    <div class="p-step"><div class="p-num"></div><div><h3>Don't respond right away</h3><p>The urge to reply instantly is the pull, not you. Put the phone down. Nothing genuine is lost by waiting. Set a timer if it helps &mdash; 48 hours is a good floor.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Tell one safe person immediately</h3><p>Before you do anything else, tell someone you trust: "They reached out. I'm not okay right now." Saying it out loud breaks the secrecy the cycle depends on.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Re-read your own reasons</h3><p>Scroll up to what you wrote in "My Reasons." That's the clear-headed you, talking to the you that's wavering. Believe that one.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Ask the harder question</h3><p>Not "do I miss them?" &mdash; you will. Ask: "If nothing about them has actually changed, what would going back cost me?" You already know the answer.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>If you must communicate, keep it flat</h3><p>For unavoidable contact (co-parenting, shared logistics): keep it short, factual, unemotional &mdash; sometimes called "grey rock." No feelings to feed on, no opening to widen. Boring is safe.</p></div></div>
+    <div class="p-step"><div class="p-num"></div><div><h3>Let the wave pass</h3><p>The intensity of wanting to respond peaks and then falls, every time, usually within hours. You don't have to fight it forever. You just have to outlast this one wave.</p></div></div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="sec" id="safety">
+  <div class="eyebrow up"><span class="eyebrow-n">06</span><div class="eyebrow-line"></div><span class="eyebrow-tag">This part matters most</span></div>
+  <h2 class="up" style="transition-delay:.05s">Staying <em>Safe</em></h2>
+  <p class="lead up" style="transition-delay:.08s">The time around leaving can be the most dangerous. Planning ahead is not paranoia &mdash; it's wisdom. This is not about fear; it's about being ready.</p>
+
+  <div class="safety up" style="transition-delay:.12s">
+    <h3>Practical safety steps</h3>
+    <ul>
+      <li><strong>Trust escalation as a signal.</strong> If contact is turning to anger, threats, or showing up uninvited, that is information. Take it seriously even if part of you wants to minimise it.</li>
+      <li><strong>Keep a record.</strong> Save threatening messages, log unwanted contact with dates. You don't have to act on it now, but documentation protects you later.</li>
+      <li><strong>Tell people what's happening.</strong> A few trusted people knowing your situation is a safety net &mdash; at home, at work, wherever you spend time.</li>
+      <li><strong>Know your exits.</strong> If you share space or must meet, think through how you'd leave and where you'd go. Keep essentials (keys, phone, ID, a little cash) reachable.</li>
+      <li><strong>A hotline is not only for emergencies.</strong> Advocates help with safety planning, options, and just thinking it through &mdash; free and confidential, before anything escalates.</li>
+      <li><strong>If you are ever in immediate danger, call 911.</strong> Your safety comes before any plan on this page.</li>
+    </ul>
+  </div>
+
+  <div class="resources up" style="transition-delay:.16s">
+    <h3>Support &amp; Crisis &mdash; free, confidential, 24/7</h3>
+    <ul class="res-list">
+      <li><span class="res-n">National DV Hotline</span><span class="res-c">1-800-799-7233</span></li>
+      <li><span class="res-n">DV Hotline (text)</span><span class="res-c">START to 88788</span></li>
+      <li><span class="res-n">Crisis Text Line</span><span class="res-c">HOME to 741741</span></li>
+      <li><span class="res-n">thehotline.org</span><span class="res-c">live chat</span></li>
+      <li><span class="res-n">Immediate danger</span><span class="res-c">911</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- MY PEOPLE -->
+<section class="sec" id="people">
+  <div class="eyebrow up"><span class="eyebrow-n">07</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Who you call instead</span></div>
+  <h2 class="up" style="transition-delay:.05s">My <em>People</em></h2>
+  <p class="lead up" style="transition-delay:.08s">When the pull says "call them," this is who you call instead. Fill it in now, so the names are ready before you need them.</p>
+
+  <div class="write-block up" style="transition-delay:.12s">
+    <label for="people-list">The people I'll reach for first</label>
+    <textarea id="people-list" placeholder="Name — phone — what they're good for&#10;e.g. Sarah — 555-0100 — will just listen, no judgement&#10;e.g. My brother — 555-0142 — comes over if I ask&#10;e.g. My therapist — 555-0177"></textarea>
+    <p class="write-hint">Aim for at least two or three. Different people for different moments &mdash; one who calms you, one who'll come over, one who'll tell you the truth. You don't have to carry this alone, and you were never meant to.</p>
+    <div class="save-row">
+      <button class="save-btn" id="savebtn2">Save to this device</button>
+      <span class="save-status" id="savestatus2">Saved.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing up">
+  <p>Leaving isn't one decision. It's the same decision, made again and again, until one day it stays made. Research on leaving abusive relationships confirms that multiple separations before a final exit is the normal pattern &mdash; not a sign of failure.</p>
+  <p>Every time you don't go back is a win &mdash; even the times it was hard, even the times you almost did.</p>
+  <span class="small">You already did the hardest part.<br>This is just helping you keep it.</span>
+</div>
+
+<nav class="companions">
+  <h4>Companion guides</h4>
+  <div class="comp-grid">
+    <a class="comp-link" href="ClearEyes.html"><span class="cl-name">Clear Eyes</span><span class="cl-desc">the complete guide</span></a>
+    <a class="comp-link" href="TheCycle.html"><span class="cl-name">The Cycle</span><span class="cl-desc">understand the pattern</span></a>
+    <a class="comp-link current"><span class="cl-name">The Anchor</span><span class="cl-desc">leaving &amp; staying gone</span></a>
+    <a class="comp-link" href="TheUndertow.html"><span class="cl-name">The Undertow</span><span class="cl-desc">catch yourself drifting back</span></a>
+  </div>
+</nav>
+<footer>
+  <strong>The Anchor</strong> &mdash; A companion to <em>The Cycle</em> · 2026<br><br>
+  Sources: Dutton &amp; Painter (1981, 1993), traumatic bonding &mdash; power imbalance &amp; intermittent reinforcement · Wuest &amp; Merritt-Gray (1999), stages of leaving · Van der Kolk (2014)<br><br>For education and self-support only. Not a substitute for a therapist, advocate, or safety professional. If anything here conflicts with advice from someone supporting you directly, follow theirs.<br><br>
+  Your written notes are stored only in this browser on this device, and are never transmitted anywhere. Clear them anytime by saving with empty boxes, or by clearing your browser data.<br><br>
+  <strong>Immediate danger:</strong> 911 · <strong>DV Hotline:</strong> 1-800-799-7233 · <strong>Text:</strong> START to 88788
+</footer>
+
+<script>
+// no pinch zoom
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+
+// progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('pb').style.width=(h>0?window.scrollY/h*100:0)+'%';
+},{passive:true});
+
+// reveal
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.06});
+document.querySelectorAll('.up').forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>{document.querySelectorAll('.up').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in')})});
+
+// checklist + tally
+const list=document.getElementById('hooverlist');
+const tally=document.getElementById('tally');
+list.querySelectorAll('.check-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    item.classList.toggle('checked');
+    const n=list.querySelectorAll('.check-item.checked').length;
+    if(n===0){tally.classList.remove('show');tally.textContent='';}
+    else{
+      tally.classList.add('show');
+      let msg;
+      if(n===1) msg="You marked 1 sign. Even one is worth pausing on. This is the pattern reaching for you again — not a fresh start.";
+      else if(n<=3) msg="You marked "+n+" signs. This looks like the return phase of the cycle, dressed up as something new. Slow down before you respond.";
+      else msg="You marked "+n+" signs. This is the cycle, clearly. The warmth is the bait — you have seen exactly this before. Please go to 'If They Reach Out' and reach for one of your people first.";
+      tally.textContent=msg;
+    }
+  });
+});
+
+// local save (graceful — works on hosted/standalone file; degrades silently if blocked)
+function wire(btnId,statusId,keys){
+  const btn=document.getElementById(btnId);
+  const status=document.getElementById(statusId);
+  if(!btn) return;
+  // load
+  try{
+    keys.forEach(k=>{const el=document.getElementById(k);const v=localStorage.getItem('anchor_'+k);if(el&&v!==null)el.value=v;});
+  }catch(e){}
+  btn.addEventListener('click',()=>{
+    try{
+      keys.forEach(k=>{const el=document.getElementById(k);if(el)localStorage.setItem('anchor_'+k,el.value);});
+      status.textContent='Saved to this device.';
+    }catch(e){
+      status.textContent='Could not save here — screenshot instead.';
+    }
+    status.classList.add('show');
+    setTimeout(()=>status.classList.remove('show'),2600);
+  });
+}
+wire('savebtn','savestatus',['reasons-why','reasons-promise']);
+wire('savebtn2','savestatus2',['people-list']);
+</script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, minimal-ui">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="The Undertow">
+<meta name="theme-color" content="#080c18">
+<title>The Undertow — Catching Yourself Being Pulled Back</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Mono:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#080c18;--ink:#111520;--card:#141828;--border:rgba(255,255,255,.07);
+  --paper:#f5f0e4;--cream:#faf7f0;--mist:rgba(245,240,228,.4);--ghost:rgba(245,240,228,.18);
+  --gold:#c4882a;--gold-b:#e5a340;--gold-pale:rgba(196,136,42,.12);
+  --rose:#8a3040;--rose-b:#b34055;--rose-pale:rgba(138,48,64,.16);
+  --teal:#1a5c5c;--teal-b:#2a9090;--teal-pale:rgba(26,92,92,.18);
+  --green:#2e7d5b;--green-b:#3fa676;--green-pale:rgba(46,125,91,.16);
+  --amber:#b8862a;--amber-b:#e0a838;--amber-pale:rgba(184,134,42,.14);
+  --slate:#7a8090;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%;background:var(--night);scroll-behavior:smooth}
+body{background:var(--night);color:var(--paper);font-family:'Lato',sans-serif;line-height:1.65;overflow-x:hidden;-webkit-touch-callout:none;padding-bottom:max(24px,var(--safe-bot))}
+a{-webkit-tap-highlight-color:transparent;touch-action:manipulation;color:var(--teal-b)}
+button{-webkit-tap-highlight-color:transparent;font-family:inherit}
+
+.pb{position:fixed;top:0;left:0;right:0;height:2px;background:var(--teal-b);width:0%;z-index:400;transition:width .1s linear}
+
+.nav{position:sticky;top:0;z-index:300;background:rgba(8,12,24,.93);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-top:var(--safe-top)}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--teal-b);padding:10px 12px;border-right:1px solid var(--border);flex-shrink:0;white-space:nowrap;font-weight:700}
+.nav a{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ghost);text-decoration:none;padding:10px 11px;white-space:nowrap;flex-shrink:0;transition:color .18s,background .18s}
+.nav a:active{color:var(--teal-b);background:rgba(255,255,255,.05)}
+
+.up{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.up.in{opacity:1;transform:none}
+
+.cover{min-height:76vh;background:var(--night);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:28px 20px;padding-top:calc(28px + var(--safe-top))}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 120% 70% at 70% 8%,rgba(26,92,92,.16),transparent 55%),radial-gradient(ellipse 90% 100% at 10% 88%,rgba(138,48,64,.06),transparent 60%);pointer-events:none}
+.cover-eyebrow{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.22em;color:var(--teal-b);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cover-eyebrow::before{content:'';width:20px;height:1px;background:var(--teal-b);opacity:.6}
+.cover h1{font-family:'Cormorant Garant',serif;font-size:58px;font-weight:700;line-height:.9;color:var(--paper);letter-spacing:-.02em;margin-bottom:16px}
+.cover h1 em{font-style:italic;color:var(--teal-b)}
+.cover-sub{font-family:'Cormorant Garant',serif;font-style:italic;font-size:18px;color:var(--mist);line-height:1.5;max-width:96%;margin-bottom:18px}
+.cover-rule{width:34px;height:2px;background:var(--teal-b);margin-bottom:16px;opacity:.7}
+.cover-note{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--ghost);line-height:1.9;text-transform:uppercase}
+
+.sec{padding:30px 20px;position:relative}
+.sec+.sec{border-top:1px solid var(--border)}
+.eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.eyebrow-n{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--teal-b);font-weight:700}
+.eyebrow-line{flex:1;height:1px;background:var(--border)}
+.eyebrow-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate)}
+h2{font-family:'Cormorant Garant',serif;font-size:33px;font-weight:700;line-height:1.0;letter-spacing:-.01em;margin-bottom:10px;color:var(--paper)}
+h2 em{font-style:italic;color:var(--teal-b)}
+.lead{font-family:'Cormorant Garant',serif;font-style:italic;font-size:16px;color:var(--mist);line-height:1.62;margin-bottom:20px}
+.body{font-size:13.5px;color:rgba(245,240,228,.7);line-height:1.72;margin-bottom:14px}
+.body strong{color:var(--paper);font-weight:700}
+
+.truthcard{background:linear-gradient(160deg,var(--card),var(--ink));border:1px solid var(--teal-pale);border-radius:6px;padding:22px 18px;margin-top:6px}
+.truthcard p{font-family:'Cormorant Garant',serif;font-size:17px;line-height:1.5;color:var(--paper);margin-bottom:14px}
+.truthcard p:last-child{margin-bottom:0}
+.truthcard em{font-style:italic;color:var(--teal-b)}
+.truthcard .big{font-size:22px;font-weight:700;line-height:1.32}
+
+/* STAGE INTRO */
+.stages-intro{display:grid;gap:8px;margin-top:6px}
+.stage-row{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;padding:12px 14px;background:var(--card);border-radius:5px;border-left:3px solid var(--teal-b)}
+.stage-row.s1{border-left-color:var(--green-b)}
+.stage-row.s2{border-left-color:var(--amber-b)}
+.stage-row.s3{border-left-color:var(--rose-b)}
+.stage-ico{font-family:'Cormorant Garant',serif;font-size:24px;font-weight:700;line-height:1;color:var(--green-b)}
+.stage-row.s2 .stage-ico{color:var(--amber-b)}
+.stage-row.s3 .stage-ico{color:var(--rose-b)}
+.stage-row h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper);margin-bottom:2px}
+.stage-row p{font-size:12px;color:rgba(245,240,228,.62);line-height:1.55}
+
+/* CHECK GROUP */
+.checkgroup{margin-top:18px}
+.cg-head{display:flex;align-items:center;gap:8px;margin:22px 0 4px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.cg-badge{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:4px 9px;border-radius:4px}
+.cg-badge.g{background:var(--green-pale);color:var(--green-b)}
+.cg-badge.a{background:var(--amber-pale);color:var(--amber-b)}
+.cg-badge.r{background:var(--rose-pale);color:var(--rose-b)}
+.cg-head .cg-title{font-family:'Cormorant Garant',serif;font-weight:700;font-size:18px;color:var(--paper)}
+.cg-sub{font-family:'Cormorant Garant',serif;font-style:italic;font-size:13px;color:var(--mist);line-height:1.5;margin-bottom:4px}
+
+.checklist{list-style:none}
+.check-item{display:grid;grid-template-columns:24px 1fr;gap:11px;align-items:start;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border:1.5px solid var(--slate);border-radius:5px;margin-top:1px;flex-shrink:0;transition:all .2s var(--ease);position:relative;background:transparent}
+.check-item.checked .check-box{background:var(--teal-b);border-color:var(--teal-b)}
+.check-item.checked .check-box::after{content:'\2713';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.check-text{font-size:13.5px;color:rgba(245,240,228,.74);line-height:1.5}
+.check-item.checked .check-text{color:var(--mist)}
+
+/* LIVE METER */
+.meter-wrap{position:sticky;bottom:0;z-index:250;background:rgba(8,12,24,.96);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--border);padding:12px 16px;padding-bottom:max(12px,var(--safe-bot))}
+.meter-bar{height:6px;border-radius:3px;background:var(--ink);overflow:hidden;margin-bottom:8px}
+.meter-fill{height:100%;width:0%;background:var(--green-b);border-radius:3px;transition:width .35s var(--ease),background .35s}
+.meter-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--mist);line-height:1.5;text-align:center}
+.meter-label strong{color:var(--paper)}
+
+/* RESULT BOX */
+.result{margin-top:6px;border-radius:6px;padding:18px 16px;border:1px solid var(--border);display:none}
+.result.show{display:block}
+.result.lvl-0{background:var(--green-pale);border-color:rgba(63,166,118,.35)}
+.result.lvl-1{background:var(--green-pale);border-color:rgba(63,166,118,.35)}
+.result.lvl-2{background:var(--amber-pale);border-color:rgba(224,168,56,.35)}
+.result.lvl-3{background:var(--rose-pale);border-color:rgba(179,64,85,.4)}
+.result h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:21px;margin-bottom:8px;line-height:1.2}
+.result.lvl-0 h3,.result.lvl-1 h3{color:var(--green-b)}
+.result.lvl-2 h3{color:var(--amber-b)}
+.result.lvl-3 h3{color:var(--rose-b)}
+.result p{font-size:13.5px;color:rgba(245,240,228,.78);line-height:1.66;margin-bottom:10px}
+.result p:last-child{margin-bottom:0}
+.result strong{color:var(--paper)}
+.result .dolist{list-style:none;margin-top:8px}
+.result .dolist li{font-size:13px;color:rgba(245,240,228,.8);line-height:1.5;padding:7px 0 7px 22px;position:relative;border-top:1px solid var(--border)}
+.result .dolist li::before{content:'\2192';position:absolute;left:0;color:var(--teal-b);font-weight:700}
+
+.btn-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{border:none;padding:11px 18px;border-radius:6px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-primary{background:var(--teal);color:var(--paper)}
+.btn-primary:active{background:var(--teal-b)}
+.btn-ghost{background:transparent;color:var(--mist);border:1px solid var(--border)}
+.btn-ghost:active{background:var(--ink)}
+
+/* PULL */
+.pull{padding:24px 20px;margin:0 -20px;font-family:'Cormorant Garant',serif;font-style:italic;font-size:20px;line-height:1.48;color:var(--paper)}
+.pull.teal{background:var(--teal)}
+.pull.green{background:var(--green)}
+.pull cite{display:block;margin-top:10px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,228,.45);font-style:normal}
+
+/* CARD-SHOT */
+.card-shot{background:var(--ink);border:1.5px solid var(--teal-b);border-radius:8px;padding:20px 18px;margin-top:6px;position:relative}
+.card-shot::before{content:'SCREENSHOT THIS';position:absolute;top:-8px;left:16px;background:var(--night);padding:0 8px;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.16em;color:var(--teal-b)}
+.card-shot h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:19px;color:var(--teal-b);margin-bottom:12px;line-height:1.2}
+.card-shot ol{list-style:none;counter-reset:c}
+.card-shot li{counter-increment:c;font-size:13.5px;color:rgba(245,240,228,.8);line-height:1.5;padding:7px 0 7px 28px;position:relative;border-bottom:1px solid var(--border)}
+.card-shot li:last-child{border-bottom:none}
+.card-shot li::before{content:counter(c);position:absolute;left:0;top:7px;width:18px;height:18px;background:var(--teal-pale);color:var(--teal-b);border-radius:50%;font-family:'Space Mono',monospace;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.card-shot li strong{color:var(--paper)}
+
+.framing{background:var(--teal-pale);border:1px solid rgba(42,144,144,.3);border-radius:4px;padding:16px 14px;margin-top:18px}
+.framing h4{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-b);margin-bottom:8px}
+.framing p{font-size:13px;color:rgba(245,240,228,.7);line-height:1.66;margin-bottom:0}
+.framing strong{color:var(--paper);font-weight:700}
+
+.resources{background:var(--ink);border:1px solid var(--border);padding:16px 14px;margin-top:16px;border-radius:6px}
+.resources h3{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--green-b);margin-bottom:12px}
+.res-list{list-style:none;font-size:12.5px}
+.res-list li{padding:9px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.res-list li:last-child{border-bottom:none}
+.res-n{color:var(--paper);font-weight:700;font-size:13px}
+.res-c{font-family:'Space Mono',monospace;font-size:9px;color:var(--green-b);letter-spacing:.03em;text-align:right;white-space:nowrap}
+
+.closing{text-align:center;padding:36px 20px;border-top:1px solid var(--border)}
+.closing p{font-family:'Cormorant Garant',serif;font-style:italic;font-size:21px;line-height:1.45;color:var(--paper);margin-bottom:10px}
+.closing .small{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-style:normal;line-height:1.8}
+
+footer{background:var(--ink);border-top:1px solid var(--border);padding:20px;padding-bottom:max(20px,var(--safe-bot));font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.07em;color:var(--ghost);line-height:1.9}
+footer strong{color:rgba(245,240,228,.4);font-weight:700}
+footer em{color:var(--mist);font-style:italic}
+
+@media print{.nav,.pb,.meter-wrap{display:none}body{background:#fff;color:#000}.up{opacity:1;transform:none}}
+
+.companions{background:var(--night);border-top:1px solid var(--border);padding:24px 20px;padding-bottom:24px}
+.companions h4{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);margin-bottom:14px}
+.comp-grid{display:grid;gap:8px}
+.comp-link{display:flex;align-items:baseline;gap:10px;padding:11px 13px;border:1px solid var(--border);border-radius:6px;text-decoration:none;background:var(--card);transition:border-color .2s}
+.comp-link:active{border-color:var(--teal-b)}
+.comp-link .cl-name{font-family:'Cormorant Garant',serif;font-weight:700;font-size:16px;color:var(--paper)}
+.comp-link .cl-desc{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.04em;color:var(--mist);text-transform:uppercase}
+.comp-link.current{background:var(--ink);border-style:dashed;pointer-events:none}
+.comp-link.current .cl-name{color:var(--teal-b)}
+.comp-link.current .cl-desc::after{content:' \2022 you are here';color:var(--teal-b)}
+</style>
+</head>
+<body>
+
+<div class="pb" id="pb"></div>
+
+<nav class="nav">
+  <div class="nav-logo">\u2248 UNDERTOW</div>
+  <a href="#first">Read First</a>
+  <a href="#how">How It Works</a>
+  <a href="#check">Self-Check</a>
+  <a href="#card">The Card</a>
+  <a href="#wave">Ride the Wave</a>
+  <a href="#help">Help</a>
+</nav>
+
+<header class="cover">
+  <div class="cover-eyebrow">A self-check for catching the drift</div>
+  <h1>THE<br><em>UNDERTOW</em></h1>
+  <div class="cover-rule"></div>
+  <p class="cover-sub">You rarely feel the current until it already has you. This is how to notice you're being pulled back &mdash; while you can still swim.</p>
+  <div class="cover-note">Check in honestly · Catch it early · 2026</div>
+</header>
+
+<!-- READ FIRST -->
+<section class="sec" id="first">
+  <div class="eyebrow up"><span class="eyebrow-n">00</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Before the checklist</span></div>
+  <h2 class="up" style="transition-delay:.05s">Going Back Is Not <em>An Event</em></h2>
+  <p class="lead up" style="transition-delay:.08s">It's a process. It almost never starts with a decision &mdash; it starts with a feeling, then a thought, long before any contact happens.</p>
+  <div class="truthcard up" style="transition-delay:.12s">
+    <p class="big">Nobody wakes up one morning and decides to go back.</p>
+    <p>The slide begins quietly &mdash; weeks, sometimes months, before any message is sent. First the <em>mood</em> shifts. Then the <em>thinking</em> shifts. Only last does the <em>behaviour</em> shift. By the time you're reaching for the phone, the current has been carrying you for a while.</p>
+    <p>That's good news. It means there are <em>early</em> signs &mdash; and if you can name them while you're still in the shallows, you can turn around before the water is over your head.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec" id="how">
+  <div class="eyebrow up"><span class="eyebrow-n">01</span><div class="eyebrow-line"></div><span class="eyebrow-tag">What the research actually shows</span></div>
+  <h2 class="up" style="transition-delay:.05s">The Pull Has <em>Early Signs</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Researchers who study leaving abusive relationships find the same thing every time: leaving is not one clean event, and returning is not a sudden choice. Both are slow, cyclical processes &mdash; which means there are signs you can learn to read.</p>
+  <div class="body up" style="transition-delay:.1s">
+    <p>Studies that map the journey out of an abusive relationship describe a path with stages &mdash; and a very common point where someone returns, before eventually leaving for good. <strong>This back-and-forth is normal, expected, and well-documented.</strong> It is not weakness, and it is not failure. Most people who leave for good did it after returning at least once.</p>
+    <p>The signs of being pulled back tend to arrive in a rough order &mdash; the <em>mood</em> shifts first, then the <em>thinking</em>, and only last the <em>actions</em>. Naming which one is happening tells you what kind of help you need right now.</p>
+  </div>
+  <div class="stages-intro up" style="transition-delay:.12s">
+    <div class="stage-row s1"><div class="stage-ico">1</div><div><h3>The mood shifts first</h3><p>You're not thinking about them yet &mdash; but your self-care and connection are slipping. The easiest point to turn around, and the easiest to miss.</p></div></div>
+    <div class="stage-row s2"><div class="stage-ico">2</div><div><h3>Then the thinking shifts</h3><p>A debate starts in your head. The good memories get louder and the harm goes quiet &mdash; the mind plays the highlight reel. Old self-blame can creep back in.</p></div></div>
+    <div class="stage-row s3"><div class="stage-ico">3</div><div><h3>Then the actions shift</h3><p>Checking, re-reading, "just one conversation." This is the point closest to contact &mdash; and the moment to reach for another person hardest.</p></div></div>
+  </div>
+  <div class="framing up" style="transition-delay:.16s">
+    <h4>Why this matters &mdash; and a word about blame</h4>
+    <p>The pull that brings you back was built from two conditions identified by trauma-bonding research: a <strong>power imbalance</strong> that narrowed your options, and <strong>intermittent reinforcement</strong> that trained your nervous system to chase relief from the same source as the pain (Dutton &amp; Painter, 1981, 1993). Naming those conditions is not an excuse for going back &mdash; it is an explanation of why the pull is so strong, and why noticing it early matters.</p>
+    <p>The aim is to notice the <strong>mood or thinking</strong> shift early, while turning around still feels possible. And if you do return &mdash; many people do, often more than once &mdash; that is part of how leaving usually works, <strong>not proof that something is wrong with you.</strong> This tool is a mirror, never a scorecard.</p>
+  </div>
+</section>
+
+<!-- SELF CHECK -->
+<section class="sec" id="check">
+  <div class="eyebrow up"><span class="eyebrow-n">02</span><div class="eyebrow-line"></div><span class="eyebrow-tag">Honest, private, just for you</span></div>
+  <h2 class="up" style="transition-delay:.05s">The <em>Self-Check</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Tap anything that's true for you lately. Be honest &mdash; no one sees this but you, and honesty is the whole point. The meter at the bottom moves as you go.</p>
+
+  <div class="checkgroup up" style="transition-delay:.1s" id="checkgroup">
+
+    <div class="cg-head"><span class="cg-badge g">First</span><span class="cg-title">The mood shift</span></div>
+    <p class="cg-sub">Not about them yet &mdash; about you slipping.</p>
+    <ul class="checklist" data-weight="1">
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been pulling away from my support people &mdash; cancelling, going quiet, isolating.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've stopped doing the things that were helping me (therapy, meetings, journaling, exercise, sleep).</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">My sleeping or eating has gotten noticeably worse, or I feel "off" in my body.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">There's a restlessness or emptiness in me lately that I can't quite name.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been drinking or using more than I meant to &mdash; to take the edge off.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">When people ask how I'm doing, I say "fine" when I'm not.</div></li>
+    </ul>
+
+    <div class="cg-head"><span class="cg-badge a">Next</span><span class="cg-title">The thinking shift</span></div>
+    <p class="cg-sub">The debate has started in your head.</p>
+    <ul class="checklist" data-weight="2">
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I keep replaying the good times and the warmth &mdash; and the bad parts feel fuzzy or far away.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've caught myself thinking "maybe it wasn't as bad as I made it out to be."</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">The old self-blame is back &mdash; "if I'd just been better / hadn't been drinking, maybe..."</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been telling myself "this time would be different" or "people can change."</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I'm starting to believe no one else will ever understand me the way they did.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I find myself defending them, or softening the story, when I talk about them.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I'm looking for reasons it would be "okay" to make contact &mdash; the kids, closure, a birthday.</div></li>
+    </ul>
+
+    <div class="cg-head"><span class="cg-badge r">Then</span><span class="cg-title">The action shift</span></div>
+    <p class="cg-sub">Thoughts are turning into actions.</p>
+    <ul class="checklist" data-weight="3">
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've been checking their social media, or driving past, or keeping tabs on them.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've re-read old messages, looked at old photos, or kept a "just in case" door open.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I responded to their contact and told myself it was nothing.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I'm hiding my thoughts about them, or any contact, from the people I trust.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've started imagining or half-planning how a reunion would actually happen.</div></li>
+      <li class="check-item"><div class="check-box"></div><div class="check-text">I've let them back in through "logistics," and the conversations are widening.</div></li>
+    </ul>
+
+  </div>
+
+  <div class="result up" id="result">
+    <h3 id="result-h"></h3>
+    <div id="result-body"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="recheck">Clear &amp; check again</button>
+    </div>
+  </div>
+</section>
+
+<div class="pull teal up">Euphoric recall is the mind playing you the highlight reel and hiding the rest. The warmth you're remembering was real &mdash; it just never stayed. That was the whole pattern.</div>
+
+<!-- THE CARD -->
+<section class="sec" id="card">
+  <div class="eyebrow up"><span class="eyebrow-n">03</span><div class="eyebrow-line"></div><span class="eyebrow-tag">When the current is strong</span></div>
+  <h2 class="up" style="transition-delay:.05s">If You're Already <em>Drifting</em></h2>
+  <p class="lead up" style="transition-delay:.08s">Catching it is the win. Here's what to do the moment you notice &mdash; screenshot this.</p>
+  <div class="card-shot up" style="transition-delay:.12s">
+    <h3>The moment I notice the pull:</h3>
+    <ol>
+      <li><strong>Name the stage.</strong> Say it out loud: "I'm in the emotional drift / the tug-of-war / I'm reaching back." Naming it shrinks it.</li>
+      <li><strong>Tell one safe person today.</strong> The pull feeds on secrecy. Breaking the silence breaks its hold.</li>
+      <li><strong>Go back to basics.</strong> Sleep, food, water, the meeting, the walk. Emotional drift is reversed by self-care, not willpower.</li>
+      <li><strong>Re-read your reasons for leaving</strong> &mdash; in your own words, written when you were clear.</li>
+      <li><strong>Don't act for 48 hours.</strong> The wave peaks and falls. You only have to outlast this one.</li>
+      <li><strong>If you already made contact, you have not failed.</strong> Returning is part of how most people eventually leave for good. Be gentle, and turn back toward your plan now.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="wave">
+  <div class="eyebrow up"><span class="eyebrow-n">04</span><div class="eyebrow-line"></div><span class="eyebrow-tag">For the strongest moments</span></div>
+  <h2 class="up" style="transition-delay:.05s">Ride The <em>Wave</em></h2>
+  <p class="lead up" style="transition-delay:.08s">An urge is a wave, not a wall. It rises, crests, and falls &mdash; usually within twenty to thirty minutes &mdash; whether or not you act on it. You don't have to fight it forever. You only have to stay afloat through this one.</p>
+  <div class="card-shot up" style="transition-delay:.12s">
+    <h3>When the urge to reach out peaks:</h3>
+    <ol>
+      <li><strong>Notice and name it.</strong> "This is an urge. It will pass." Saying it puts a sliver of space between you and the pull.</li>
+      <li><strong>Set a timer for 20 minutes.</strong> Promise yourself you'll do nothing until it rings. Urges almost always soften in that window.</li>
+      <li><strong>Move your body.</strong> Walk, shower, cold water on your face, step outside. Changing your physical state changes the wave.</li>
+      <li><strong>Call someone from your list</strong> &mdash; not them. A real voice shrinks the urge faster than anything.</li>
+      <li><strong>When the timer rings, check again.</strong> Most of the time, the wave has already dropped. If not, reset it. You can outlast it one wave at a time.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="pull green up">Reaching out once &mdash; or even going back &mdash; does not erase what you've learned. Most people who leave for good returned at least once first. The knowing you've built doesn't disappear. It comes with you.</div>
+
+<!-- HELP -->
+<section class="sec" id="help">
+  <div class="eyebrow up"><span class="eyebrow-n">05</span><div class="eyebrow-line"></div><span class="eyebrow-tag">You were never meant to do this alone</span></div>
+  <h2 class="up" style="transition-delay:.05s">Reach <em>Out</em></h2>
+  <p class="body up" style="transition-delay:.08s">If the meter ran high, or if you've already made contact, that is exactly when a real human voice helps most. None of these require a crisis &mdash; they help with the quiet drift too.</p>
+  <div class="resources up" style="transition-delay:.12s">
+    <h3>Support &mdash; free, confidential, 24/7</h3>
+    <ul class="res-list">
+      <li><span class="res-n">National DV Hotline</span><span class="res-c">1-800-799-7233</span></li>
+      <li><span class="res-n">DV Hotline (text)</span><span class="res-c">START to 88788</span></li>
+      <li><span class="res-n">SAMHSA (substance use)</span><span class="res-c">1-800-662-4357</span></li>
+      <li><span class="res-n">Crisis Text Line</span><span class="res-c">HOME to 741741</span></li>
+      <li><span class="res-n">Immediate danger</span><span class="res-c">911</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="closing up">
+  <p>The fact that you opened this &mdash; that you're checking &mdash; means part of you is still swimming.</p>
+  <span class="small">Listen to that part.<br>It's the one telling the truth.</span>
+</div>
+
+<nav class="companions">
+  <h4>Companion guides</h4>
+  <div class="comp-grid">
+    <a class="comp-link" href="ClearEyes.html"><span class="cl-name">Clear Eyes</span><span class="cl-desc">the complete guide</span></a>
+    <a class="comp-link" href="TheCycle.html"><span class="cl-name">The Cycle</span><span class="cl-desc">understand the pattern</span></a>
+    <a class="comp-link" href="TheAnchor.html"><span class="cl-name">The Anchor</span><span class="cl-desc">leaving &amp; staying gone</span></a>
+    <a class="comp-link current"><span class="cl-name">The Undertow</span><span class="cl-desc">catch yourself drifting back</span></a>
+  </div>
+</nav>
+<footer>
+  <strong>The Undertow</strong> &mdash; a companion to Clear Eyes &middot; 2026<br><br>
+  <strong>Grounding &amp; sources:</strong> The idea that leaving an abusive relationship is a cyclical process &mdash; with a common "return" point, and multiple separations before a final one &mdash; comes from the Stages of Change literature applied to intimate-partner violence (Prochaska &amp; DiClemente; Wuest &amp; Merritt-Gray, 1999, "Not Going Back"; Khaw &amp; Hardesty, 2009). The mood &rarr; thinking &rarr; action ordering of early warning signs, and "euphoric recall" (remembering the good and forgetting the harm), are adapted from relapse-prevention research (Gorski &amp; Miller, 1986; distilled into three stages by Melemis, 2015, <em>Yale J. Biol. Med.</em>).<br><br>
+  <strong>On the word "relapse":</strong> advocates caution against framing a return as "relapse," because it can add shame to something that is common and human. This tool deliberately avoids that framing. Returning is not a moral failure; it is part of how leaving often works.<br><br>
+  <strong>Important:</strong> For education and self-support only. Not a substitute for a therapist, advocate, or counsellor. Your taps are not saved or sent anywhere &mdash; they live only on this screen and reset when you reload.<br><br>
+  <strong>Immediate danger:</strong> 911 &middot; <strong>DV Hotline:</strong> 1-800-799-7233 &middot; <strong>SAMHSA:</strong> 1-800-662-4357
+</footer>
+
+<!-- LIVE METER -->
+<div class="meter-wrap">
+  <div class="meter-bar"><div class="meter-fill" id="meterfill"></div></div>
+  <div class="meter-label" id="meterlabel"><strong>Tap honestly above.</strong> The current rises as you go.</div>
+</div>
+
+<script>
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault()},{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault());
+window.addEventListener('scroll',()=>{const h=document.body.scrollHeight-window.innerHeight;document.getElementById('pb').style.width=(h>0?window.scrollY/h*100:0)+'%';},{passive:true});
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.05});
+document.querySelectorAll('.up').forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>{document.querySelectorAll('.up').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in')})});
+
+const group=document.getElementById('checkgroup');
+const fill=document.getElementById('meterfill');
+const label=document.getElementById('meterlabel');
+const result=document.getElementById('result');
+const resultH=document.getElementById('result-h');
+const resultBody=document.getElementById('result-body');
+
+function maxStageChecked(){
+  let m=0;
+  group.querySelectorAll('ul.checklist').forEach(ul=>{
+    const w=parseInt(ul.getAttribute('data-weight'),10);
+    if(ul.querySelectorAll('.check-item.checked').length>0 && w>m) m=w;
+  });
+  return m;
+}
+function totalChecked(){return group.querySelectorAll('.check-item.checked').length;}
+
+function render(){
+  const total=totalChecked();
+  const stage=maxStageChecked();
+  // meter reflects deepest stage reached, nudged by count
+  let pct=0,color='var(--green-b)';
+  if(stage===0){pct=total>0?8:0;}
+  else if(stage===1){pct=22+Math.min(total,4)*4;color='var(--green-b)';}
+  else if(stage===2){pct=55+Math.min(total,4)*4;color='var(--amber-b)';}
+  else if(stage===3){pct=86+Math.min(total,3)*4;color='var(--rose-b)';}
+  fill.style.width=Math.min(pct,100)+'%';
+  fill.style.background=color;
+
+  if(total===0){
+    label.innerHTML='<strong>Tap honestly above.</strong> The current rises as you go.';
+    result.classList.remove('show');
+    return;
+  }
+  const stageName=stage===1?'the mood shift':stage===2?'the thinking shift':'the action shift';
+  label.innerHTML='You marked <strong>'+total+'</strong> &mdash; deepest stage: <strong>'+stageName+'</strong>.';
+
+  // result content
+  let lvl,h,html;
+  if(stage<=1){
+    lvl=1;h='You\u2019re in the early current \u2014 the best place to be.';
+    html='<p>What you\u2019re noticing is the <strong>mood shift</strong> \u2014 the self-care-and-connection slip that tends to come <em>before</em> the thoughts about them start. It\u2019s the easiest point to turn around, and most people miss it entirely. You didn\u2019t.</p><p>This stage is reversed by care, not willpower:</p><ul class="dolist"><li>Put back one thing you dropped \u2014 the meeting, the walk, a real night\u2019s sleep.</li><li>Tell one safe person you\u2019re feeling shaky, today.</li><li>Eat something, drink water, get outside. Boring basics genuinely work here.</li></ul>';
+  } else if(stage===2){
+    lvl=2;h='You\u2019re in the tug-of-war. Slow down.';
+    html='<p>The debate has started, and <strong>euphoric recall</strong> is doing its work \u2014 the warmth gets louder, the harm goes quiet, and the old self-blame creeps back. None of that means you were wrong to leave. It means the current is pulling.</p><p>Right now:</p><ul class="dolist"><li>Re-read your reasons for leaving \u2014 in your own words, from when you were clear.</li><li>Call a safe person and say the quiet part out loud: \u201cI\u2019m thinking about going back.\u201d Secrecy is the current\u2019s fuel.</li><li>Name the recall when it happens: \u201cthat\u2019s the highlight reel, not the whole film.\u201d</li><li>Don\u2019t make any contact for 48 hours. Let this wave pass first.</li></ul>';
+  } else {
+    lvl=3;h='You\u2019re reaching back. This is the moment to grab a hand.';
+    html='<p>Thoughts are turning into actions \u2014 checking, re-reading, half-planning, maybe already a message. This is the point closest to contact, and it is <strong>not</strong> the moment to handle alone. (And if contact already happened: that is common and human, not a failure \u2014 see below.)</p><p>Please, now:</p><ul class="dolist"><li>Reach a real person before you reach them \u2014 a trusted friend, or a hotline below. Do this first.</li><li>If you\u2019ve already made contact: that\u2019s a slip, not a failure. Turning around now still counts. Everything you\u2019ve learned is still yours.</li><li>Re-read your reasons. Put 48 hours between you and any next step.</li><li>If any contact involves fear for your safety, treat that as the priority \u2014 see the hotline numbers below.</li></ul>';
+  }
+  result.className='result show lvl-'+lvl;
+  resultH.textContent=h;
+  resultBody.innerHTML=html;
+}
+
+group.querySelectorAll('.check-item').forEach(it=>{
+  it.addEventListener('click',()=>{it.classList.toggle('checked');render();});
+});
+document.getElementById('recheck').addEventListener('click',()=>{
+  group.querySelectorAll('.check-item.checked').forEach(i=>i.classList.remove('checked'));
+  render();
+  document.getElementById('check').scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
